@@ -1,25 +1,18 @@
-import logo from './logo.svg';
+import { Button } from 'flowbite-react';
 import './App.css';
+import FooterComp from './Components/footer';
+import SubscribeBox from './Components/SubscribeBox';
+import BannerAlert from './Components/Banner';
+import NavbarComp from './Components/Navbar/Navbar';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <>
+  <NavbarComp />
+  <BannerAlert />
+  <SubscribeBox />
+  <FooterComp/>
+
+  </>
 }
 
 export default App;
