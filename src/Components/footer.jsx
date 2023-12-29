@@ -6,39 +6,39 @@ function FooterComp() {
   return (
     <Footer container className="shadow-none ">
       <div className="w-full">
-        <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-          <div className="flex justify-center flex-col ">
+        <div className="grid w-full justify-between lg:w-11/12 lg:mx-auto lg:flex md:grid-cols-1 lg:py-[3rem] lg:gap-[4rem]">
+          <div className="flex justify-center flex-col lg:justify-start lg:w-5/12 lg:mt-[2rem]">
             <img
               src={iconImg}
               alt="icon"
-              className="w-[160px] h-[37px] mx-auto"
+              className="w-[160px] h-[37px] mx-auto lg:mx-0 lg:object-contain"
             />
-            <p className="text-black  text-[12px] font-[400] py-[40px] w-[17.3rem] mx-auto text-center">
+            <p className="text-black  text-[12px] md:text-[14px] font-[400] py-[40px] w-[17.3rem] md:w-[21rem] lg:w-full mx-auto text-center lg:text-left">
               Lorem ipsum dolor sit amet consectetur. Molestie mauris velit
               congue sed cras leo porttitor.. Lorem ipsum dolor sit amet
               consectetur. Molestie mauris velit congue sed cras l...{" "}
-              <a className="text-nav-pink">Read More</a>
+              <a className="text-nav-pink underline underline-offset-4">Read More</a>
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-4 mt-[2rem] sm:mt-4 sm:grid-cols-3 sm:gap-4">
+          <div className="grid  grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-[2rem] sm:mt-4 sm:grid-cols-3 sm:gap-4 lg:w-6/12">
             {footer_api_data.map((data, i) => {
               return (
                 <>
                   <div
                     key={i}
-                    className={`${data?.hidden ? "hidden" : ""} md:block`}
+                    className={`${data?.hidden ? "hidden lg:block " : ""} `}
                   >
                     <Footer.Title
-                      className="font-[16px]"
+                      className="font-[16px] md:text-[20px] text-nav-pink capitalize lg:text-[17px]"
                       title={`${data?.title}`}
                     />
-                    <Footer.LinkGroup className="" col>
+                    <Footer.LinkGroup className="lg:gap-[1rem] lg:mt-[3rem]" col>
                       {data.sub_title.map((sub_title, i) => {
                         return (
                           <Footer.Link
                             key={i}
                             href={`${sub_title?.link}`}
-                            className={`${sub_title?.style} text-[12px]`}
+                            className={`${sub_title?.style} text-[12px] md:text-[16px] lg:text-[15px] `}
                           >
                             {sub_title.name}
                           </Footer.Link>
@@ -52,9 +52,9 @@ function FooterComp() {
           </div>
         </div>
         <Footer.Divider />
-        <div className="w-full sm:flex sm:items-center sm:justify-between space-y-[1rem]">
+        <div className="w-full lg:w-full  lg:mx-auto space-y-[1rem] lg:space-y-0 lg:flex  lg:justify-between ">
           {/* <Footer.Copyright href="#" by="Flowbite™" year={2022} /> */}
-          <div className="mt-4 flex space-x-6 sm:mt-0 justify-center">
+          <div className="mt-4 flex space-x-6 sm:mt-0 justify-center lg:w-3/12 lg:mx-auto ">
             <div className="icon1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -132,19 +132,20 @@ function FooterComp() {
               </svg>
             </div>
           </div>
-          <p className="text-center text-[12px] text-[#363636] ">© Copyright 2023 Kiwana. All Rights Reserved</p>
-          <div className="payment-div flex w-6/12 mx-auto gap-[1.3rem] ">
+          <div className="lg:w-4/12 lg:mx-auto ">
+          <p className="text-center text-[12px] text-[#363636]">© Copyright 2023 Kiwana. All Rights Reserved</p>
+          </div>
+          <div className="payment-div flex w-6/12 lg:w-3/12 lg:justify-center mx-auto gap-[1.3rem] ">
           {
             payment_img.map((data, i)=>{
                 return <>
-                <div className="payment p-1 border-[0.01rem] ">
+                <div key={i} className="payment p-1 border-[0.01rem]">
                     <img src={data.image} className="w-[26px] h-[8px]" alt="payment"
                     />
                 </div>
                 </>
             })
-          }
-            
+          } 
           </div>
         </div>
       </div>
@@ -157,36 +158,48 @@ function FooterComp() {
 const footer_api_data = [
   {
     id: 1,
-    title: "SHOP",
+    title: "Shop",
     sub_title: [
       {
         name: "Shop All",
         link: "/",
-        style: "text-nav-pink underline",
+        style: "hover:text-nav-pink hover:underline",
       },
       {
         name: "Face Care",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Hair Care",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Body Care",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Combos",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Best",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Sellers",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
     ],
   },
@@ -197,18 +210,26 @@ const footer_api_data = [
       {
         name: "Blogs",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "FAQ",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "Ingredie",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
       {
         name: "nts",
         link: "/",
+        style: "hover:text-nav-pink hover:underline",
+
       },
     ],
   },
@@ -219,19 +240,23 @@ const footer_api_data = [
     sub_title: [
       {
         name: "Manage",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Account",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Saved Items",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Orders & Returns",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
     ],
   },
@@ -241,19 +266,23 @@ const footer_api_data = [
     sub_title: [
       {
         name: "Contact Us",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Privacy Policy",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Shipping Policy",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
       {
         name: "Terms & Conditions",
-        link: "/",
+        style: "hover:text-nav-pink hover:underline",
+        link: "/", 
       },
     ],
   },

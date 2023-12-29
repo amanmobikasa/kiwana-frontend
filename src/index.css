@@ -1,6 +1,7 @@
 
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=MonteCarlo&family=Playfair+Display&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,3 +17,100 @@
       @apply  font-poppins
     }
   }
+
+  @layer base{
+    #productShopNow{
+      @apply  font-playfair
+    }
+  }
+
+  @layer base{
+    body{
+      @apply bg-[#FFF8F7]
+    };
+  }
+
+  @layer base{
+    #landingComp{
+      @apply font-montycarlo
+    }
+  }
+
+  .react-multi-carousel-track {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    will-change: transform,transition;
+    gap: 2rem;
+}
+
+.react-multi-carousel-dot button {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  opacity: 1;
+  padding: 5px 5px 5px 5px;
+  box-shadow: none;
+  transition: background .5s;
+  padding: 0;
+  margin: 0;
+  margin-right: 6px;
+  outline: 0;
+  cursor: pointer;
+  background-color: pink;
+  
+}
+
+.react-multi-carousel-dot--active button {
+  background-color: white;
+  scale: 5rem;
+}
+
+
+.react-multi-carousel-list {
+  display: flex;
+  align-items: center;
+  /* overflow: hidden; */
+  position: relative;
+
+}
+
+.react-multi-carousel-dot-list {
+  position: absolute;
+  bottom: -49px;
+  display: flex;
+  left: 0;
+  right: 0;
+  justify-content: center;
+  margin: auto;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  text-align: center;
+}
+
+#featured-div svg{
+  height: 3rem;
+  width: 5rem;
+}
+
+.react-multiple-carousel__arrow--left {
+  left: -20px;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 30px;
+}
+
+.react-multi-carousel-list {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: unset;
+}
