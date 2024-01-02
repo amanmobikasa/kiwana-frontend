@@ -21,7 +21,7 @@ const FeaturedCollection = () => {
 
     </>
 }
-export {FeaturedCollection};
+export default FeaturedCollection;
 
 const FeaturedCollection_api = [
     {

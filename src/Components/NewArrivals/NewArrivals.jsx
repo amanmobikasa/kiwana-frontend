@@ -67,4 +67,4 @@ const NewArrivals_api = [
     },
 ]
 
-export {NewArrivalsProducts};
+export default NewArrivalsProducts;

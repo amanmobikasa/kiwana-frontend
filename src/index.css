@@ -24,11 +24,11 @@
     }
   }
 
-  @layer base{
+  /* @layer base{
     body{
       @apply bg-[#FFF8F7]
     };
-  }
+  } */
 
   @layer base{
     #landingComp{
@@ -113,4 +113,8 @@
   align-items: center;
   overflow: hidden;
   position: unset;
+}
+
+#about-us{
+  @apply bg-white
 }
