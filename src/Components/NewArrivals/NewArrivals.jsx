@@ -13,7 +13,7 @@ const NewArrivalsProducts = () => {
             <div className='w-full lg:mb-[4rem]'>
                 <h1 className='text-[25px] text-center text-black font-playfair font-[500] md:text-[33px] lg:text-[45px]'>New Arrivals</h1>
             </div>
-            <div className='crousel-container  py-5 w-full flex-row justify-center'>
+            <div className='crousel-container  py-5 w-full flex-row justify-start'>
                 {/*  card1 */}
                 <CustomCarousel carouselData = {NewArrivals_api}/>
             </div>

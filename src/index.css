@@ -115,6 +115,27 @@
   position: unset;
 }
 
+
+.multi-range-slider {
+  display: flex;
+  position: relative;
+  /* border: solid 1px gray; */
+  /* border-radius: 10px; */
+  /* padding: 20px 10px; */
+  /* box-shadow: 1px 1px 4px black; */
+  flex-direction: column;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.multi-range-slider .ruler {
+  margin: 10px 0px -5px 0px;
+  display: flex;
+  display: none;
+  overflow: hidden;
+}
+
 #about-us{
   @apply bg-white
 }

@@ -3,15 +3,14 @@ import React from 'react'
 import { AiOutlinePlus } from 'react-icons/ai';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
-
+import play from '../Assest/images/play.png';
 
 
 const CustomCarousel = ({carouselData}) => {
     return <>
     <Carousel
   additionalTransfrom={0}
-  arrows={true}
+  arrows={false}
   autoPlaySpeed={3000}
   centerMode={false}
   className=""
@@ -35,7 +34,6 @@ const CustomCarousel = ({carouselData}) => {
       },
       items: 3,
       slidesToSlide : 4,
-    
 
     },
     mobile: {
@@ -45,7 +43,7 @@ const CustomCarousel = ({carouselData}) => {
       },
       items: 1,
       slidesToSlide : 1,
-      partialVisibilityGutter: 30
+      
     },
     tablet: {
       breakpoint: {
@@ -54,7 +52,7 @@ const CustomCarousel = ({carouselData}) => {
       },
       items: 2,
       slidesToSlide : 2,
-      partialVisibilityGutter: 30
+      
     }
   }}
   rewind={false}
@@ -84,24 +82,34 @@ const CustomCarousel = ({carouselData}) => {
 const CarouselCards = ({cardData}) => {
     return <>
     <div id={`card-${cardData.id}`} className='card-container w-full z-30  h-fit '>
-        <div className='h-full w-full lg:w-[80%] lg:h-fit  box-content relative '>
-            <img src={cardData.imgLink}  className='w-full h-full object-cover lg:object-contain' alt={cardData?.title}/>
+        <div className='h-full w-full lg:w-[90%] lg:h-fit   relative '>
+          <div className='h-full w-full object-contain'>
+              <img src={cardData.imgLink}  className='w-full h-full object-cover lg:object-contain' alt={cardData?.title}/>
+          </div>
             {
-                cardData.type === 'category' ? null : 
-            <div className={`absolute bottom-[1rem] right-[1rem] md:bottom-[2rem] md:right-[2rem]  ${cardData?.type==="featured_products" ? "bg-nav-pink text-white" : "bg-white text-nav-pink"}  h-[1.5rem] w-[1.5rem] md:h-[2.5rem] md:w-[2.5rem] rounded-full flex justify-center items-center`}>
+                cardData.type === 'category' || cardData.type === 'videoCollection' ? null : 
+            <div className={`absolute bottom-[1rem] right-[1rem] md:bottom-[2rem] md:right-[2rem] lg:bottom-5 lg:right-8  ${cardData?.type==="featured_products" ? "bg-nav-pink text-white" : "bg-white text-nav-pink"}  h-[1.5rem] w-[1.5rem] md:h-[2.5rem] md:w-[2.5rem] lg:h-[1.8rem] lg:w-[1.8rem] rounded-full flex justify-center items-center`}>
                 <AiOutlinePlus className='text-lg'/>
             </div>
             }
-           { cardData.type === 'featured_products' ? <div id='heart' className='absolute top-[2rem] right-[2rem] h-[2rem] w-[2rem] '>
-              <svg  className='h-[2rem] w-[2rem]' xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
+            {
+                cardData.type === 'videoCollection' ?
+            <div className={`absolute top-0 flex justify-center w-full h-full items-center`}>
+                <img src={play} className='h-[4rem] w-[4rem]' alt=''/>
+            </div> : null
+            }
+           { cardData.type === 'featured_products' ? <div id='heart' className='absolute top-[1rem] right-[1rem] h-[1rem] w-[1rem] '>
+              <svg  className='h-[1rem] w-[1rem]' xmlns="http://www.w3.org/2000/svg" width="19" height="17" viewBox="0 0 19 17" fill="none">
               <path d="M9.38934 17C8.44862 17 7.50889 16.6718 6.777 16.0145C1.21147 11.0171 -0.857127 7.01223 0.450032 3.77069C1.05288 2.27497 2.47332 0.406081 4.49168 0.0599155C6.78389 -0.332272 8.64563 1.29751 9.43466 2.13991C10.2188 1.30951 12.0657 -0.276245 14.3757 0.114942C17.0855 0.579163 18.2893 3.3855 18.4173 3.70366C19.7245 6.9422 17.6263 10.9701 12.0027 16.0155C11.2688 16.6718 10.3291 17 9.38934 17ZM5.2019 0.999364C5.02361 0.999364 4.84138 1.01437 4.65619 1.04539C2.52356 1.41256 1.47448 3.87073 1.36219 4.14987C0.232336 6.9492 2.21721 10.5849 7.42811 15.2642C8.52841 16.2506 10.2503 16.2506 11.3496 15.2642C16.5457 10.6019 18.6173 6.84015 17.5042 4.08184C17.1151 3.11737 15.9852 1.40456 14.2112 1.10141C11.8047 0.682213 9.8996 3.10337 9.81981 3.20642C9.63364 3.44653 9.23371 3.44653 9.04753 3.20642C8.8584 2.9633 7.26558 0.999364 5.2019 0.999364Z" fill="#EEBAB2"/>
               </svg>
             </div> : ""}
         </div>
-        <div className='content-container flex justify-center text-center my-3 lg:w-[80%]'>
+        {
+          cardData.type === "videoCollection" ? null :
+        <div className='content-container flex justify-center text-center my-3 lg:w-[90%]'>
             <div>
-                <h1 className='capitalize text-[14px] font-[400] md:text-[20px]'>{cardData?.title}</h1>
-                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[14px] font-[500] md:text-[20px]'>$  {cardData?.price}.00</h1>}
+                <h1 className='capitalize text-[14px] font-[400] md:text-[20px] lg:text-[1rem]'>{cardData?.title}</h1>
+                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[14px] font-[500] md:text-[20px] '>$  {cardData?.price}.00</h1>}
                 
                 { cardData?.type === 'category' ? null : <div className='flex items-center justify-center gap-3 w-full'>
                     <div id='featured-div' className=''>
@@ -118,7 +126,7 @@ const CarouselCards = ({cardData}) => {
                         </svg>
                     </div>
                    <div>
-                        <h2 className='text-[#999999] text-[10px] font-[500] md:text-[18px]'>{cardData?.reviewsCount} reviews</h2>
+                        <h2 className='text-[#999999] text-[10px] font-[500] md:text-[18px] lg:text-[12px]'>{cardData?.reviewsCount} reviews</h2>
                     </div>
                 </div>}
                 { cardData.type === 'category' &&
@@ -129,6 +137,7 @@ const CarouselCards = ({cardData}) => {
                  
             </div>
         </div>
+        }
     </div>
 
     </>
