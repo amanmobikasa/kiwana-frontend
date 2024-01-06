@@ -23,7 +23,7 @@ const ShopCategory = () => {
 
     </>
 }
-export {ShopCategory};
+export default ShopCategory;
 
 const ShopCategory_api = [
     {
