@@ -6,9 +6,14 @@ const FilterShortCollection = () => {
 
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
 
-    const handleFilterBanner = () => {
-        const updatedJson = {...showFilterValue, show : false}
-        setShowFilterValue(updatedJson);
+    const handleFilterBanner = (event, dataObj) => {
+        const remove = event.target.innerHTML;
+        if(remove === "Remove All"){
+            setShowFilterValue([]);
+        }else{
+        const updatedJson = showFilterValue.filter((data)=> data.id !== dataObj.id)
+        setShowFilterValue(updatedJson)
+        }
     }
 
 
@@ -39,18 +44,18 @@ return <>
                         showFilterValue.map((data, i)=>{
                             return <>
                             
-                             <button hidden={true} key={i} className='flex px-4 py-1 items-center justify-between bg-[#EEE] gap-3 md:gap-3 text-[#7E7E7E]'>
+                             <button  key={i} className='flex px-4 py-1 items-center justify-between bg-[#EEE] gap-3 md:gap-3 text-[#7E7E7E]'>
                             <div>
                                 <span className='text-[15px] md:text-[1.5rem]'>{data.filterName}: <span>{data.filterValue}</span></span>
                             </div>
-                            <div onClick={handleFilterBanner}>
+                            <div onClick={(event)=>handleFilterBanner(event, data)}>
                                 <RxCross1 className='text-[16px] md:text-[1.4rem]'/>
                             </div>
                             </button>
                             </>
                         })
                     }  
-                        <a className='underline text-[15px] md:text-[1.5rem]'>Remove All</a>
+                        <a onClick={(event)=>handleFilterBanner(event)} className='underline text-[15px] md:text-[1.5rem]'>Remove All</a>
                     </div>
                 </div>
             </div>
@@ -66,13 +71,13 @@ return <>
             show : true,
         },
         {
-            id : 1,
+            id : 2,
             filterName : "Price",
             filterValue : "$5.00 - $80.00",
             show : true,
         },
         {
-            id : 1,
+            id : 3,
             filterName : "Product Type",
             filterValue : "Hair & Skin",
             show : true,

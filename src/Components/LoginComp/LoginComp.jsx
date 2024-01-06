@@ -1,7 +1,12 @@
-import { Label, TextInput } from 'flowbite-react';
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux';
+import { userLogin } from '../../Redux/reducer/userAuthSlice';
+import { useSelector } from 'react-redux';
+
 
 const LoginComp = () => {
+    const dispatch = useDispatch();
+
 
     const [loginData, setLoginData] = useState({
         email : "",
@@ -16,8 +21,12 @@ const LoginComp = () => {
     const handleLoginSubmit = (event) => {
         event.preventDefault();
         localStorage.setItem("loginData", JSON.stringify(loginData));
+        dispatch(userLogin(loginData))
         setLoginData({email : "", password : ""})
         }
+
+    const user_details = useSelector(state=> console.log(state))    
+    // console.log("user_details",user_details)
 
 
     return <>

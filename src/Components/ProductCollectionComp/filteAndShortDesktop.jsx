@@ -4,16 +4,18 @@ import { RxCross1 } from 'react-icons/rx';
 import { filterandshort_api } from './filterandshortJSON';
 import MultiRangeSlider from "multi-range-slider-react";
 
-
-
 const FilterAndShortDesktop = () => {
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
     const [filterAndShortApi, setFilterAndShortApi] = useState(filterandshort_api)
     const [filterChangeValue, setFilterChangeValue] = useState([])
 
-    const handleFilterBanner = () => {
-        const updatedJson = {...showFilterValue, show : false}
-        setShowFilterValue(updatedJson);
+    const handleFilterBanner = (event,dataObj) => {
+        if(event.target.innerHTML === "Remove All"){
+            setShowFilterValue([]);
+        }else{
+        const updatedJson =  showFilterValue.filter((data)=> data.id !== dataObj.id)
+        setShowFilterValue(updatedJson)
+        }
     }
 
     const handleFilterValue = (parentInputData) => {
@@ -29,18 +31,18 @@ const FilterAndShortDesktop = () => {
                         <div className='filter-text-container-inner'>
                             <div className='flex justify-between w-full'>
                                 <h1 className='text-[20px] font-[600] text-[#363636]'>Filters</h1>
-                                <a href="" className='text-[16px] font-[400] underline capitalize '>Remove All</a>
+                                <a onClick={(event)=>handleFilterBanner(event, filterSort)} className='text-[16px] font-[400] underline capitalize '>Remove All</a>
                             </div>
                             <div className='banner-container flex flex-col gap-[16px] w-fit'>
                             {
                         showFilterValue.map((data, i)=>{
                             return <>
                             
-                             <button hidden={true} key={i} className='flex px-4 py-[1px] w-fit items-center justify-between bg-[#EEE] gap-3 md:gap-3 text-[#7E7E7E]'>
+                             <button key={i} className='flex px-4 py-[1px] w-fit items-center justify-between bg-[#EEE] gap-3 md:gap-3 text-[#7E7E7E]'>
                             <div>
                                 <span className='text-[15px] md:text-[1.5rem] lg:text-[14px] '>{data.filterName}: <span>{data.filterValue}</span></span>
                             </div>
-                            <div onClick={handleFilterBanner}>
+                            <div onClick={(event)=>handleFilterBanner(event,data)}>
                                 <RxCross1 className='text-[16px] md:text-[1.4rem] lg:text-[10px] '/>
                             </div>
                             </button>
@@ -59,8 +61,7 @@ const FilterAndShortDesktop = () => {
                             </div>
                             </>
                         })
-                    }
-                    
+                    } 
                 </div>
             </div>
         </section>
@@ -169,7 +170,7 @@ const filterSort = [
         show : true,
     },
     {
-        id : 1,
+        id : 2,
         filterName : "Product Type",
         filterValue : "Hair & Skin",
         show : true,
