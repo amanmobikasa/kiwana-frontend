@@ -13,7 +13,7 @@ const ProductCollectionAlsoLike = () => {
         <div className='inner-container w-full h-fit py-[60px] lg:pl-[30px] relative'>
             <div className='content-container space-y-[42px] '>
                 <div className='w-full text-center'>
-                    <h1 className='text-[#363636] text-[35px] font-[500] font-playfair'>You May Also Like</h1>
+                    <h1 className='text-[#363636] text-[35px] lg:text-[45px] font-[500] font-playfair'>You May Also Like</h1>
                 </div>
                 <div className='z-20 '>
                     {

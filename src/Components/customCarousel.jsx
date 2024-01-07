@@ -7,12 +7,15 @@ import play from '../Assest/images/play.png';
 
 
 const CustomCarousel = ({carouselData}) => {
+
+
+
     return <>
     <Carousel
   additionalTransfrom={0}
   arrows={false}
   autoPlaySpeed={3000}
-  centerMode={false}
+  centerMode={true}
   className=""
   containerClass="container-padding-bottom"
   dotListClass=""
@@ -32,8 +35,8 @@ const CustomCarousel = ({carouselData}) => {
         max: 3000,
         min: 1000
       },
-      items: 3,
-      slidesToSlide : 4,
+      items: 4,
+      slidesToSlide : 1,
 
     },
     mobile: {
@@ -50,13 +53,13 @@ const CustomCarousel = ({carouselData}) => {
         max: 1024,
         min: 464
       },
-      items: 2,
-      slidesToSlide : 2,
+      items: 3,
+      slidesToSlide : 1,
       
     }
   }}
   rewind={false}
-  rewindWithAnimation={false}
+  rewindWithAnimation={true}
   rtl={false}
   shouldResetAutoplay
   sliderClass=""
@@ -82,8 +85,8 @@ const CustomCarousel = ({carouselData}) => {
 const CarouselCards = ({cardData}) => {
     return <>
     <div id={`card-${cardData.id}`} className='card-container w-full z-30  h-fit '>
-        <div className='h-full w-full lg:w-[90%] lg:h-fit   relative '>
-          <div className='h-full w-full object-contain'>
+        <div className='h-full w-full lg:w-[95%] lg:h-fit   relative '>
+          <div className='h-full w-full object-contain lg:object-cover'>
               <img src={cardData.imgLink}  className='w-full h-full object-cover lg:object-contain' alt={cardData?.title}/>
           </div>
             {
@@ -106,7 +109,7 @@ const CarouselCards = ({cardData}) => {
         </div>
         {
           cardData.type === "videoCollection" ? null :
-        <div className='content-container flex justify-center text-center my-3 lg:w-[90%]'>
+        <div className='content-container flex justify-center text-center my-3 lg:w-[95%]'>
             <div>
                 <h1 className='capitalize text-[14px] font-[400] md:text-[20px] lg:text-[1rem]'>{cardData?.title}</h1>
                 {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[14px] font-[500] md:text-[20px] '>$  {cardData?.price}.00</h1>}

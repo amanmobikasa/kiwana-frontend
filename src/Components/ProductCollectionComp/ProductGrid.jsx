@@ -123,5 +123,37 @@ const productCollectionList_api = [
         reviews : "",
         reviewsCount : 2947,
     },
+    {
+        id : 13,
+        imgLink : arrivalimg2,
+        title : "hair conditioner",
+        price : 600,
+        reviews : "",
+        reviewsCount : 2947,
+    },
+    {
+        id : 14,
+        imgLink : arrivalimg2,
+        title : "hair conditioner",
+        price : 600,
+        reviews : "",
+        reviewsCount : 2947,
+    },
+    {
+        id : 15,
+        imgLink : arrivalimg2,
+        title : "hair conditioner",
+        price : 600,
+        reviews : "",
+        reviewsCount : 2947,
+    },
+    {
+        id : 16,
+        imgLink : arrivalimg2,
+        title : "hair conditioner",
+        price : 600,
+        reviews : "",
+        reviewsCount : 2947,
+    },
 ]
 export default ProductGrid;
