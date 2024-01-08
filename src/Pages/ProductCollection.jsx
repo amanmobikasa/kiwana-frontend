@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CollectionLandingComp from '../Components/ProductCollectionComp/CollectionLandingComp';
 import FilterShortCollection from '../Components/ProductCollectionComp/FilterAndShorts';
 import ProductGrid from '../Components/ProductCollectionComp/ProductGrid';
@@ -8,8 +8,11 @@ import FilterAndShortDesktop from '../Components/ProductCollectionComp/filteAndS
 import PdpPopup from '../common/pdpPopUp';
 
 const ProductCollection = () => {
+
+    const [hidePdpPopup, setHidePDPPopUp] = useState(true);
+
     return <>
-    <PdpPopup/>
+    { hidePdpPopup ? <PdpPopup hidePdp={setHidePDPPopUp} /> : null}
     <section className='w-full relative h-fit '>
         <div className='inner-container bg-white w-full h-fit px-[25px]'>
             <div className='content-container w-full h-fit pt-[37px] md:pt-[8rem] lg:pt-[6.5rem]'>
