@@ -1,19 +1,24 @@
 import { Footer } from "flowbite-react";
-import payment1 from '../Assest/images/payment1.png'
+import payment1 from '../Assest/images/payment1 (2).png'
 import iconImg from "../Assest/images/icon.png";
+import payment2 from '../Assest/images/payment2.png'
+import payment3 from '../Assest/images/payment3.png'
+import payment4 from '../Assest/images/payment4.png'
+import payment5 from '../Assest/images/payment5.png'
+
 
 function FooterComp() {
   return (
     <Footer container className="shadow-none ">
       <div className="w-full">
-        <div className="grid w-full justify-between lg:w-11/12 lg:mx-auto lg:flex md:grid-cols-1 lg:py-[3rem] lg:gap-[4rem]">
-          <div className="flex justify-center flex-col lg:justify-start lg:w-5/12 lg:mt-[2rem]">
+        <div className="grid w-full justify-between lg:w-full lg:mx-auto lg:flex md:grid-cols-1 lg:py-[1rem] lg:gap-[4rem]">
+          <div className="flex justify-center flex-col lg:justify-start lg:w-5/12 lg:mt-[1rem] px-8 lg:-space-y-5">
             <img
               src={iconImg}
               alt="icon"
               className="w-[160px] h-[37px] mx-auto lg:mx-0 lg:object-contain"
             />
-            <p className="text-black  text-[12px] md:text-[14px] font-[400] py-[40px] w-[17.3rem] md:w-[21rem] lg:w-full mx-auto text-center lg:text-left">
+            <p className="text-black  text-[12px] md:text-[14px] font-[400] py-[40px] w-[17.3rem] md:w-[22rem] lg:w-full mx-auto text-center lg:text-left">
               Lorem ipsum dolor sit amet consectetur. Molestie mauris velit
               congue sed cras leo porttitor.. Lorem ipsum dolor sit amet
               consectetur. Molestie mauris velit congue sed cras l...{" "}
@@ -32,13 +37,13 @@ function FooterComp() {
                       className="font-[16px] md:text-[20px] text-nav-pink capitalize lg:text-[17px]"
                       title={`${data?.title}`}
                     />
-                    <Footer.LinkGroup className="lg:gap-[1rem] lg:mt-[3rem]" col>
+                    <Footer.LinkGroup className="lg:gap-[0px] lg:mt-[1px] lg:space-y-0" col>
                       {data.sub_title.map((sub_title, i) => {
                         return (
                           <Footer.Link
                             key={i}
                             href={`${sub_title?.link}`}
-                            className={`${sub_title?.style} text-[12px] md:text-[16px] lg:text-[15px] `}
+                            className={`${sub_title?.style} text-[12px] md:text-[16px] lg:text-[12px] `}
                           >
                             {sub_title.name}
                           </Footer.Link>
@@ -54,7 +59,7 @@ function FooterComp() {
         <Footer.Divider />
         <div className="w-full lg:w-full  lg:mx-auto space-y-[1rem] lg:space-y-0 lg:flex  lg:justify-between ">
           {/* <Footer.Copyright href="#" by="Flowbite™" year={2022} /> */}
-          <div className="mt-4 flex space-x-6 sm:mt-0 justify-center lg:w-3/12 lg:mx-auto ">
+          <div className="mt-4 flex space-x-6 sm:mt-0 justify-center lg:w-3/12  ">
             <div className="icon1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -139,9 +144,8 @@ function FooterComp() {
           {
             payment_img.map((data, i)=>{
                 return <>
-                <div key={i} className="payment p-1 border-[0.01rem]">
-                    <img src={data.image} className="w-[26px] h-[8px]" alt="payment"
-                    />
+                <div key={i} className="payment object-contain ">
+                    <img src={data.image} className="w-fit h-fit" alt="payment" />
                 </div>
                 </>
             })
@@ -296,19 +300,24 @@ const payment_img = [
     },
     {
         id : 2,
-        image : payment1,
+        image : payment2,
         
     },
     {
         id : 3,
-        image : payment1,
+        image : payment3,
         
     },
     {
         id : 4,
-        image : payment1,
+        image : payment4,
         
-    }
+    },
+    {
+      id : 4,
+      image : payment5,
+      
+  }
 ]
 
 export default FooterComp;

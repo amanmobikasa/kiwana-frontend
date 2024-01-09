@@ -22,12 +22,20 @@ const LandingPage = () => {
             <NewsletterPopup />
             <LandingComponent />
             <ShopCategories />
-            <BestSellerProduct />
+            <div className='-mt-[2.5rem] lg:space-y-[2rem]'>
+                <div className='w-full h-fit text-center '>
+                    <h1 className='text-[43px] font-[500] font-playfair text-[#333] '>Bestseller Products</h1>
+                </div>
+                <div>
+                    <BestSellerProduct />
+                </div>
+            </div>
             <FeaturedCollection />
             <ProductShopNow />
             <NewArrivalsProducts />
             <DiscountComp />
             <WhyTrustUs />
+            <Testimonials/>
             <LastestNews />
         </div>
     

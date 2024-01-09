@@ -4,15 +4,15 @@ const WhyTrustUs = (bgColor) => {
     <section id='why-trust-us' className={`w-full h-fit relative ${bgColor ? `${bgColor} my-0` : "bg-[#FFF8F7]"}  my-[3rem] md:mb-[15rem] lg:mt-[2rem] lg:mb-[4rem] `}>
         <div className='w-10/12 mx-auto text-center relative lg:space-y-[3rem]'>
             <h1 className='text-[30px] font-[500] text-black font-playfair md:text-[35px] lg:text-[45px] '>Why Trust Us?</h1>
-            <div className='flex flex-col justify-center mt-[3rem]  w-5/12 mx-auto md:items-center space-y-[70px] md:space-y-[5rem] lg:flex-row lg:justify-evenly lg:w-11/12 lg:space-y-0 '>
+            <div className='flex flex-col justify-center mt-[3rem]  w-5/12 mx-auto md:items-center space-y-[70px] md:space-y-[5rem] lg:flex-row lg:justify-evenly lg:w-11/12 lg:space-y-0 lg:gap-10'>
                 {/* item 1 */}
                 {
                     why_trust_us_api.map((data, i)=>{
                         return <>
                         <div key={i} id='item 1' className=' w-full flex flex-col items-center'>
                             {data.svg}
-                            <h6 className='pt-[1.5rem] text-black font-playfair font-[20px] md:text-[20px]'>{data.heading}</h6>
-                            <p className='text-nav-pink text-[15px] md:text-[16px]'>{data.paragraph}</p>
+                            <h6 className='pt-[1.5rem] text-black font-playfair font-[20px] md:text-[20px] lg:text-[16px]'>{data.heading}</h6>
+                            <p className='text-nav-pink text-[15px] md:text-[16px] lg:text-[14px]'>{data.paragraph}</p>
                         </div>
 
                         </>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import logo from "../../Assest/images/icon.png";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const NavbarComp = () => {
 
@@ -24,25 +25,28 @@ const NavbarComp = () => {
   return (
     <>
       <nav className="bg-[#FCEBE8] w-full relative overflow-auto h-fit">
-        <div className="md:px-[3rem] lg:px-10 px-6  py-4 flex items-center lg:justify-between justify-between">
+        <div className="md:px-[3rem] lg:px-19 px-6  py-4 lg:py-7  flex items-center lg:justify-between justify-between">
         {/* for hamburger */}
         <div className="lg:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="18" viewBox="0 0 28 18" fill="none">
             <path d="M0 1H28M0 9.24242H10.2308H20.4615M0 17H12.2051" stroke="#363636" stroke-width="1.5"/>
           </svg>
         </div>
-          <div className="w-fit h-fit">
-            <img src={logo} alt="logo" className="h-auto w-auto" />
+          <div className="w-fit h-fit object-cover">
+            <img src={logo} alt="logo" className="h-auto w-auto " />
           </div>
-          <ul className="lg:flex items-center gap-[30px] lg:gap-[30px]  text-[16px] lg:text-[14px] text-black hidden">
+          <ul className="lg:flex items-center gap-[30px] lg:gap-[33px]  text-[16px] lg:text-[16px] lg:font-[600] text-black hidden">
             <li className="">
-              <a href="#" className="font-medium underline">
+              <a href="#" className="font-[600] underline">
                 HOME
               </a>
             </li>
             <li className="">
-              <a href="#" className="hover:underline">
+              <a href="#" className="hover:underline lg:flex items-center">
                 SHOP
+                <span className="hidden lg:block">
+                  <MdKeyboardArrowDown className="text-[18px]" />
+                </span>
               </a>
             </li>
             <li className="">
@@ -72,7 +76,7 @@ const NavbarComp = () => {
               value={globalSearch}
               onChange={handleGlobalSearch}
               type="text"
-              className="w-[312px] bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
+              className="w-[330px] py-3 bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
               placeholder="Search"
             />
             <button className="absolute left-[1rem] top-[50%] translate-y-[-50%] ">
@@ -91,12 +95,12 @@ const NavbarComp = () => {
               </svg>
             </button>
           </div>
-          <div className="flex items-center md:gap-[2rem] gap-5">
+          <div className="flex items-center md:gap-[2rem] gap-5 pt-2  pr-3">
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="23"
-                height="23"
+                width="27"
+                height="27"
                 viewBox="0 0 23 23"
                 fill="none"
               >
@@ -109,8 +113,8 @@ const NavbarComp = () => {
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="18"
+                width="27"
+                height="27"
                 viewBox="0 0 20 18"
                 fill="none"
               >
@@ -119,15 +123,15 @@ const NavbarComp = () => {
                   fill="#363636"
                 />
               </svg>
-              <div className="absolute -top-2 -right-2 flex justify-center items-center h-4 w-4 rounded-full bg-nav-pink">
+              <div className="absolute -top-3 -right-3 flex justify-center items-center h-5 w-5 rounded-full bg-nav-pink">
                 <span className="text-white text-[8px]">3</span>
               </div>
             </div>
             <div className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="23"
-                height="20"
+                width="27"
+                height="27"
                 viewBox="0 0 23 20"
                 fill="none"
               >
@@ -136,7 +140,7 @@ const NavbarComp = () => {
                   fill="#363636"
                 />  
               </svg>
-              <div className="absolute -top-2 -right-2 flex justify-center items-center h-4 w-4 rounded-full bg-nav-pink">
+              <div className="absolute -top-3 -right-3 flex justify-center items-center h-5 w-5 rounded-full bg-nav-pink">
                 <span className="text-white text-[8px]">3</span>
               </div>
             </div>

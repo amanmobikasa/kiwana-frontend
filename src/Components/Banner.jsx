@@ -16,9 +16,9 @@ const BannerAlert = () =>{
          <div className='bg-nav-pink text-white w-full rounded-none  '>
             <div className='content-container w-full h-fit relative'>
                 <div className='content-container w-full h-fit'>
-                    <div id="hurry-up-banner" className="gap-2 flex justify-center items-center py-3">
+                    <div id="hurry-up-banner" className="gap-2 flex justify-center items-center py-3 lg:py-2">
                         <div>
-                            <p className="font-medium text-center uppercase tracking-widest text-[19px] md:text-[18px]">hurry up! buy now</p>
+                            <p className="font-medium text-center uppercase tracking-widest lg:tracking-normal text-[19px] md:text-[18px]">hurry up! buy now</p>
                         </div>
                         <div onClick={handleShowBanner} className='focus:outline-1'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
