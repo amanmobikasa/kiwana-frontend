@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CollectionLandingComp from '../Components/ProductCollectionComp/CollectionLandingComp';
 import FilterShortCollection from '../Components/ProductCollectionComp/FilterAndShorts';
 import ProductGrid from '../Components/ProductCollectionComp/ProductGrid';
@@ -6,13 +6,32 @@ import ProductCollectionVideoComp from '../Components/ProductCollectionComp/Prod
 import ProductCollectionAlsoLike from '../Components/ProductCollectionComp/ProductCollectionAlsoLike';
 import FilterAndShortDesktop from '../Components/ProductCollectionComp/filteAndShortDesktop';
 import PdpPopup from '../common/pdpPopUp';
+import { useSelector } from 'react-redux';
+import pdppopupSlice from '../Redux/reducer/pdppopupSlice';
 
 const ProductCollection = () => {
 
-    const [hidePdpPopup, setHidePDPPopUp] = useState(true);
+    const [hidePdpPopup, setHidePDPPopUp] = useState(false);
+    const [pdpPopupDataNew, setPdpPopUpDataNew] = useState([]);
+
+    
+        const pdpPopUpData = useSelector(state => state.pdpSlice.pdpProducts);
+        // console.log("pdpPopUpData", pdpPopUpData)
+
+        useEffect(()=>{
+            // console.log(pdpPopUpData.product_title)
+            if(pdpPopUpData.product_title){
+                setHidePDPPopUp(true)     
+            }
+        },[pdpPopUpData])
+        
+        
+
+   
+
 
     return <>
-    { hidePdpPopup ? <PdpPopup hidePdp={setHidePDPPopUp} /> : null}
+    { hidePdpPopup ? <PdpPopup hidePdp={setHidePDPPopUp} pdpPopUpData={pdpPopUpData} />  : null}
     <section className='w-full relative h-fit '>
         <div className='inner-container bg-white w-full h-fit px-[25px]'>
             <div className='content-container w-full h-fit pt-[37px] md:pt-[8rem] lg:pt-[6.5rem]'>

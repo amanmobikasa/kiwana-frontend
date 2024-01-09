@@ -4,10 +4,10 @@ import newsimg2 from '../../Assest/images/newsimg2.png';
 
 const LastestNews = () => {
     return <>
-    <section className='main-container w-full h-fit my-[4rem] pt-[3rem] pb-[3rem] lg:my-[4rem] lg:mt-[4rem]'>
-        <div className='inner-container relative w-full h-full space-y-[35px] md:space-y-[40px]'>
-            <div className='w-full lg:my-[6rem]'>
-                <h1 className='text-[25px] text-center font-[500] font-playfair text-black md:text-[33px] lg:text-[45px] '>Lastest News</h1>
+    <section className='main-container w-full h-fit my-[4rem] pt-[3rem] pb-[3rem] lg:my-[4rem] lg:mt-[2rem]'>
+        <div className='inner-container relative w-full h-full space-y-[35px] md:space-y-[40px] lg:space-y-[45px]'>
+            <div className='w-full lg:mt-[5.5rem]'>
+                <h1 className='text-[25px] text-center font-[500] font-playfair text-black md:text-[33px] lg:text-[42px] '>Latest News</h1>
             </div>
             <div className='w-10/12 lg:w-11/12  mx-auto flex flex-col justify-center space-y-[2rem] md:space-y-[2.6rem]  lg:flex-row lg:gap-[1.5rem] lg:space-y-0 '>
             {/* cards1 */}
@@ -20,8 +20,8 @@ const LastestNews = () => {
             }
                 
             </div>
-            <div className='w-10/12 mx-auto flex justify-center space-y-[1.2rem]  '>
-            <button className='uppercase bg-nav-pink px-10  py-3 text-white tracking-widest font-[400] text-[14px] hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.01rem]'>view all post</button>
+            <div className='w-10/12 mx-auto flex justify-center space-y-[1rem]  '>
+            <button className='uppercase bg-nav-pink px-10  py-3 text-white tracking-widest font-[400] text-[14px] hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.01rem] lg:text-[1.2rem] lg:px-5'>view all post</button>
             </div>
         </div>
         

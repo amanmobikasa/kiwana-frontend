@@ -3,18 +3,23 @@ import productOne from '../../Assest/images/product_1.png';
 import limited_offer from '../../Assest/images/limited_offer.png'
 const BestSellerProducts = () => {
     return <>
-    <section className='bg-[#FCEBE8] w-auto h-fit lg:h-auto relative py-[3rem] lg:flex '>
-        <div className='relative h-fit w-full lg:w-6/12  bg-red-500'>
+    <section className='bg-[#FCEBE8] w-auto h-fit lg:h-auto relative py-[3rem] lg:py-[4.5rem]'>
+        <div className='relative h-fit w-full lg:w-[55%]  '>
             <img src={productOne} alt='product_one' className='w-full lg:w-full lg:h-[40rem] lg:object-cover h-auto'/>
-            <div className='limited-offer absolute -top-14 left-8 md:-top-14 md:left-18'>
+            <div className='limited-offer absolute -top-14 left-8 md:-top-14 md:left-18 lg:-top-7  lg:left-5'>
             <div className='relative w-fit h-fit'>
-                <img src={limited_offer} alt='limited_offer'  className='h-[8rem] w-[8rem] md:h-[10rem] md:w-[10rem] relative z-0'/>
-                <h5 className='uppercase text-white -rotate-45 absolute top-6 md:top-10 md:w-[6rem] md:mx-auto text-[0.90rem] md:text-[1rem]  left-8 md:left-11 z-10 '>limited <span className='text-center'>offer</span></h5>
+                <img src={limited_offer} alt='limited_offer'  className='h-[8rem] w-[8rem] md:h-[10rem] md:w-[10rem] lg:h-[13rem] lg:w-[13rem] relative z-0'/>
+                {/* <h5 className='uppercase text-white -rotate-45 absolute top-6 md:top-10 md:w-[6rem] md:mx-auto text-[0.90rem] md:text-[1rem]  left-8 md:left-11 z-10 '>limited <span className='text-center'>offer</span></h5> */}
+                <div className='absolute top-[4rem]  flex justify-center text-center items-center w-full -rotate-[22deg]'>
+                    <h1 className='text-[1.5rem] w-6/12 text-white font-[500] uppercase'>
+                        Limited Offer
+                    </h1>
+                </div>
             </div>
                 
             </div>
         </div>
-        <div id='special_offer_card' className=' lg:w-7/12 lg:absolute lg:right-0 lg:top-[6rem] bg-pink-500'>
+        <div id='special_offer_card' className=' lg:w-6/12 lg:absolute lg:right-0 lg:top-[6rem] bg-pink-500'>
             <SpecialOfferCard />
         </div>
     </section>
@@ -24,17 +29,17 @@ const BestSellerProducts = () => {
 const SpecialOfferCard = () =>{
     return <>
         <div className='bg-white w-11/12 md:w-10/12 lg:w-full h-[35rem] mx-auto -mt-[4rem] md:-mt-[7rem] lg:mt-0 shadow-lg drop-shadow-md relative'>
-            <div className='px-[30px] py-[44px] lg:px-[50px] lg:space-y-5'>
+            <div className='px-[30px] py-[44px] lg:px-[76px] lg:pt-[60px] lg:pb-[20px] lg:space-y-4'>
                 <div className='special_offer flex justify-start gap-4 items-center'>
-                    <p className='text-black text-[12px] font-[400] tracking-wider uppercase md:text-[16px]'>Special Offer</p>
-                    <button className='px-2 py-1 text-sm  bg-[#E89689] text-white md:px-3 md:py-1 md:text-lg'>-20%</button>
+                    <p className='text-black text-[12px] font-[400] tracking-wider uppercase md:text-[16px] lg:text-[1.3rem]'>Special Offer</p>
+                    <button className='px-2 py-1 text-sm  bg-[#E89689] text-white md:px-3 md:py-1 md:text-lg lg:text-[14px] lg:py-[1px] lg:px-2'>-20%</button>
                 </div>
-                <div className='title text-start mt-[19px] lg:mt-[10px] lg:space-y-3'>
-                    <h1 className='text-[25px] md:text-[30px] lg:text-[35px]  font-playfair text-black font-[500] overflow-hidden'>Ultra Brightening Face Serum</h1>
-                    <p className='text-[18px] md:text-[22px]  font-[400] '>$272 <strike className="text-gray-300 ml-2 text-[14px] md:text-[18px]">$340</strike> </p>
+                <div className='title text-start mt-[19px] lg:mt-[10px] lg:space-y-1'>
+                    <h1 className='text-[25px] md:text-[30px] lg:text-[38px] lg:font-[600]  font-playfair text-[#363636] lg:tracking-wider overflow-hidden '>Ultra Brightening Face Serum</h1>
+                    <p className='text-[18px] md:text-[22px]  font-[400] lg:text-[35px] flex items-center w-full'>$272 <strike className="text-gray-300 ml-2 text-[14px] md:text-[18px] lg:text-[20px]">$340</strike> </p>
                 </div>
                 {/* rating for it */}
-                <div className='flex items-center justify-start gap-3 mt-[30px]'>
+                <div className='flex items-center justify-start gap-3 '>
                     <svg xmlns="http://www.w3.org/2000/svg" className='' width="101" height="20" viewBox="0 0 101 20" fill="none">
                             <path className='text-2xl' d="M9.62914 16.2596L14.1058 19.1519C14.6832 19.5225 15.3938 18.9712 15.225 18.2933L13.9282 13.1051C13.8931 12.9613 13.8987 12.8104 13.9443 12.6696C13.9898 12.5289 14.0736 12.4042 14.1858 12.3097L18.2006 8.90221C18.7246 8.45932 18.4582 7.5645 17.7742 7.51931L12.5337 7.17584C12.3907 7.16738 12.2532 7.11671 12.138 7.03003C12.0229 6.94335 11.9351 6.82442 11.8853 6.68776L9.93114 1.6804C9.87941 1.53569 9.78518 1.41069 9.66123 1.32236C9.53729 1.23403 9.38963 1.18665 9.23831 1.18665C9.087 1.18665 8.93934 1.23403 8.8154 1.32236C8.69145 1.41069 8.59722 1.53569 8.54549 1.6804L6.59138 6.68776C6.54158 6.82442 6.45373 6.94335 6.33858 7.03003C6.22343 7.11671 6.08596 7.16738 5.94297 7.17584L0.702394 7.51931C0.0184547 7.5645 -0.248015 8.45932 0.276042 8.90221L4.29086 12.3097C4.40307 12.4042 4.48679 12.5289 4.53236 12.6696C4.57793 12.8104 4.58351 12.9613 4.54844 13.1051L3.34933 17.9137C3.14504 18.7271 3.99774 19.3869 4.68168 18.944L8.84749 16.2596C8.96431 16.184 9.09988 16.1439 9.23831 16.1439C9.37675 16.1439 9.51232 16.184 9.62914 16.2596Z" fill="#E89689"/>
                             <path d="M30.1594 16.2596L34.6361 19.1519C35.2135 19.5225 35.924 18.9712 35.7553 18.2933L34.4585 13.1051C34.4234 12.9613 34.429 12.8104 34.4745 12.6696C34.5201 12.5289 34.6038 12.4042 34.716 12.3097L38.7309 8.90221C39.2549 8.45932 38.9884 7.5645 38.3045 7.51931L33.0639 7.17584C32.9209 7.16738 32.7835 7.11671 32.6683 7.03003C32.5532 6.94335 32.4653 6.82442 32.4155 6.68776L30.4614 1.6804C30.4097 1.53569 30.3155 1.41069 30.1915 1.32236C30.0676 1.23403 29.9199 1.18665 29.7686 1.18665C29.6173 1.18665 29.4696 1.23403 29.3457 1.32236C29.2217 1.41069 29.1275 1.53569 29.0758 1.6804L27.1217 6.68776C27.0719 6.82442 26.984 6.94335 26.8689 7.03003C26.7537 7.11671 26.6162 7.16738 26.4732 7.17584L21.2327 7.51931C20.5487 7.5645 20.2823 8.45932 20.8063 8.90221L24.8211 12.3097C24.9333 12.4042 25.0171 12.5289 25.0626 12.6696C25.1082 12.8104 25.1138 12.9613 25.0787 13.1051L23.8796 17.9137C23.6753 18.7271 24.528 19.3869 25.212 18.944L29.3778 16.2596C29.4946 16.184 29.6302 16.1439 29.7686 16.1439C29.907 16.1439 30.0426 16.184 30.1594 16.2596Z" fill="#E89689"/>
@@ -45,12 +50,12 @@ const SpecialOfferCard = () =>{
                     <p className="text-black text-[14px] md:text-[18px] font-[300] mt-1">(212)</p>
                 </div>
                 {/* radio buttons */}
-                <div className={`radio_buttons flex flex-col  space-y-4 flex-wrap h-[7rem] lg:h-[5rem]  mt-[1.5rem]   justify-start items-start`}>
+                <div className={`radio_buttons flex flex-col lg:space-y-0 lg:grid lg:grid-cols-3 space-y-4 flex-wrap h-[7rem] lg:h-[5rem]  mt-[1.5rem]   justify-start items-start`}>
                 {
                     products_choice_radio.map((data, i)=>{
                         return <>
                         <label key={i} className='space-x-2 md:space-x-3 ' htmlFor={data.name} >
-                            <input type='radio' value="" name={data.name} className='bg-[#FCEBE8] border-nav-pink'/>
+                            <input type='radio' value="" name={"product_type"} className='bg-[#FCEBE8] border-nav-pink lg:h-5 lg:w-5'/>
                             <span className='font-poppins text-black text-[12px] md:text-[16px]  font-[400]'>{data.label}</span>
                         </label>
                         </>
@@ -58,10 +63,10 @@ const SpecialOfferCard = () =>{
                 }  
                 </div>
                 {/* timer */}
-                <div className='flex items-center justify-center lg:justify-start mt-4 text-center '>
-                    <p className='text-4xl md:text-6xl font-[400] text-gray-400 text-[48px] leading-8'>
+                <div className='flex items-center justify-center lg:justify-start mt-4 lg:mt-0  '>
+                    <p className='text-4xl lg:text-[3.5rem] md:text-6xl font-[400] text-gray-400 text-[48px] leading-8'>
                         <p className='space-x-0'><span>01</span> : <span>02</span> : <span>12</span> : <span>09</span></p>
-                        <p className='text-[13px] md:text-[16px] font-[300] tracking-wider flex space-x-9 md:space-x-12'>
+                        <p className='text-[13px] md:text-[16px] font-[300] tracking-wider flex space-x-9 md:space-x-10'>
                             <span>DAYS</span>
                             <span>HOURS</span>
                             <span>MINUTES</span>
@@ -69,7 +74,7 @@ const SpecialOfferCard = () =>{
                         </p>
                     </p>
                 </div>
-                <div className='mt-[1rem] lg:w-6/12'>
+                <div className='mt-[1rem] lg:pt-[1rem] lg:w-8/12'>
                     <button className='bg-[#E89689] text-white tracking-wider font-[400] text-[14px] md:text-[18px] md:tracking-widest uppercase w-full py-3 hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.02rem] '>BUY NOW</button>
                 </div>
             </div>
