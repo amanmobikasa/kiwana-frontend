@@ -4,12 +4,12 @@ import newsimg2 from '../../Assest/images/newsimg2.png';
 
 const LastestNews = () => {
     return <>
-    <section className='main-container w-full h-fit my-[4rem] pt-[3rem] pb-[3rem] lg:my-[4rem] lg:mt-[2rem]'>
+    <section className='main-container w-full h-fit my-[9rem] pt-[3rem] pb-[3rem] lg:my-[4rem] lg:mt-[2rem]'>
         <div className='inner-container relative w-full h-full space-y-[35px] md:space-y-[40px] lg:space-y-[45px]'>
             <div className='w-full lg:mt-[5.5rem]'>
-                <h1 className='text-[25px] text-center font-[500] font-playfair text-black md:text-[33px] lg:text-[42px] '>Latest News</h1>
+                <h1 className='text-[30px] text-center font-[500] font-playfair text-black md:text-[33px] lg:text-[42px] '>Latest News</h1>
             </div>
-            <div className='w-10/12 lg:w-11/12  mx-auto flex flex-col justify-center space-y-[2rem] md:space-y-[2.6rem]  lg:flex-row lg:gap-[1.5rem] lg:space-y-0 '>
+            <div className='w-11/12 lg:w-11/12   mx-auto lg:flex flex-col justify-center items-center space-y-[3.5rem] md:space-y-[2.6rem]  lg:flex-row lg:gap-[1.5rem] lg:space-y-0 '>
             {/* cards1 */}
             {
                 newsCards_api.map((data, i)=>{
@@ -31,9 +31,9 @@ const LastestNews = () => {
 
 const NewsCards = ({newsData}) => {
     return <>
-        <div className='relative mx-auto w-7/12 lg:w-3/12  md:mx-auto md:flex md:flex-col md:justify-center h-fit'>
-            <div className='w-full box-content'>
-                <img src={newsData.imgLink} className='h-fit md:h-full md:w-full w-fit object-cover lg:object-contain' alt={newsData.imgAlt} />
+        <div className='relative mx-auto w-10/12 lg:w-3/12   md:mx-auto md:flex md:flex-col md:justify-center h-fit'>
+            <div className='w-full h-full box-content object-cover lg:object-contain'>
+                <img src={newsData.imgLink} className='h-full md:h-full md:w-full w-full ' alt={newsData.imgAlt} />
             </div>
             <div className='pt-[1rem]'>
                 <div>

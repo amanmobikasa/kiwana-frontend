@@ -18,7 +18,7 @@ const DiscountComp = () => {
               <div key={i} className={`w-full h-full relative overflow-auto ${data.bgColor}`}>
                   <div className="relative h-fit w-full">
                     <div className="object-contain h-full w-full">
-                      <img src={data?.image_url} className="h-full w-full hidden lg:block" alt="" />
+                      <img src={data?.image_url} className="h-full w-full " alt="" />
                       {/* <img src={discountDesktopimg2} className="h-full w-full hidden lg:block" alt="" /> */}
                     </div>
                     <div className="absolute left-0 top-0 flex justify-center items-start w-7/12 ">

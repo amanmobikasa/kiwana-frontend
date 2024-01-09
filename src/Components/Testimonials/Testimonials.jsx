@@ -7,13 +7,13 @@ import TestimonialsCrousel from './TestimonialsCrousel';
 
 const Testimonials = () => {
     return <>
-    <section id='testimonials' className='bg-[#D5F0FF] w-full h-[48rem] md:h-[68rem] lg:h-[49rem] lg:mt-[20rem] relative '>
+    <section id='testimonials' className='bg-[#D5F0FF] mt-[13rem]  w-full h-[56rem] md:h-[68rem] lg:h-[49rem] lg:mt-[20rem] relative '>
         <div className='inner-div w-12/12 px-[1rem] pb-[3rem] h-full relative'>
-            <div className='absolute left-[4rem] md:left-0 md:right-0 md:mx-auto -top-[9rem] md:-top-[11rem] lg:-top-[13.5rem]'>
+            <div className='absolute lg:left-[4rem] left-[2rem] md:left-0 md:right-0 md:mx-auto -top-[9rem] md:-top-[11rem] lg:-top-[13.5rem]'>
                 <VideoTestimonials/>
             </div> 
             <div className='flex flex-col justify-end w-full items-center z-20 relative h-full pt-[20rem] md:pt-[20rem] lg:pt-[3rem] space-y-[3rem] '>
-                <h1 className='font-playfair text-[26px] font-[500] text-black md:text-[34px] lg:text-[43px]'>Testimonials</h1>
+                <h1 className='font-playfair text-[33px] font-[500] text-black md:text-[34px] lg:text-[43px]'>Testimonials</h1>
                 <div className='w-full h-fit'>
                     <TestimonialsCrousel testimonialsData={testimonials_api} />
                 </div>
@@ -25,7 +25,7 @@ const Testimonials = () => {
 
 const VideoTestimonials = () => {
     return <>
-        <div className='w-fit md:w-9/12  mx-auto bg-white p-3 md:p-[1rem] md:h-[45rem] lg:w-10/12 lg:h-[32rem] relative rounded-md drop-shadow-md shadow-md'>
+        <div className='w-full h-[36rem] md:w-9/12  mx-auto bg-white p-3 md:p-[1rem] md:h-[45rem] lg:w-10/12 lg:h-[32rem] relative rounded-md drop-shadow-md shadow-md'>
             <img src={person1} alt='' className='object-cover h-full w-full md:hidden'/>
             <img src={profile2} alt='' className='object-cover h-full w-full hidden md:block'/>
 

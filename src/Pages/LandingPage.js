@@ -1,4 +1,5 @@
 import React from 'react'
+
 // importing lazy loading components.
 const BannerAlert = React.lazy(() => import('../Components/Banner'));
 const NavbarComp = React.lazy(() => import('../Components/Navbar/Navbar'));
@@ -15,6 +16,7 @@ const SubscribeBox = React.lazy(() => import('../Components/SubscribeBox'));
 const FooterComp = React.lazy(() => import('../Components/footer'));
 const Testimonials = React.lazy(() => import('../Components/Testimonials/Testimonials'));
 const NewsletterPopup = React.lazy(() => import('../Components/NewsletterPopup/NewsletterPopup'));
+const DiscountCompMobile = React.lazy(()=> import('../Components/DiscountComp/DiscountCompMobile'));
 
 const LandingPage = () => {
     return <>
@@ -22,9 +24,9 @@ const LandingPage = () => {
             <NewsletterPopup />
             <LandingComponent />
             <ShopCategories />
-            <div className='-mt-[2.5rem] lg:space-y-[2rem]'>
-                <div className='w-full h-fit text-center '>
-                    <h1 className='text-[43px] font-[500] font-playfair text-[#333] '>Bestseller Products</h1>
+            <div className='lg:-mt-[2.5rem]  lg:space-y-[2rem] space-y-[3rem]'>
+                <div className='w-full h-fit text-center pt-5'>
+                    <h1 className='lg:text-[43px] text-[30px] font-[500] font-playfair text-[#333] '>Bestseller Products</h1>
                 </div>
                 <div>
                     <BestSellerProduct />
@@ -33,7 +35,15 @@ const LandingPage = () => {
             <FeaturedCollection />
             <ProductShopNow />
             <NewArrivalsProducts />
-            <DiscountComp />
+            <div>
+                <div className='hidden lg:block'>
+                    <DiscountComp />
+                </div>
+                <div className='lg:hidden'>
+                    <DiscountCompMobile />
+                </div>
+
+            </div>
             <WhyTrustUs />
             <Testimonials/>
             <LastestNews />

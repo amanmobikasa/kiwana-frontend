@@ -23,12 +23,12 @@ const CustomCarousel = ({carouselData}) => {
   arrows={false}
   autoPlaySpeed={3000}
   centerMode={true}
-  className="gap-[2rem]"
+  className="lg:gap-[2rem] gap-2"
   containerClass="container-padding-bottom "
   dotListClass=""
   draggable
   focusOnSelect
-  infinite
+  infinite={false}
   itemClass=""
   keyBoardControl
   minimumTouchDrag={80}
@@ -51,14 +51,15 @@ const CustomCarousel = ({carouselData}) => {
         max: 500,
         min: 0
       },
-      items: 1,
+      items: 0.5,
       slidesToSlide : 1,
+    
       
     },
     tablet: {
       breakpoint: {
         max: 1024,
-        min: 464
+        min: 501
       },
       items: 3,
       slidesToSlide : 1,
@@ -72,6 +73,7 @@ const CustomCarousel = ({carouselData}) => {
   sliderClass=""
   slidesToSlide={1}
   swipeable
+  showDots={true}
   
 >
   
@@ -101,10 +103,10 @@ const CarouselCards = ({cardData}) => {
   }
 
     return <>
-    <div id={`card-${cardData.id}`} className='card-container w-full z-30  h-fit lg:space-y-3 '>
-        <div className='h-full w-full lg:w-[95%] lg:h-fit bg-[#fff] relative'>
-          <div className='h-full w-full object-contain '>
-              <img src={cardData.imgLink}  className='w-full h-full object-cover lg:object-contain' alt={cardData?.title}/>
+    <div id={`card-${cardData.id}`} className='card-container w-full h-fit lg:space-y-3 '>
+        <div className='h-full w-full lg:w-[95%] lg:h-fit   relative'>
+          <div className='h-full w-full object-contain  lg:object-contain'>
+              <img src={cardData.imgLink}  className='w-full h-full ' alt={cardData?.title}/>
           </div>
             {
                 cardData.type === 'category' || cardData.type === 'videoCollection' ? null : 
@@ -126,10 +128,10 @@ const CarouselCards = ({cardData}) => {
         </div>
         {
           cardData.type === "videoCollection" ? null :
-        <div className='content-container flex justify-center text-center  lg:w-[95%]'>
+        <div className='content-container flex justify-center text-center mt-3 lg:mt-0 lg:w-[95%]'>
             <div>
-                <h1 className='capitalize text-[14px] font-[400] md:text-[20px] lg:text-[1.2rem]'>{cardData?.title}</h1>
-                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[14px] font-[500] md:text-[20px] lg:text-[20px]'>$  {cardData?.price}.00</h1>}
+                <h1 className='capitalize text-[16px] font-[400] md:text-[20px] lg:text-[1.2rem]'>{cardData?.title}</h1>
+                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[16px] font-[500] md:text-[20px] lg:text-[20px]'>$  {cardData?.price}.00</h1>}
                 
                 { cardData?.type === 'category' ? null : <div className='flex items-center justify-center gap-3 w-full'>
                     <div id='featured-div' className=''>
@@ -146,7 +148,7 @@ const CarouselCards = ({cardData}) => {
                         </svg>
                     </div>
                    <div>
-                        <h2 className='text-[#999999] text-[10px] font-[500] md:text-[18px] lg:text-[12px]'>{cardData?.reviewsCount} reviews</h2>
+                        <h2 className='text-[#999999] text-[14px] font-[500] md:text-[18px] lg:text-[12px]'>{cardData?.reviewsCount} reviews</h2>
                     </div>
                 </div>}
                 { cardData.type === 'category' &&

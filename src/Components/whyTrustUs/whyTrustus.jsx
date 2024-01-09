@@ -11,7 +11,7 @@ const WhyTrustUs = (bgColor) => {
                         return <>
                         <div key={i} id='item 1' className=' w-full flex flex-col items-center'>
                             {data.svg}
-                            <h6 className='pt-[1.5rem] text-black font-playfair font-[20px] md:text-[20px] lg:text-[16px]'>{data.heading}</h6>
+                            <h6 className='pt-[1.7rem] text-black font-playfair font-[20px] md:text-[20px] lg:text-[16px]'>{data.heading}</h6>
                             <p className='text-nav-pink text-[15px] md:text-[16px] lg:text-[14px]'>{data.paragraph}</p>
                         </div>
 

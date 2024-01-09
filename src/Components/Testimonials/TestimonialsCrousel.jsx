@@ -12,7 +12,7 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
     arrows={false}
     autoPlaySpeed={3000}
     centerMode={true}
-    className="gap-[1rem] "
+    className="gap-[2px] "
     containerClass="container-padding-bottom "
     dotListClass=""
     draggable
@@ -31,7 +31,7 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
           max: 3000,
           min: 1000
         },
-        items: 2,
+        items: 3,
         slidesToSlide : 1,
   
       },
@@ -47,7 +47,7 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
       tablet: {
         breakpoint: {
           max: 1024,
-          min: 464
+          min: 501
         },
         items: 3,
         slidesToSlide : 1,
