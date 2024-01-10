@@ -9,7 +9,7 @@ import discountDesktopimg2 from '../../Assest/images/discountDesktopImage2.png';
 const DiscountComp = () => {
   return (
     <>
-      <section className="h-fit w-full relative overflow-auto mt-[16.5rem] mb-[5rem]">
+      <section className="h-fit w-full relative overflow-auto mt-[6rem] mb-[5rem]">
         <div className="main-container w-11/12 mx-auto h-fit ">
           <div className="content-container grid grid-cols-2 items-center justify-evenly gap-[1rem]">
           {

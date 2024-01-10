@@ -31,8 +31,9 @@ const DiscountCompMobile = () => {
                       alt=""
                     />
                   </div>
+                  
                   <div
-                    className={`flex w-full ${data.bgColor} h-[20rem] md:h-[20rem] px-[1.6rem] -mt-2 py-3 lg:flex lg:h-full lg:mt-0`}
+                    className={`flex ${data?.heading === "" ? "items-center" : null}  w-full ${data.bgColor} h-[20rem] md:h-[20rem] px-[1.6rem] -mt-2 py-3 lg:flex lg:h-full lg:mt-0`}
                   >
                     <div 
                       className={`w-11/12 mx-auto h-fit relative mt-4 space-y-[1.1rem] md:space-y-[1.4rem]`}

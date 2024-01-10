@@ -1,6 +1,8 @@
 import React from 'react'
 import productOne from '../../Assest/images/product_1.png';
 import limited_offer from '../../Assest/images/limited_offer.png'
+import Timer from './Timer';
+import moment from 'moment';
 const BestSellerProducts = () => {
     return <>
     <section className='bg-[#FCEBE8] w-auto h-fit lg:h-auto relative py-[3rem] lg:py-[4.5rem]'>
@@ -27,6 +29,10 @@ const BestSellerProducts = () => {
 }
 
 const SpecialOfferCard = () =>{
+
+    const endTime = moment().add(1,'hours');
+
+
     return <>
         <div className='bg-white w-11/12 md:w-10/12 lg:w-full lg:h-[35rem] h-[36.5rem] mx-auto -mt-[3.5rem] md:-mt-[7rem] lg:mt-0 shadow-lg drop-shadow-md relative'>
             <div className='px-[37px] py-[46px] lg:px-[76px] lg:pt-[60px] lg:pb-[20px]  lg:space-y-4'>
@@ -63,17 +69,7 @@ const SpecialOfferCard = () =>{
                 }  
                 </div>
                 {/* timer */}
-                <div className='flex items-center justify-center lg:justify-start mt-10 lg:mt-0  '>
-                    <p className=' lg:text-[3.5rem] md:text-6xl font-[400] text-gray-400 text-[3.3rem] leading-8'>
-                        <p className='space-x-0'><span>01</span> : <span>02</span> : <span>12</span> : <span>09</span></p>
-                        <p className='text-[13px] md:text-[16px] font-[300] tracking-wider flex space-x-9 md:space-x-10'>
-                            <span>DAYS</span>
-                            <span>HOURS</span>
-                            <span>MINUTES</span>
-                            <span>SECONDS</span>
-                        </p>
-                    </p>
-                </div>
+                <Timer endTime={endTime.valueOf()} />
                 <div className='mt-[1.5rem] lg:pt-[1rem] lg:w-8/12'>
                     <button className='bg-[#E89689] text-white tracking-wider font-[400] text-[14px] md:text-[18px] md:tracking-widest uppercase w-full py-3 hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.02rem] '>BUY NOW</button>
                 </div>

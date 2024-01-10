@@ -13,7 +13,7 @@ const ProductShopNow = () => {
                     return <>
                     <div key={i} className={`custom-grid-box w-full ${data.parentDiv} h-full relative mx-auto`}>
                     <div className='custom-grid-box-inner lg:h-full lg:w-full object-contain'>
-                    <img src={data.image_link} className='w-full h-full  ' alt=''/>
+                    <img src={data.image_link} className='w-full h-full  lg:h-[35rem]' alt=''/>
                     <div className={`${data?.divStyle}`}>
                         <h1 className={`${data.headingStyle}`}>{data?.heading}</h1>
                         <a href={`${data.linkHref}`} className={`flex items-center text-[18px] md:text-[28px] font-[400] justify-center gap-2 underline underline-offset-2 font-poppins lg:text-[1.2rem] ${data?.linkStyle}`}>

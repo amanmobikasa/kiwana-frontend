@@ -145,3 +145,32 @@
 #LandingHomePage{
   @apply bg-[#FFF8F7]
 }
+
+/* @layer base{
+  .absolute.bottom-5.left-1\/2.flex.-translate-x-1\/2.space-x-3{
+  @apply flex flex-col gap-[1rem] absolute top-1/2 left-[4rem] w-auto
+} */
+/* } */
+/* .custom_crousel:nth-child(2){
+  display: flex;
+  flex-direction: column !important;
+  position: absolute;
+  top: 50% !important;
+  background-color: yellow !important;
+} */
+
+.flex-item-center{
+  display: flex;
+  align-items: center;
+  width: 100%;
+
+
+}
+
+.custom-dot-class{
+  position: absolute;
+  align-items: center;
+  display: flex;
+  left: 50vw;
+  /* bottom: -32px; */
+}

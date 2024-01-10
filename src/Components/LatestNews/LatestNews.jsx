@@ -31,7 +31,7 @@ const LastestNews = () => {
 
 const NewsCards = ({newsData}) => {
     return <>
-        <div className='relative mx-auto w-10/12 lg:w-3/12   md:mx-auto md:flex md:flex-col md:justify-center h-fit'>
+        <div className='relative mx-auto w-11/12 lg:w-3/12   md:mx-auto md:flex md:flex-col md:justify-center h-fit'>
             <div className='w-full h-full box-content object-cover lg:object-contain'>
                 <img src={newsData.imgLink} className='h-full md:h-full md:w-full w-full ' alt={newsData.imgAlt} />
             </div>

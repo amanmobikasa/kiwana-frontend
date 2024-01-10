@@ -34,6 +34,8 @@ const ShopCategory_api = [
         buttonText : "BODY CARE",
         buttonCss : "px-7 py-3 bg-transparent border-[0.01rem] border-nav-pink hover:text-white hover:bg-nav-pink",
         buttonLink : "/",
+        dots: false,
+        arrows : false,
     },
     {
         id : 2,
@@ -53,4 +55,5 @@ const ShopCategory_api = [
         buttonCss : "",
         buttonLink : "",
     },
+    
 ]

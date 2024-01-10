@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 // importing lazy loading components.
 const BannerAlert = React.lazy(() => import('../Components/Banner'));
 const NavbarComp = React.lazy(() => import('../Components/Navbar/Navbar'));
@@ -17,12 +18,14 @@ const FooterComp = React.lazy(() => import('../Components/footer'));
 const Testimonials = React.lazy(() => import('../Components/Testimonials/Testimonials'));
 const NewsletterPopup = React.lazy(() => import('../Components/NewsletterPopup/NewsletterPopup'));
 const DiscountCompMobile = React.lazy(()=> import('../Components/DiscountComp/DiscountCompMobile'));
+const LandingCarousel = React.lazy(()=> import('../Components/LandingComponent/LandingCrousel'));
 
 const LandingPage = () => {
     return <>
         <div id='LandingHomePage' className=''>
             <NewsletterPopup />
-            <LandingComponent />
+            {/* <LandingComponent /> */}
+            <LandingCarousel />
             <ShopCategories />
             <div className='lg:-mt-[2.5rem]  lg:space-y-[2rem] space-y-[3rem]'>
                 <div className='w-full h-fit text-center pt-5'>

@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import logo from "../../Assest/images/icon.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import MegaMenuComp from "./MegaMenu";
 
 const NavbarComp = () => {
 
   const [globalSearch, setGlobalSearch] = useState("");
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
 
   const handleGlobalSearch = (event) => {
     try {
@@ -20,10 +22,15 @@ const NavbarComp = () => {
         console.error("Global Search Error : ",error)
       }
     }
-  }
+  } 
+
+  // const handleMegaMenu = (event) => {
+  //   setShowMegaMenu(true)
+  // }
 
   return (
     <>
+   { showMegaMenu ?  <MegaMenuComp setShowMegaMenu={setShowMegaMenu} /> : null}
       <nav className="bg-[#FCEBE8] w-full relative overflow-auto h-fit">
         <div className="md:px-[3rem] lg:px-19 px-6  py-4 lg:py-7  flex items-center lg:justify-between justify-between">
         {/* for hamburger */}
@@ -41,7 +48,7 @@ const NavbarComp = () => {
                 HOME
               </a>
             </li>
-            <li className="">
+            <li  onMouseEnter={()=> setShowMegaMenu(true)} onfo className="">
               <a href="#" className="hover:underline lg:flex items-center">
                 SHOP
                 <span className="hidden lg:block">
