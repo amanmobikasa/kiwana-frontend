@@ -3,19 +3,24 @@ import React, { useEffect, useState } from 'react'
 import { RxCross1 } from 'react-icons/rx';
 import { filterandshort_api } from './filterandshortJSON';
 import MultiRangeSlider from "multi-range-slider-react";
+import { useDispatch } from 'react-redux';
+import { productFilter } from '../../Redux/reducer/filterProductSlice';
 
 const FilterAndShortDesktop = () => {
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
     const [filterAndShortApi, setFilterAndShortApi] = useState(filterandshort_api)
     const [filterChangeValue, setFilterChangeValue] = useState([])
     const [filterBannerArrayState, setFilterBannerArrayState] = useState([])
+    const dispatch = useDispatch();
 
     const handleFilterBanner = (event,dataObj) => {
         // console.log(dataObj)
         if(event.target.innerHTML === "Remove All"){
             setFilterBannerArrayState([]);
         }else{
+            
         const updatedJson =  filterBannerArrayState?.filter((data)=> data.id !== dataObj.id)
+
         setFilterBannerArrayState(updatedJson)
         }
     }
@@ -54,6 +59,7 @@ const FilterAndShortDesktop = () => {
             }
           })
         });
+            dispatch(productFilter(filterBannerArray)) // sending the filter banner array of object to redux store.
             setFilterBannerArrayState(filterBannerArray)
       }
 

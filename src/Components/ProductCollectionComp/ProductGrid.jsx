@@ -1,36 +1,160 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import arrivalimg1 from '../../Assest/images/arrival1.png';
 import arrivalimg2 from '../../Assest/images/arrival2.png';
 import arrivalimg3 from '../../Assest/images/arrival3.png';
 import arrivalimg4 from '../../Assest/images/arrival4.png';
 import { CarouselCards } from '../customCarousel';
 import pddPopUpImg from '../../Assest/images/pdppopupimg1.png';
+import { useSelector } from 'react-redux';
+
 
 const ProductGrid = () => {
-    return <>
-    <section id='' className='w-full lg:w-full mt-[1.7rem] relative '>
-        <div className='content-container'>
-            <div className='grid grid-cols-2 lg:grid-cols-4  grid-rows-5 lg:grid-rows-3 gap-3 lg:gap-0 justify-between '>
-            {
-                productCollectionList_api.map((items, i)=>{
-                    {/* console.log(items.pdpPopup[0].product_image); */}
-                    return <>
-                    <div key={i} className='w-full h-full object-contain'>
-                        <CarouselCards cardData={items}  />
-                    </div>
-                    </>
-                })
+    const [filterArrayofObject , setFilterArrayofObject] = useState([]);
+    const [productListDataApi, setProductListDataApi] = useState(productCollectionList_api);
+
+    // getting the filter array of object  from the redux store 
+    
+    const selector = useSelector((state)=> state.filterProducts.filterProductState);
+
+    // render the filtered products based on ifelse condition
+    function handleFilteredProducts(productType1, productType2){
+        if(productType1 && productType2){
+            if (productType1 == productType2){
+                return true;
             }
-                
+            else{
+                return false;
+            }
+        }
+    }
+
+    const handleFilterProducts = (selector) => {
+        const filterConditions = {
+            'in stock': 'in_stock',
+            'out of stock': 'in_stock',
+            'hair': 'product_type',
+            'skin': 'product_type',
+            'face': 'product_type',
+            'body': 'product_type',
+            // Add more conditions as needed
+          };
+         
+        const filterProductValue =  productCollectionList_api.filter((product, idx) => { 
+            let filter_data  = selector?.filterValue?.toLowerCase()
+
+            const conditionProperty = filterConditions[filter_data];
+            console.log("conditionProperty : ", conditionProperty);
+
+            if (conditionProperty) {
+              return product[conditionProperty]?.toLowerCase() === filter_data;
+            }
+
+            return false;
+       
+            // if(handleFilteredProducts(filter_data, "in stock")){
+            //     return product?.in_stock.toLowerCase() == filter_data;
+            // }
+            // else if(handleFilterProducts(filter_data, "out of stock")){
+            //     return product?.in_stock.toLowerCase() == filter_data;
+            // }
+            // else if(handleFilteredProducts(filter_data, "hair")){
+            //     return product?.product_type?.toLowerCase() == filter_data;
+            // }
+            // else if(handleFilterProducts(filter_data, "skin")){
+            //     return product?.product_type?.toLowerCase() == filter_data;
+            // }
+            // else if(handleFilteredProducts(filter_data, "face")){
+            //     return product?.product_type?.toLowerCase() == filter_data;
+            // }
+            // else if(handleFilteredProducts(filter_data, "body")){
+            //     return product?.product_type?.toLowerCase() == filter_data;
+            // }
+            
+            // if (filterValue) {
+            //     if (
+            //         filterValue === product.product_type?.toLowerCase() ||
+            //         filterValue === product.in_stock?.toLowerCase()   ||
+            //         filterValue === `${product.weight} ml`.toLowerCase()
+            //     ) {
+            //         filterProductsTemp.push(product);
+
+            //     }
+            // }
+
+        });
+        // console.log("filterProductValue : ", filterProductValue);
+        
+        if(filterProductValue.length > 0){
+            setProductListDataApi(filterProductValue); // inserting the filtered products.
+        }
+    };
+   
+    useEffect(()=>{
+        if(selector.length > 0){
+            setFilterArrayofObject(selector)
+            selector.map((filterObj, i)=>{
+                handleFilterProducts(filterObj);
+            })
+        }else{
+            setProductListDataApi(productCollectionList_api);
+        }
+    },[selector])
+
+
+   // create a function that handle the filter functionality
+//    const handleFilterProducts = () => {
+//     const filterProductsTemp = []
+//     productCollectionList_api.filter((products, idx)=>{
+//         if (filterArrayofObject[idx] && filterArrayofObject[idx].filterValue) {
+//             console.log(idx);
+//             if(filterArrayofObject[idx]?.filterValue?.toLowerCase() === products?.product_type?.toLowerCase()){
+//                 filterProductsTemp.push(products)
+//             }
+//             if(filterArrayofObject[idx]?.filterValue?.toLowerCase() === products?.in_stock?.toLowerCase()){
+//                 filterProductsTemp.push(products)
+
+//             }
+//             if(filterArrayofObject[idx]?.filterValue?.toLowerCase() === `${products?.weight} ml`?.toLowerCase()){
+//                 filterProductsTemp.push(products);
+//             }
+//         }
+//         return [];
+//     })
+
+//     console.log("filterProductOutput : ",filterProductsTemp);
+    
+//    }
+
+
+
+    // console.log("product : ", productListDataApi)
+
+    return <>
+        <section id='' className='w-full lg:w-full mt-[1.7rem] relative '>
+            <div className='content-container'>
+                <div className='grid grid-cols-2 lg:grid-cols-4  grid-rows-5 lg:grid-rows-3 gap-3 lg:gap-0 justify-between '>
+                {
+                    productListDataApi.map((items, i)=>{
+                        {/* console.log(items.pdpPopup[0].product_image); */}
+                        return <>
+                        <div key={i} className='w-full h-full object-contain'>
+                            <CarouselCards cardData={items}  />
+                        </div>
+                        </>
+                    })
+                }  
+                </div>
             </div>
-        </div>
-    </section>       
+        </section>       
     </>
 }
 
 const productCollectionList_api = [
     {
         id : 1,
+        product_type : "hair",
+        in_stock : "In stock",
+        weight : 100,
         imgLink : arrivalimg1,
         title : "hair conditioner",
         price : 600,
@@ -102,6 +226,9 @@ const productCollectionList_api = [
     },
     {
         id : 2,
+        product_type : "hair",
+        in_stock : "In stock",
+        weight : 150,
         imgLink : arrivalimg2,
         title : "hair serum",
         price : 600,
@@ -173,6 +300,9 @@ const productCollectionList_api = [
     },
     {
         id : 3,
+        product_type : "skin",
+        weight : 100,
+        in_stock : "In Stock",
         imgLink : arrivalimg3,
         title : "skin care",
         price : 600,
@@ -244,6 +374,9 @@ const productCollectionList_api = [
     },
     {
         id : 4,
+        product_type : "hair",
+        weight : 200,
+        in_stock : "Out of Stock",
         imgLink : arrivalimg4,
         title : "hair conditionar new",
         price : 600,
@@ -315,6 +448,9 @@ const productCollectionList_api = [
     },
     {
         id : 5,
+        product_type : "face",
+        in_stock : "in stock",
+        weight : 250,
         imgLink : arrivalimg1,
         title : "Face mask",
         price : 600,
@@ -386,6 +522,9 @@ const productCollectionList_api = [
     },
     {
         id : 6,
+        product_type : "hair",
+        weight : 400,
+        in_stock : "out of stock",
         imgLink : arrivalimg4,
         title : "hair oil",
         price : 600,
@@ -457,6 +596,9 @@ const productCollectionList_api = [
     },
     {
         id : 7,
+        product_type : "hair",
+        weight : 450,
+        in_stock : "in stock",
         imgLink : arrivalimg3,
         title : "hair shampoo",
         price : 600,
@@ -528,6 +670,9 @@ const productCollectionList_api = [
     },
     {
         id : 8,
+        product_type : "hair",
+        in_stock : "out of stock",
+        weight : 250,
         imgLink : arrivalimg2,
         title : "hair new shampo",
         price : 600,
@@ -599,6 +744,9 @@ const productCollectionList_api = [
     },
     {
         id : 9,
+        product_type : "skin",
+        weight : 300,
+        in_stock : "out of stock",
         imgLink : arrivalimg2,
         title : "skin care ",
         price : 600,
@@ -670,6 +818,9 @@ const productCollectionList_api = [
     },
     {
         id : 10,
+        product_type : "face",
+        weight : 450,
+        in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "face cream",
         price : 600,
@@ -741,6 +892,9 @@ const productCollectionList_api = [
     },
     {
         id : 11,
+        product_type : "face",
+        in_stock : "out of stock",
+        weight : 750,
         imgLink : arrivalimg2,
         title : "new face cream",
         price : 600,
@@ -812,6 +966,9 @@ const productCollectionList_api = [
     },
     {
         id : 12,
+        product_type : "face",
+        in_stock : "in stock",
+        weight : 300,
         imgLink : arrivalimg2,
         title : "fair and lovely",
         price : 600,
@@ -883,6 +1040,9 @@ const productCollectionList_api = [
     },
     {
         id : 13,
+        product_type : "hair",
+        weight : 100,
+        in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "hair serum ",
         price : 600,
@@ -954,6 +1114,9 @@ const productCollectionList_api = [
     },
     {
         id : 14,
+        product_type : "hair",
+        weight : 300,
+        in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "new hair",
         price : 600,
@@ -1025,6 +1188,9 @@ const productCollectionList_api = [
     },
     {
         id : 15,
+        product_type : "hair",
+        weight : 150,
+        in_stock : "out of stock",
         imgLink : arrivalimg2,
         title : "hair conditioner 1",
         price : 600,
@@ -1096,6 +1262,9 @@ const productCollectionList_api = [
     },
     {
         id : 16,
+        product_type : "hair",
+        weight : 250,
+        in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "hair conditioner 2",
         price : 600,
