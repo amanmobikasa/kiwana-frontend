@@ -6,14 +6,14 @@ import shopnow3 from '../../Assest/images/shopnow_3.png';
 
 const ProductShopNow = () => {
     return <>
-        <section id='productShopNow' className='w-12/12 h-fit  relative overflow-hidden lg:w-11/12 lg:mt-[17.5rem] lg:mb-[5rem]  lg:mx-auto'>
-            <div className='flex custom-grid-list flex-col h-fit w-11/12 md:w-10/12  lg:w-full  lg:flex-row mx-auto relative space-y-10 lg:space-y-0 lg:justify-evenly lg:gap-[1rem]'>
+        <section id='productShopNow' className='w-12/12 h-fit pt-[5.5rem] lg:pt-0 relative overflow-hidden lg:w-11/12 lg:mt-[17.5rem] lg:mb-[5rem]  lg:mx-auto'>
+            <div className='flex custom-grid-list flex-col h-fit w-11/12 md:w-10/12  lg:w-full  lg:flex-row mx-auto relative space-y-2 lg:space-y-0 lg:justify-evenly lg:gap-[1rem]'>
             {
                 ProductShopNow_api.map((data, i)=>{
                     return <>
                     <div key={i} className={`custom-grid-box w-full ${data.parentDiv} h-full relative mx-auto`}>
                     <div className='custom-grid-box-inner lg:h-full lg:w-full object-contain'>
-                    <img src={data.image_link} className='w-full h-full  ' alt=''/>
+                    <img src={data.image_link} className='w-full h-full  lg:h-[35rem]' alt=''/>
                     <div className={`${data?.divStyle}`}>
                         <h1 className={`${data.headingStyle}`}>{data?.heading}</h1>
                         <a href={`${data.linkHref}`} className={`flex items-center text-[18px] md:text-[28px] font-[400] justify-center gap-2 underline underline-offset-2 font-poppins lg:text-[1.2rem] ${data?.linkStyle}`}>
@@ -41,8 +41,8 @@ const ProductShopNow_api = [
     {
         id : 1,
         heading : "Revitalise your Gaze with Under Eye Cream",
-        divStyle : "absolute top-[3rem] left-[30px] text-white text-center lg:leading-tight font-[600] space-y-6  mx-auto h-fit text-[25px] md:text-[40px] w-10/12 ",
-        headingStyle : "text-[1.7rem] font-playfair",
+        divStyle : "absolute top-[4rem] left-[30px] text-white text-center lg:leading-tight font-[600] space-y-6  mx-auto h-fit text-[25px] md:text-[40px] w-10/12",
+        headingStyle : "text-[2.2rem] lg:text-[1.7rem] font-playfair",
         parentDiv : "lg:w-3/12 lg:h-full",
         linkName : "Shop Now",
         linkHref : "/",
@@ -53,8 +53,8 @@ const ProductShopNow_api = [
     {
         id : 2,
         heading : "Purify with Aloe & Neem Glow",
-        divStyle : "absolute  w-full left-0 top-[2rem]  flex-col justify-center items-start text-white text-center font-[600] space-y-2  mx-auto h-fit text-[25px] md:text-[40px] ",
-        headingStyle : "text-[1.8rem] font-playfair lg:w-4/12 mx-auto ",
+        divStyle : "absolute  w-full left-0 top-[1.3rem]  flex-col justify-center items-start text-white text-center font-[600] space-y-2  mx-auto h-fit text-[25px] md:text-[40px] ",
+        headingStyle : "lg:text-[1.8rem] text-[1.3rem] font-playfair w-5/12  lg:w-4/12 mx-auto ",
         parentDiv : "lg:w-6/12 lg:h-full",
         linkName : "Shop Now",
         linkHref : "/",
@@ -65,8 +65,8 @@ const ProductShopNow_api = [
     {
         id : 3,
         heading : "Illuminate your Skin’s Glow with Face Serum",
-        divStyle : "absolute top-[2.7rem] leading-tight left-[30px]  text-center font-[600] space-y-6  mx-auto h-fit text-[25px] md:text-[48px] w-10/12",
-        headingStyle : "text-black lg:text-[1.7rem] ",
+        divStyle : "absolute top-[5.7rem] leading-tight left-[30px]  text-center font-[600] space-y-6  mx-auto h-fit text-[25px] md:text-[48px] w-10/12",
+        headingStyle : "text-black lg:text-[1.7rem] text-[2rem] ",
         parentDiv : "lg:w-3/12 lg:h-full",
         linkName : "Shop Now",
         linkHref : "/",

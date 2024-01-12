@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -9,12 +10,12 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
       <Carousel
     
     additionalTransfrom={0}
-    arrows={false}
+    arrows={true}
     autoPlaySpeed={3000}
     centerMode={true}
-    className="gap-[1rem] "
+    className="gap-[2px] lg:w-[95%] lg:mx-auto"
     containerClass="container-padding-bottom "
-    dotListClass=""
+    dotListClass="custom-dot-class"
     draggable
     focusOnSelect
     infinite
@@ -24,7 +25,10 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
     pauseOnHover
     renderArrowsWhenDisabled={false}
     renderButtonGroupOutside={false}
-    renderDotsOutside={false}
+    renderDotsOutside={true}
+    customRightArrow={<CustomRightArrow />}
+    customLeftArrow={<CustomLeftArrow />}
+    customDot={<CustomDot />}
     responsive={{
       desktop: {
         breakpoint: {
@@ -40,14 +44,14 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
           max: 500,
           min: 0
         },
-        items: 1,
+        items: 0.1,
         slidesToSlide : 1,
         
       },
       tablet: {
         breakpoint: {
           max: 1024,
-          min: 464
+          min: 501
         },
         items: 3,
         slidesToSlide : 1,
@@ -61,6 +65,7 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
     sliderClass=""
     slidesToSlide={1}
     swipeable
+    showDots={true}
     
   >
     
@@ -81,7 +86,7 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
 
   const TestimonialsCard = ({cardData}) => {
     return <> 
-    <div className='bg-white w-10/12 md:w-full md:rounded-sm mx-auto text-black h-[270px] shadow-inner drop-shadow-md'>
+    <div className='bg-white w-full md:w-full md:rounded-sm mx-auto text-black h-[270px] shadow-inner drop-shadow-md'>
         <div className='inner-container  px-5 py-9   md:px-8 text-left space-y-[1rem] '>
             <div>
                 <h1 className='text-[18px] font-[500] md:text-[22px]'>{cardData?.heading}</h1>
@@ -112,6 +117,37 @@ const TestimonialsCrousel  = ({testimonialsData}) => {
     </div>
     </>
 }
+
+
+// custom right arrow
+const CustomRightArrow = ({ onClick}) => {
+    // onMove means if dragging or swiping in progress.
+    return <button className='h-[3rem] w-[3rem] absolute top-2/12 left-0 bg-white  rounded-full flex items-center justify-center ' onClick={() => onClick()}>
+      <MdChevronLeft className='text-[1.5rem] text-[#333]'/>
+    </button>;
+  };
+  
+  const CustomLeftArrow = ({ onClick}) => {
+    // onMove means if dragging or swiping in progress.
+    return <button className='h-[3rem] w-[3rem] absolute top-2/12 right-0 bg-white  rounded-full flex items-center justify-center ' onClick={() => onClick()}>
+      <MdChevronRight className='text-[1.5rem] text-[#333]'/>
+    </button>;
+  };
+  
+  // custom dots 
+  const CustomDot = ({ onClick, active }) => {
+    
+    // const carouselItems = [CarouselItem1, CaourselItem2, CarouselItem3];
+    // onMove means if dragging or swiping in progress.
+    // active is provided by this lib for checking if the item is active or not.
+    return (
+      
+      <button
+        className={`w-3 h-3 rounded-full mx-2 ${active ? "active border-[0.01rem] border-nav-pink h-5 w-5 bg-transparent " : null} bg-nav-pink`}
+        onClick={() => onClick()} />
+     
+    );
+  };
 
   export default TestimonialsCrousel;
 

@@ -8,12 +8,12 @@ import { CustomCarousel } from '../customCarousel';
 
 const NewArrivalsProducts = () => {
     return <>
-    <section className='main-container  w-full h-fit my-[2rem] md:mb-[15rem] relative lg:my-[0rem]'>
+    <section className='main-container  w-full lg:h-[44rem] my-[2rem] md:mb-[15rem]  relative lg:my-[0rem]'>
         <div className='inner-container px-[1rem] py-[2rem] lg:py-0 w-full  space-y-[2rem] h-[35rem]'>
             <div className='w-full lg:mb-[1rem] lg:-mt-4'>
-                <h1 className='text-[25px] text-center text-black font-playfair font-[500] md:text-[33px] lg:text-[43px]'>New Arrivals</h1>
+                <h1 className='text-[33px] text-center text-black font-playfair font-[500] md:text-[33px] lg:text-[43px]'>New Arrivals</h1>
             </div>
-            <div className='crousel-container  py-5 lg:py-0 w-full flex-row justify-start'>
+            <div className='crousel-container lg:mb-[10rem]  py-5 lg:py-0 w-full flex-row justify-start'>
                 {/*  card1 */}
                 <CustomCarousel carouselData = {NewArrivals_api}/>
             </div>

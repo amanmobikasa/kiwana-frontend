@@ -1,5 +1,5 @@
 import { Accordion } from 'flowbite-react';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { RxCross1 } from 'react-icons/rx';
 import { filterandshort_api } from './filterandshortJSON';
 import MultiRangeSlider from "multi-range-slider-react";
@@ -8,20 +8,57 @@ const FilterAndShortDesktop = () => {
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
     const [filterAndShortApi, setFilterAndShortApi] = useState(filterandshort_api)
     const [filterChangeValue, setFilterChangeValue] = useState([])
+    const [filterBannerArrayState, setFilterBannerArrayState] = useState([])
 
     const handleFilterBanner = (event,dataObj) => {
+        // console.log(dataObj)
         if(event.target.innerHTML === "Remove All"){
-            setShowFilterValue([]);
+            setFilterBannerArrayState([]);
         }else{
-        const updatedJson =  showFilterValue.filter((data)=> data.id !== dataObj.id)
-        setShowFilterValue(updatedJson)
+        const updatedJson =  filterBannerArrayState?.filter((data)=> data.id !== dataObj.id)
+        setFilterBannerArrayState(updatedJson)
         }
     }
 
     const handleFilterValue = (parentInputData) => {
         setFilterChangeValue([...filterChangeValue, parentInputData]);
+      
+        
     }
-    console.log("filterValueChange : ", filterChangeValue);
+  
+
+    useEffect(()=>{
+        handleFilterBannerUpdate();
+    },[filterChangeValue,filterAndShortApi])
+
+    //handle banner updation based on filter checked.
+    const handleFilterBannerUpdate = () => {
+        const filterObj = [];
+        let i = 0;
+        const filterBannerArray = [];
+        filterAndShortApi.map(product => {
+          if(product.tabItems.some(tab => tab.default_check)) {
+            filterObj.push(product);
+          }
+        });
+      
+        filterObj.map(product => {
+          product?.tabItems?.map((items)=>{
+            if(items?.default_check === true){
+                 filterBannerArray.push({
+                    id : i++,
+                    filterName : product?.tabName,
+                    filterValue : items?.input_value,
+                    show : true
+                })
+            }
+          })
+        });
+            setFilterBannerArrayState(filterBannerArray)
+      }
+
+      
+      
 
     return <>
         <section id='filter-and-short-desktop' className='hidden lg:block w-full h-fit relative overflow-auto'>
@@ -35,7 +72,7 @@ const FilterAndShortDesktop = () => {
                             </div>
                             <div className='banner-container flex flex-col gap-[16px] w-fit'>
                             {
-                        showFilterValue.map((data, i)=>{
+                                filterBannerArrayState.map((data, i)=>{
                             return <>
                             
                              <button key={i} className='flex px-4 py-[1px] w-fit items-center justify-between bg-[#EEE] gap-3 md:gap-3 text-[#7E7E7E]'>
@@ -74,6 +111,7 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
 
     const handleFilterInputValue =(event, InputData, parentInputItems) => {
         const {name, value, checked} = event.target;
+        console.log("inputData", InputData);
         // console.log("checked",checked)
         // console.log("parentInputItems : ", parentInputItems)
         if(InputData.input_name === name && parentInputItems){

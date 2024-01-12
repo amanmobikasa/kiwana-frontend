@@ -103,7 +103,7 @@ const productCollectionList_api = [
     {
         id : 2,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "hair serum",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -174,7 +174,7 @@ const productCollectionList_api = [
     {
         id : 3,
         imgLink : arrivalimg3,
-        title : "hair conditioner",
+        title : "skin care",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -245,7 +245,7 @@ const productCollectionList_api = [
     {
         id : 4,
         imgLink : arrivalimg4,
-        title : "hair conditioner",
+        title : "hair conditionar new",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -316,7 +316,7 @@ const productCollectionList_api = [
     {
         id : 5,
         imgLink : arrivalimg1,
-        title : "hair conditioner",
+        title : "Face mask",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -387,7 +387,7 @@ const productCollectionList_api = [
     {
         id : 6,
         imgLink : arrivalimg4,
-        title : "hair conditioner",
+        title : "hair oil",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -458,7 +458,7 @@ const productCollectionList_api = [
     {
         id : 7,
         imgLink : arrivalimg3,
-        title : "hair conditioner",
+        title : "hair shampoo",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -529,7 +529,7 @@ const productCollectionList_api = [
     {
         id : 8,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "hair new shampo",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -600,7 +600,7 @@ const productCollectionList_api = [
     {
         id : 9,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "skin care ",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -671,7 +671,7 @@ const productCollectionList_api = [
     {
         id : 10,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "face cream",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -742,7 +742,7 @@ const productCollectionList_api = [
     {
         id : 11,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "new face cream",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -813,7 +813,7 @@ const productCollectionList_api = [
     {
         id : 12,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "fair and lovely",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -884,7 +884,7 @@ const productCollectionList_api = [
     {
         id : 13,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "hair serum ",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -955,7 +955,7 @@ const productCollectionList_api = [
     {
         id : 14,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "new hair",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -1026,7 +1026,7 @@ const productCollectionList_api = [
     {
         id : 15,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "hair conditioner 1",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -1097,7 +1097,7 @@ const productCollectionList_api = [
     {
         id : 16,
         imgLink : arrivalimg2,
-        title : "hair conditioner",
+        title : "hair conditioner 2",
         price : 600,
         reviews : "",
         reviewsCount : 2947,
@@ -1166,4 +1166,4 @@ const productCollectionList_api = [
         ]
     },
 ]
-export default ProductGrid;
+export { productCollectionList_api,  ProductGrid };

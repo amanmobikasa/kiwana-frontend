@@ -7,10 +7,10 @@ import featuredimg4 from '../../Assest/images/featured4.png';
 
 const FeaturedCollection = () => {
     return <>
-     <section className='main-container  w-full h-fit my-[2rem] md:mb-[14rem] lg:my-[3rem] relative'>
+     <section className='main-container  w-full h-fit my-[3rem] md:mb-[14rem] lg:my-[3rem] relative'>
         <div className='inner-container px-[1rem] py-[2rem] w-full  space-y-[2rem] h-[35rem]'>
             <div className='w-full lg:mb-[3rem]'>
-                <h1 className='text-[25px] lg:text-[45px] text-center text-black font-playfair font-[500] md:text-[33px]'>Featured Collection</h1>
+                <h1 className='text-[30px] lg:text-[45px] text-center text-black font-playfair font-[500] md:text-[33px]'>Featured Collection</h1>
             </div>
             <div className='crousel-container relative py-5 w-full flex-row justify-center lg:w-auto lg:mx-[2rem] '>
                 {/*  card1 */}

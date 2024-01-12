@@ -6,10 +6,12 @@ import 'react-multi-carousel/lib/styles.css';
 import play from '../Assest/images/play.png';
 import { useDispatch } from 'react-redux';
 import { pdpPopUpSlice } from '../Redux/reducer/pdppopupSlice';
+import { MdChevronLeft, MdChevronRight } from "react-icons/md";
 
 
 const CustomCarousel = ({carouselData}) => {
   const [categoryItems, setCategoryItems] = useState(3);
+  const [hideDots, setHideDots] = useState(true); // true means show and false means hide.
   useEffect(()=>{
     if(carouselData[0].type === "category"){
       setCategoryItems(2)
@@ -17,25 +19,36 @@ const CustomCarousel = ({carouselData}) => {
   
   },[carouselData])
 
+  useEffect(()=>{
+
+    if(carouselData[0]?.dots === false){
+      setHideDots(false);
+    }
+
+  },[carouselData])
+
     return <>
     <Carousel
   additionalTransfrom={0}
-  arrows={false}
+  arrows={hideDots ? true : false}
   autoPlaySpeed={3000}
   centerMode={true}
-  className="gap-[2rem]"
+  className="lg:gap-[2rem] gap-2 z-0 h-fit w-full"
   containerClass="container-padding-bottom "
-  dotListClass=""
+  dotListClass="flex-item-center"
   draggable
   focusOnSelect
-  infinite
+  infinite={true}
   itemClass=""
   keyBoardControl
   minimumTouchDrag={80}
   pauseOnHover
-  renderArrowsWhenDisabled={false}
-  renderButtonGroupOutside={false}
-  renderDotsOutside={false}
+  // renderArrowsWhenDisabled={false}
+  // renderButtonGroupOutside={false}
+  renderDotsOutside={true}
+  customRightArrow={<CustomRightArrow  />} // handle the right arrow
+  customLeftArrow={<CustomLeftArrow />} // handle the left arrow
+  customDot={ <CustomDot />}
   responsive={{
     desktop: {
       breakpoint: {
@@ -51,14 +64,15 @@ const CustomCarousel = ({carouselData}) => {
         max: 500,
         min: 0
       },
-      items: 1,
+      items: 0.5,
       slidesToSlide : 1,
+    
       
     },
     tablet: {
       breakpoint: {
         max: 1024,
-        min: 464
+        min: 501
       },
       items: 3,
       slidesToSlide : 1,
@@ -72,6 +86,7 @@ const CustomCarousel = ({carouselData}) => {
   sliderClass=""
   slidesToSlide={1}
   swipeable
+  showDots={hideDots ? true : false}
   
 >
   
@@ -101,10 +116,10 @@ const CarouselCards = ({cardData}) => {
   }
 
     return <>
-    <div id={`card-${cardData.id}`} className='card-container w-full z-30  h-fit lg:space-y-3 '>
-        <div className='h-full w-full lg:w-[95%] lg:h-fit bg-[#fff] relative'>
-          <div className='h-full w-full object-contain '>
-              <img src={cardData.imgLink}  className='w-full h-full object-cover lg:object-contain' alt={cardData?.title}/>
+    <div id={`card-${cardData.id}`} className='card-container w-full h-fit lg:space-y-3 '>
+        <div className='h-full w-full lg:w-[95%] lg:h-fit   relative'>
+          <div className='h-full w-full object-contain  lg:object-contain'>
+              <img src={cardData.imgLink}  className='w-full h-full ' alt={cardData?.title}/>
           </div>
             {
                 cardData.type === 'category' || cardData.type === 'videoCollection' ? null : 
@@ -126,10 +141,10 @@ const CarouselCards = ({cardData}) => {
         </div>
         {
           cardData.type === "videoCollection" ? null :
-        <div className='content-container flex justify-center text-center  lg:w-[95%]'>
+        <div className='content-container flex justify-center text-center mt-3 lg:mt-0 lg:w-[95%]'>
             <div>
-                <h1 className='capitalize text-[14px] font-[400] md:text-[20px] lg:text-[1.2rem]'>{cardData?.title}</h1>
-                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[14px] font-[500] md:text-[20px] lg:text-[20px]'>$  {cardData?.price}.00</h1>}
+                <h1 className='capitalize text-[16px] font-[400] md:text-[20px] lg:text-[1.2rem]'>{cardData?.title}</h1>
+                {cardData?.type === 'category' ? null :  <h1 className='text-gray-800 text-[16px] font-[500] md:text-[20px] lg:text-[20px]'>$  {cardData?.price}.00</h1>}
                 
                 { cardData?.type === 'category' ? null : <div className='flex items-center justify-center gap-3 w-full'>
                     <div id='featured-div' className=''>
@@ -146,7 +161,7 @@ const CarouselCards = ({cardData}) => {
                         </svg>
                     </div>
                    <div>
-                        <h2 className='text-[#999999] text-[10px] font-[500] md:text-[18px] lg:text-[12px]'>{cardData?.reviewsCount} reviews</h2>
+                        <h2 className='text-[#999999] text-[14px] font-[500] md:text-[18px] lg:text-[12px]'>{cardData?.reviewsCount} reviews</h2>
                     </div>
                 </div>}
                 { cardData.type === 'category' &&
@@ -162,5 +177,35 @@ const CarouselCards = ({cardData}) => {
 
     </>
 }
+
+// custom right arrow
+const CustomRightArrow = ({ onClick}) => {
+  // onMove means if dragging or swiping in progress.
+  return <button className='h-[3rem] w-[3rem] absolute top-2/12 left-0 bg-white  rounded-full flex items-center justify-center ' onClick={() => onClick()}>
+    <MdChevronLeft className='text-[1.5rem] text-[#333]'/>
+  </button>;
+};
+
+const CustomLeftArrow = ({ onClick}) => {
+  // onMove means if dragging or swiping in progress.
+  return <button className='h-[3rem] w-[3rem] absolute top-2/12 right-0 bg-white  rounded-full flex items-center justify-center ' onClick={() => onClick()}>
+    <MdChevronRight className='text-[1.5rem] text-[#333]'/>
+  </button>;
+};
+
+// custom dots 
+const CustomDot = ({ onClick, active }) => {
+  
+  // const carouselItems = [CarouselItem1, CaourselItem2, CarouselItem3];
+  // onMove means if dragging or swiping in progress.
+  // active is provided by this lib for checking if the item is active or not.
+  return (
+    
+    <button
+      className={`w-3 h-3 rounded-full mx-2 ${active ? "active border-[0.01rem] border-nav-pink h-5 w-5 bg-transparent " : null} bg-nav-pink`}
+      onClick={() => onClick()} />
+   
+  );
+};
 
 export  {CustomCarousel, CarouselCards};

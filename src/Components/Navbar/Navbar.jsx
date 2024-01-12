@@ -1,33 +1,58 @@
 import React, { useState } from "react";
 import logo from "../../Assest/images/icon.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
+import MegaMenuComp from "./MegaMenu";
+import { Navsidebar } from "./Sidebar";
+import { globalSearchHook } from "../../Customhooks/globalSearchHook";
+import { SearchList } from "./ListGroup";
 
 const NavbarComp = () => {
 
   const [globalSearch, setGlobalSearch] = useState("");
+  const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [showSidebar , setShowSidebar] = useState(false); 
+  const [searchResultArray, setSearchResultArray] = useState([]);
+  const [showSearchList, setShowSearchList] = useState(false);
 
   const handleGlobalSearch = (event) => {
     try {
-      const { id, value } = event.target;
-      if(id === "searchQuerry"){
+      const { name, value } = event.target;
+      if(name === "searchQuerry"){
         setGlobalSearch(value);
-      }else{
-        throw new Error("Some Error Raise While Searching!")
+        const searchResult =  globalSearchHook(value); // sending the search querry 
+        if(searchResult.length > 0){
+          setSearchResultArray(searchResult);
+          setShowSearchList(true); // show the searchList;
+        }
+        if(value === "" || searchResultArray.length === 0){
+          setShowSearchList(false); // hide the searchlist when value is empty
+        }
       }
+
       
     } catch (error) {
       if(error){
         console.error("Global Search Error : ",error)
       }
     }
-  }
+  } 
+
+  // console.log("searchResultArray : ",searchResultArray) // searching the products using the search custom hook.
+  
+
 
   return (
     <>
+   { showMegaMenu ?  <MegaMenuComp setShowMegaMenu={setShowMegaMenu} /> : null}
+
+   { showSidebar ? <Navsidebar setShowSidebar={setShowSidebar} /> : null }
+
+    { showSearchList ? <SearchList searchResultArray = {searchResultArray} setShowSearchList={setShowSearchList}  />  : null}
+   
       <nav className="bg-[#FCEBE8] w-full relative overflow-auto h-fit">
         <div className="md:px-[3rem] lg:px-19 px-6  py-4 lg:py-7  flex items-center lg:justify-between justify-between">
         {/* for hamburger */}
-        <div className="lg:hidden">
+        <div onClick={()=> setShowSidebar(true)}  className="lg:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="18" viewBox="0 0 28 18" fill="none">
             <path d="M0 1H28M0 9.24242H10.2308H20.4615M0 17H12.2051" stroke="#363636" stroke-width="1.5"/>
           </svg>
@@ -41,7 +66,7 @@ const NavbarComp = () => {
                 HOME
               </a>
             </li>
-            <li className="">
+            <li  onMouseEnter={()=> setShowMegaMenu(true)} onfo className="">
               <a href="#" className="hover:underline lg:flex items-center">
                 SHOP
                 <span className="hidden lg:block">
@@ -76,7 +101,7 @@ const NavbarComp = () => {
               value={globalSearch}
               onChange={handleGlobalSearch}
               type="text"
-              className="w-[330px] py-3 bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
+              className="w-[330px] text-[#333] py-3 bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
               placeholder="Search"
             />
             <button className="absolute left-[1rem] top-[50%] translate-y-[-50%] ">
@@ -96,7 +121,7 @@ const NavbarComp = () => {
             </button>
           </div>
           <div className="flex items-center md:gap-[2rem] gap-5 pt-2  pr-3">
-            <div className="relative">
+            <div className="relative lg:block hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="27"
@@ -111,19 +136,10 @@ const NavbarComp = () => {
               </svg>
             </div>
             <div className="relative">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="27"
-                height="27"
-                viewBox="0 0 20 18"
-                fill="none"
-              >
-                <path
-                  d="M9.95439 18C8.94943 18 7.94552 17.6525 7.16364 16.9566C1.21805 11.6652 -0.991818 7.42472 0.404607 3.99249C1.04863 2.40879 2.56607 0.429968 4.72227 0.06344C7.17101 -0.351817 9.15989 1.37383 10.0028 2.26579C10.8404 1.38654 12.8135 -0.292495 15.2812 0.121703C18.1761 0.613232 19.4621 3.58465 19.5989 3.92152C20.9953 7.35057 18.7539 11.6154 12.7462 16.9576C11.9622 17.6525 10.9583 18 9.95439 18ZM5.48099 1.05815C5.29052 1.05815 5.09584 1.07404 4.898 1.10688C2.61974 1.49565 1.49902 4.09843 1.37905 4.39398C0.172045 7.35798 2.29247 11.2076 7.85923 16.1621C9.03466 17.2066 10.8741 17.2066 12.0485 16.1621C17.5995 11.2256 19.8125 7.24251 18.6234 4.32194C18.2077 3.30075 17.0007 1.48718 15.1055 1.1662C12.5347 0.722343 10.4995 3.28592 10.4143 3.39503C10.2154 3.64927 9.78812 3.64927 9.58924 3.39503C9.38719 3.13761 7.68559 1.05815 5.48099 1.05815Z"
-                  fill="#363636"
-                />
-              </svg>
-              <div className="absolute -top-3 -right-3 flex justify-center items-center h-5 w-5 rounded-full bg-nav-pink">
+            <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 22 22" fill="none">
+            <path d="M20.8284 19.9964L16.4674 15.6357C17.8236 14.0923 18.651 12.0553 18.651 9.82482C18.651 4.95096 14.6998 1 9.82551 1C4.95127 1 1 4.95096 1 9.82482C1 14.6987 4.95127 18.6496 9.82551 18.6496C12.0554 18.6496 14.0925 17.8223 15.6462 16.4583L15.6361 16.4669L19.9971 20.8276C20.1037 20.9342 20.2502 21 20.4124 21C20.7367 21 21 20.7368 21 20.4124C21 20.2502 20.9342 20.1029 20.8276 19.9972L20.8284 19.9964ZM2.19721 9.835C2.19721 5.61611 5.61725 2.19633 9.83648 2.19633C14.0557 2.19633 17.4757 5.61611 17.4757 9.835C17.4757 14.0539 14.0557 17.4737 9.83648 17.4737C5.6196 17.469 2.20191 14.0508 2.19721 9.835Z" fill="#363636" stroke="#363636" stroke-width="0.2"/>
+            </svg>
+              <div className="absolute -top-3 hidden lg:visible -right-3 lg:flex justify-center items-center h-5 w-5 rounded-full bg-nav-pink">
                 <span className="text-white text-[8px]">3</span>
               </div>
             </div>
