@@ -174,3 +174,9 @@
   left: 50vw;
   /* bottom: -32px; */
 }
+
+@layer base{
+  .dump>button>svg{
+    @apply hidden
+  }
+}

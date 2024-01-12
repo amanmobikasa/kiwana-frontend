@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CollectionLandingComp from '../Components/ProductCollectionComp/CollectionLandingComp';
 import FilterShortCollection from '../Components/ProductCollectionComp/FilterAndShorts';
-import ProductGrid from '../Components/ProductCollectionComp/ProductGrid';
+import {ProductGrid} from '../Components/ProductCollectionComp/ProductGrid';
 import ProductCollectionVideoComp from '../Components/ProductCollectionComp/ProductCollectionVideoComp';
 import ProductCollectionAlsoLike from '../Components/ProductCollectionComp/ProductCollectionAlsoLike';
 import FilterAndShortDesktop from '../Components/ProductCollectionComp/filteAndShortDesktop';

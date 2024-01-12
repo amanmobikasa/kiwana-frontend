@@ -2,20 +2,33 @@ import React, { useState } from "react";
 import logo from "../../Assest/images/icon.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import MegaMenuComp from "./MegaMenu";
+import { Navsidebar } from "./Sidebar";
+import { globalSearchHook } from "../../Customhooks/globalSearchHook";
+import { SearchList } from "./ListGroup";
 
 const NavbarComp = () => {
 
   const [globalSearch, setGlobalSearch] = useState("");
   const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const [showSidebar , setShowSidebar] = useState(false); 
+  const [searchResultArray, setSearchResultArray] = useState([]);
+  const [showSearchList, setShowSearchList] = useState(false);
 
   const handleGlobalSearch = (event) => {
     try {
-      const { id, value } = event.target;
-      if(id === "searchQuerry"){
+      const { name, value } = event.target;
+      if(name === "searchQuerry"){
         setGlobalSearch(value);
-      }else{
-        throw new Error("Some Error Raise While Searching!")
+        const searchResult =  globalSearchHook(value); // sending the search querry 
+        if(searchResult.length > 0){
+          setSearchResultArray(searchResult);
+          setShowSearchList(true); // show the searchList;
+        }
+        if(value === "" || searchResultArray.length === 0){
+          setShowSearchList(false); // hide the searchlist when value is empty
+        }
       }
+
       
     } catch (error) {
       if(error){
@@ -24,17 +37,22 @@ const NavbarComp = () => {
     }
   } 
 
-  // const handleMegaMenu = (event) => {
-  //   setShowMegaMenu(true)
-  // }
+  // console.log("searchResultArray : ",searchResultArray) // searching the products using the search custom hook.
+  
+
 
   return (
     <>
    { showMegaMenu ?  <MegaMenuComp setShowMegaMenu={setShowMegaMenu} /> : null}
+
+   { showSidebar ? <Navsidebar setShowSidebar={setShowSidebar} /> : null }
+
+    { showSearchList ? <SearchList searchResultArray = {searchResultArray} setShowSearchList={setShowSearchList}  />  : null}
+   
       <nav className="bg-[#FCEBE8] w-full relative overflow-auto h-fit">
         <div className="md:px-[3rem] lg:px-19 px-6  py-4 lg:py-7  flex items-center lg:justify-between justify-between">
         {/* for hamburger */}
-        <div className="lg:hidden">
+        <div onClick={()=> setShowSidebar(true)}  className="lg:hidden">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="18" viewBox="0 0 28 18" fill="none">
             <path d="M0 1H28M0 9.24242H10.2308H20.4615M0 17H12.2051" stroke="#363636" stroke-width="1.5"/>
           </svg>
@@ -83,7 +101,7 @@ const NavbarComp = () => {
               value={globalSearch}
               onChange={handleGlobalSearch}
               type="text"
-              className="w-[330px] py-3 bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
+              className="w-[330px] text-[#333] py-3 bg-transparent border-nav-pink pl-11 placeholder:text-[#36363680]"
               placeholder="Search"
             />
             <button className="absolute left-[1rem] top-[50%] translate-y-[-50%] ">
