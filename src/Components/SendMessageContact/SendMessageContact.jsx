@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { contactCreateSlice } from '../../Redux/reducer/createContactSlice';
 
 const SendMessageContact = () => {
+
     const [contactData, setContactData] = useState({})
+    const dispatch = useDispatch();
 
     // handle the contact details;
     const handleContactDetails = (event, data) => {
@@ -14,6 +18,8 @@ const SendMessageContact = () => {
     // handle the submit contact details;
     const handleSubmitContactDetails = (event) => {
         event.preventDefault();
+        dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
+        alert("message is delievered!")
         setContactData({});
     }
     
