@@ -7,13 +7,13 @@ import featuredimg3 from '../../Assest/images/featured3.png';
 import featuredimg4 from '../../Assest/images/featured4.png';
 import { CustomCarousel } from '../customCarousel';
 
-const ProductCollectionAlsoLike = () => {
+const ProductCollectionAlsoLike = ({mainTitle}) => {
     return <>
     <div id='you-may-also-like' className='w-full h-fit  relative bg-[#FFF8F7] '>
         <div className='inner-container w-full h-fit py-[60px] lg:pl-[30px] relative'>
             <div className='content-container space-y-[42px] '>
                 <div className='w-full text-center'>
-                    <h1 className='text-[#363636] text-[35px] lg:text-[45px] font-[500] font-playfair'>You May Also Like</h1>
+                    <h1 className='text-[#363636] text-[25px] lg:text-[45px] font-[600] font-playfair'>{mainTitle}</h1>
                 </div>
                 <div className='z-20 '>
                     {

@@ -33,7 +33,7 @@ const CustomCarousel = ({carouselData}) => {
   arrows={hideDots ? true : false}
   autoPlaySpeed={3000}
   centerMode={true}
-  className="lg:gap-[2rem] gap-2 z-0 h-fit w-full"
+  className="lg:gap-[2rem] gap-0 z-50 h-fit w-full"
   containerClass="container-padding-bottom "
   dotListClass="flex-item-center"
   draggable
@@ -117,8 +117,8 @@ const CarouselCards = ({cardData}) => {
 
     return <>
     <div id={`card-${cardData.id}`} className='card-container w-full h-fit lg:space-y-3 '>
-        <div className='h-full w-full lg:w-[95%] lg:h-fit   relative'>
-          <div className='h-full w-full object-contain  lg:object-contain'>
+        <div className='h-fit w-[90%] lg:w-[95%] lg:h-fit   relative'>
+          <div className='h-full  lg:w-full object-contain  lg:object-contain'>
               <img src={cardData.imgLink}  className='w-full h-full ' alt={cardData?.title}/>
           </div>
             {
@@ -202,7 +202,7 @@ const CustomDot = ({ onClick, active }) => {
   return (
     
     <button
-      className={`w-3 h-3 rounded-full mx-2 ${active ? "active border-[0.01rem] border-nav-pink h-5 w-5 bg-transparent " : null} bg-nav-pink`}
+      className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full mx-[2px] lg:mx-2 ${active ? "active border-[0.01rem] border-nav-pink h-3 w-3 lg:h-5 lg:w-5 bg-transparent " : null} bg-nav-pink`}
       onClick={() => onClick()} />
    
   );

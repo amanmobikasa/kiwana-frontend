@@ -53,7 +53,7 @@ const ProductCollection = () => {
                 <ProductCollectionVideoComp />
             </div>
             <div className=''>
-                <ProductCollectionAlsoLike />
+                <ProductCollectionAlsoLike mainTitle={"You May Also Like"} />
             </div>
         </div>
         
