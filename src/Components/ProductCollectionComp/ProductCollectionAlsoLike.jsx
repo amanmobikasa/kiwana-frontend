@@ -13,7 +13,7 @@ const ProductCollectionAlsoLike = ({mainTitle}) => {
         <div className='inner-container w-full h-fit py-[60px] lg:pl-[30px] relative'>
             <div className='content-container space-y-[42px] '>
                 <div className='w-full text-center'>
-                    <h1 className='text-[#363636] text-[25px] lg:text-[45px] font-[600] font-playfair'>{mainTitle}</h1>
+                    <h1 className='text-[#363636] text-[25px] lg:text-[43px] font-[600] font-playfair'>{mainTitle}</h1>
                 </div>
                 <div className='z-20 '>
                     {
@@ -22,11 +22,11 @@ const ProductCollectionAlsoLike = ({mainTitle}) => {
                 </div>
             </div>
             {/* flower */}
-            <div className='absolute w-full  left-0 top-[3rem] flex justify-between items-center '>
-                <div className='object-contain w-3/12'>
-                    <img src={sideimg1} className='h-full w-full' alt="" />
+            <div className='absolute w-full lg:h-[50vh]  left-0 top-1/3 flex justify-between items-center '>
+                <div className='object-contain w-2/12'>
+                    <img src={sideimg1} className='h-full  w-full' alt="" />
                 </div>
-                <div className='object-contain w-3/12'>
+                <div className='object-contain w-2/12'>
                     <img src={sideimg2} className='w-full h-full' alt="" />
                 </div>
             </div>
