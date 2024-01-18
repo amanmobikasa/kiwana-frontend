@@ -22,56 +22,98 @@ const ProductPdpInformationComp = () => {
             <div className="outer-container">
                 <div className="inner-container space-y-2">
                     <div className='text-left text-[#999]'>
-                        <p className='uppercase text-[13px] tracking-widest'><span>Home</span> / Ultra Brightening Face Serum</p>
+                        <p className='uppercase text-[13px] lg:text-[15px]  tracking-widest'><span>Home</span> / Ultra Brightening Face Serum</p>
                     </div>
                     <div className='product_title-container w-full h-full relative'>
-                        <div className='space-y-2'>
-                            <div>
-                                <h1 className='text-[25px] font-playfair text-[#363636] font-[600]'>Ultra Brightening Face Serum</h1>
+                        <div className='space-y-2 lg:space-y-0'>
+                            <div className='lg:pt-2'>
+                                <h1 className='text-[25px] lg:text-[2.7rem] font-playfair text-[#363636] font-[600]'>Ultra Brightening Face Serum</h1>
                             </div>
-                            <div>
-                                <p className='text-[25px] font-[400]'>$350</p>
-                            </div>
-                            <div className='flex justify-start items-center gap-1 w-full'>
-                                <FaStar className='text-nav-pink  text-xl' />
-                                <FaStar className='text-nav-pink  text-xl' />
-                                <FaStar className='text-nav-pink  text-xl' />
-                                <FaStar className='text-nav-pink  text-xl' />
-                                <FaStar className='text-nav-pink  text-xl' />
-                                <p className='text-[12px] text-[#999]'>(212)</p>
-                            </div>
-                            <div className='range-container w-full pt-4 space-y-3'>
+                            <div className='lg:space-y-1'>
                                 <div>
-                                    <h6 className='text-xs font-[400] text-[#363636] '>Only 56 items in stock!</h6>
+                                    <p className='text-[25px] font-[400]'>$350</p>
+                                </div>
+                                <div className='flex justify-start items-center gap-1  w-full'>
+                                    <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
+                                    <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
+                                    <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
+                                    <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
+                                    <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
+                                    <p className='text-[12px] lg:text-[14px] text-[#999]'>(212)</p>
+                                </div>
+                            </div>
+                           
+                            <div className='range-container w-full pt-4 space-y-3 lg:space-y-5'>
+                                <div>
+                                    <h6 className='text-xs lg:text-[16px] font-[400] text-[#363636] '>Only 56 items in stock!</h6>
                                 </div>
                                 <div className='w-full bg-gray-200 h-[0.60rem] rounded-full'>
                                     <div className='h-full w-[60%] bg-nav-pink rounded-full'></div>
                                 </div>
                             </div>
-                            <div className='weight-container pt-4 w-full space-y-2 h-fit'>
+
+                            <div className='option-container w-full h-fit hidden lg:block lg:pt-7'>
+                                <div className='lg:grid lg:grid-cols-3 grid-cols-2 items-center w-full h-fit justify-center lg:gap-y-5 space-y-0 gap-y-8  text-[#363636]'>
+                                        <div className='w-fit h-fit relative'>
+                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
+                                                <p className='text-[14px]'>Saffron</p>
+                                            </label>
+                                        </div>
+                                        <div className='w-fit h-fit relative'>
+                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
+                                                <p className='text-[14px]'>Hyaluronic Acid</p>
+                                            </label>
+                                        </div>
+                                        <div className='w-fit h-fit relative'>
+                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
+                                                <p className='text-[14px]'>Ferulic Acid</p>
+                                            </label>
+                                        </div>
+                                        <div className='w-fit h-fit relative'>
+                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
+                                                <p className='text-[14px]'>Vitamin C</p>
+                                            </label>
+                                        </div>
+                                        <div className='w-fit h-fit relative'>
+                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
+                                                <p className='text-[14px]'>Vitamin E</p>
+                                            </label>
+                                        </div>
+                                                
+                                                
+                                </div>
+                            </div> 
+
+                            <div className='weight-container pt-4 lg:pt-6 w-full space-y-2 h-fit'>
                                 <div>
-                                    <h1 className='text-[#363636] font-playfair text-[18px] '>Weight</h1>
+                                    <h1 className='text-[#363636] font-playfair text-[18px] lg:text-[20px] lg:font-[600] '>Weight</h1>
                                 </div>
                                 <div className='flex w-full justify-start gap-2 '>
                                     <div>
-                                        <button className='text-xs text-white bg-[#363636] px-5 py-2'>30ml</button>
+                                        <button className='text-xs text-white bg-[#363636] px-5 py-2 lg:py-3 lg:text-[14px]'>30ml</button>
                                     </div>
                                     <div>
-                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2'>50ml</button>
+                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2 lg:py-3 lg:text-[14px]'>50ml</button>
                                     </div>
                                     <div>
-                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2'>100ml</button>
+                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2 lg:py-3 lg:text-[14px]'>100ml</button>
                                     </div>
                                 </div>
                             </div>
-                            <div className='quantity-container w-full h-fit  pt-3'>
+                              
+                            <div className='quantity-container w-full h-fit  pt-3 lg:pt-6'>
                                         <div className='inner-container w-full relative h-fit space-y-2'>
                                             <div>
-                                                <h1 className='lg:text-[24px] text-[#363636] font-playfair font-[600] text-[20px]'>Quanity</h1>
+                                                <h1 className='lg:text-[22px] tracking-wider text-[#363636] font-playfair font-[600] text-[20px] '>Quanity</h1>
                                             </div>
                                             <div className='button-container flex w-full h-fit gap-[1.3rem] lg:items-center lg:justify-between  lg:space-y-0'>
                                                 <div className='lg:w-4/12 w-7/12 h-fit relative '>
-                                                    <div className='w-auto h-fit py-[1px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
+                                                    <div className='w-auto h-fit py-[1px] lg:py-[4px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
                                                         <button onClick={()=> itemCount <= 0 ? alert("minimum one product is selected!") : setItemCount(itemCount - 1)}>
                                                             <LuMinus className='text-[1rem] text-[#E89689] font-thin'/>
                                                         </button>
@@ -82,20 +124,20 @@ const ProductPdpInformationComp = () => {
                                                     </div>
                                                 </div>
                                                 <div className='lg:w-8/12 w-full  h-fit relative '>
-                                                    <button className='w-full py-2 flex items-center justify-center gap-3 border-[0.01rem] border-[#E89689]'>
+                                                    <button className='w-full py-2 lg:py-[10px] flex items-center justify-center gap-3 lg:gap-4 border-[0.01rem] border-[#E89689]'>
                                                         
-                                                            <HiOutlineShoppingBag className='text-[16px] text-[#E89689]'/>
-                                                            <span className='text-[16px] text-[#E89689] '>Add to cart</span>
+                                                            <HiOutlineShoppingBag className='text-[16px] lg:text-[20px] text-[#E89689]'/>
+                                                            <span className='text-[16px] text-[#E89689] lg:text-[20px]'>Add to cart</span>
                                                        
                                                     </button>
                                                 </div>
                                             </div>
                                         </div>
                             </div>
-                            <div className='w-full h-fit pt-2'>
-                                <button className='text-white w-full py-2 bg-nav-pink hover:bg-transparent hover:text-nav-pink hover:border-nav-pink border-[0.01rem]'>BUY NOW</button>
+                            <div className='w-full h-fit pt-2 lg:pt-[0.90rem]'>
+                                <button className='text-white w-full py-2 bg-nav-pink hover:bg-transparent hover:text-nav-pink hover:border-nav-pink border-[0.01rem] lg:text-[22px]'>BUY NOW</button>
                             </div>
-                            <div className='product-image-div w-full h-fit pt-2'>
+                            <div className='product-image-div w-full h-fit pt-2 lg:pt-9'>
                                 <div className='flex justify-start items-center gap-[0.80rem]'>
                                     {/* item 1 */}
                                     <div className='h-fit w-fit rounded-full relative'>
@@ -162,7 +204,7 @@ const AccordionPDP = () => {
             <Accordion  collapseAll className='bg-transparent border-y-[0.01rem] border-x-0 border-nav-pink rounded-none'>
                 <Accordion.Panel arrowIcon={"a"}>
                     <Accordion.Title arrowIcon={<InfoIcon/>} className='flex w-full items-center '>
-                        <h6 className='text-[14px] font-playfair text-[#363636] font-[600]'>Description</h6>
+                        <h6 className='text-[14px] font-playfair text-[#363636] font-[600] lg:text-[19px]'>&nbsp; &nbsp; &nbsp; Description</h6>
                         {/* <p><InfoIcon /></p> */}
                     </Accordion.Title>
                     <Accordion.Content>
@@ -199,22 +241,22 @@ const InfoIcon = () => {
 const iconsArray = [
     {
         id : 1,
-        icon : <FaFacebookF className='text-[20px] font-[600] hover:text-pink-600'/>,
+        icon : <FaFacebookF className='text-[22px] font-[600] hover:text-pink-600'/>,
         href : "/",
     },
     {
         id : 2,
-        icon : <FaInstagram className='text-[20px] font-[600] hover:text-pink-600'/>,
+        icon : <FaInstagram className='text-[23px] font-[600] hover:text-pink-600'/>,
         href : "/",
     },
     {
         id : 3,
-        icon : <FaXTwitter className='text-[20px] font-[600] hover:text-pink-600'/>,
+        icon : <FaXTwitter className='text-[25px] font-[600] hover:text-pink-600'/>,
         href : "/",
     },
     {
         id : 4,
-        icon : <IoShareSocial className='text-[20px] font-[600] hover:text-pink-600'/>,
+        icon : <IoShareSocial className='text-[24px] font-[600] hover:text-pink-600'/>,
         href : "/",
     },
 ]
