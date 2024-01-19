@@ -14,7 +14,7 @@ const pagesRoutes = [
     { path : '/about-us', name:"aboutUsPage", element:<AboutUsPage />, exact : true },
     { path : '/login', name:"Login", element:<LoginPage />, exact : true },
     { path : '/collection', name:"ProductCollection", element:<ProductCollection />, exact : true },
-    { path : '/pdp-product', name:"Product Pdp Page", element:<PdpProducts />, exact : true },
+    { path : 'collection/pdp-product/:productId', name:"Product Pdp Page", element:<PdpProducts />, exact : true },
 
 ]
 

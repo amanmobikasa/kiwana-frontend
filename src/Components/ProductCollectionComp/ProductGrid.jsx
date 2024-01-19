@@ -219,7 +219,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : "1"
 
             }
         ]
@@ -293,7 +293,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '2'
 
             }
         ]
@@ -367,7 +367,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '3'
 
             }
         ]
@@ -441,7 +441,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '4'
 
             }
         ]
@@ -515,7 +515,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '5'
 
             }
         ]
@@ -589,7 +589,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '6'
 
             }
         ]
@@ -663,7 +663,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '7'
 
             }
         ]
@@ -737,7 +737,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '8'
 
             }
         ]
@@ -811,7 +811,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '9'
 
             }
         ]
@@ -885,7 +885,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '10'
 
             }
         ]
@@ -959,7 +959,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '11'
 
             }
         ]
@@ -1033,7 +1033,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '12'
 
             }
         ]
@@ -1107,7 +1107,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '13'
 
             }
         ]
@@ -1181,7 +1181,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '14'
 
             }
         ]
@@ -1255,7 +1255,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '15'
 
             }
         ]
@@ -1329,7 +1329,7 @@ const productCollectionList_api = [
                     },
                 ],
                 product_quantity : 1,
-                pdp_link : '/login'
+                pdp_link : '16'
 
             }
         ]
