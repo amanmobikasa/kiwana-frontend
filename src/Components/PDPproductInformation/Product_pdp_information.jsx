@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FaStar } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from 'react-icons/hi2';
 import { LuMinus, LuPlus } from 'react-icons/lu';
@@ -9,25 +9,147 @@ import play from '../../Assest/images/play.png';
 import { Accordion } from 'flowbite-react';
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { IoShareSocial } from "react-icons/io5";
+import { IoEllipseSharp, IoShareSocial } from "react-icons/io5";
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { calcLength } from 'framer-motion';
+import { useDispatch } from 'react-redux';
+import { pdpDescription } from '../../Redux/reducer/productDescriptionSlice';
 
 
 const ProductPdpInformationComp = () => {
 
-    const [itemCount, setItemCount] = useState(1);
+    const [pdpInformationData, setPdpInformationData] = useState(null);
+    const [itemCount, setItemCount] = useState({
+        productId : null,
+        productCount : 1,
+    });
+    const [productWeightState, setUpdateProductWeightState] = useState(null) // handling the updated json of weight
+    const [updateProductTypeState, setUpdateProductTypeState] = useState(null) // handling the updated json of product types
+
+    const pdp_description_data = useSelector((state)=> state.pdpProductData.pdpData)
+    const dispatch = useDispatch();
+   
+    useEffect(()=>{
+        setPdpInformationData(pdp_description_data);
+    },[pdp_description_data])
+
+    console.log("pdpInformationData : ", pdpInformationData);
+
+
+
+    const updateProductPdpData = (event, radio_type) => {
+        const id = event.target.id;
+        // console.log("id : ", id);
+        if(id == "product-type-container"){
+            // Find the index of the object to be updated
+            const indexToUpdate = pdpInformationData.product_type.findIndex(radio_data => radio_data.label === radio_type.label);
+            console.log("indexToUpdate : ", indexToUpdate);
+            // If the object is found, update it by creating a new object
+            if (indexToUpdate !== -1) {
+                const updatedProductTypes = pdpInformationData.product_type.map((radio_data, index) => {
+                    if (index === indexToUpdate) {
+                        // Create a new object with 'selected' set to true
+                        return {
+                            ...radio_data,
+                            selected: true
+                        };
+                    }
+                    // No modification needed for other objects
+                    return radio_data;
+                });
+        
+                // Dispatch an action to update the state in Redux
+                // Example: dispatch(updateProductTypesAction(updatedProductTypes));
+        
+                // console.log("testest : ", updatedProductTypes);
+                setUpdateProductTypeState(updatedProductTypes)
+            }
+        }
+
+        // handle the product weight
+        if(id == "weight-container"){
+            console.log(radio_type)
+            const indexToUpdate = pdpInformationData.product_weight.findIndex(item_weight => item_weight.weight_label === radio_type.weight_label)
+            
+            if(indexToUpdate !== -1){
+                const updateProductWeight = pdpInformationData.product_weight.map((item_weight, index)=>{
+                    if(index === indexToUpdate){
+                        return {
+                            ...item_weight,
+                            selected : true
+                        }
+                    }
+                    else{
+                        return {
+                            ...item_weight,
+                            selected : false
+                        }
+                    }
+                    
+                })
+                // console.log("updateProductWeight : ", updateProductWeight);
+                setUpdateProductWeightState(updateProductWeight)
+            }
+        }
+    };
+
+
+    const handleProductQuantity = (event, type, productID) => {
+        let newCount;
+    
+        if (type === "increment") {
+            newCount = Math.min(itemCount.productCount + 1, pdpInformationData.product_stock);
+        } else if (type === "decrement") {
+            newCount = Math.max(itemCount.productCount - 1, 0);
+        }
+    
+        setItemCount({ productId: productID, productCount: newCount });
+    
+        if (newCount >= pdpInformationData.product_stock) {
+            alert(`Quantity can't be more than ${pdpInformationData.product_stock}`);
+        } else if (newCount < 0) {
+            alert("Quantity can't be negative");
+        }
+
+        // now dispatch the state to the addtocart reducer
+    };
+
+    // console.log("itemCount :", itemCount)
+
+    // addtocart functionality for update the json and dispatch it.
+    const handleAddToCart = () => {
+        // console.log("updateProductWeight : ", productWeightState);
+        // console.log("testest : ", updateProductTypeState);
+        if(productWeightState || updateProductTypeState || itemCount){
+            setPdpInformationData({
+                ...pdpInformationData,
+                product_quantity : itemCount,
+                product_type : updateProductTypeState,
+                product_weight : productWeightState,
+            })
+            console.log("pdpInformationData : ", pdpInformationData);
+            dispatch(pdpDescription(pdpInformationData))
+
+        }else{
+            alert("error!!!!!")
+        }
+    }
+    
+    
+    
 
     return <>
         <article className='product-information-comp w-full h-full relative overflow-hidden'>
             <div className="outer-container">
                 <div className="inner-container space-y-2">
                     <div className='text-left text-[#999]'>
-                        <p className='uppercase text-[13px] lg:text-[15px]  tracking-widest'><span>Home</span> / Ultra Brightening Face Serum</p>
+                        <p className='uppercase text-[13px] lg:text-[15px]  tracking-widest'><span>Home</span> / {pdpInformationData?.product_title}</p>
                     </div>
                     <div className='product_title-container w-full h-full relative'>
                         <div className='space-y-2 lg:space-y-0'>
                             <div className='lg:pt-2'>
-                                <h1 className='text-[25px] lg:text-[2.7rem] font-playfair text-[#363636] font-[600]'>Ultra Brightening Face Serum</h1>
+                                <h1 className='text-[25px] lg:text-[2.7rem] font-playfair text-[#363636] font-[600]'>{pdpInformationData?.product_title}</h1>
                             </div>
                             <div className='lg:space-y-1'>
                                 <div>
@@ -39,13 +161,13 @@ const ProductPdpInformationComp = () => {
                                     <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
                                     <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
                                     <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />
-                                    <p className='text-[12px] lg:text-[14px] text-[#999]'>(212)</p>
+                                    <p className='text-[12px] lg:text-[14px] text-[#999]'>({pdpInformationData?.product_review})</p>
                                 </div>
                             </div>
                            
                             <div className='range-container w-full pt-4 space-y-3 lg:space-y-5'>
                                 <div>
-                                    <h6 className='text-xs lg:text-[16px] font-[400] text-[#363636] '>Only 56 items in stock!</h6>
+                                    <h6 className='text-xs lg:text-[16px] font-[400] text-[#363636] '>Only {pdpInformationData?.product_stock} items in stock!</h6>
                                 </div>
                                 <div className='w-full bg-gray-200 h-[0.60rem] rounded-full'>
                                     <div className='h-full w-[60%] bg-nav-pink rounded-full'></div>
@@ -54,37 +176,18 @@ const ProductPdpInformationComp = () => {
 
                             <div className='option-container w-full h-fit hidden lg:block lg:pt-7'>
                                 <div className='lg:grid lg:grid-cols-3 grid-cols-2 items-center w-full h-fit justify-center lg:gap-y-5 space-y-0 gap-y-8  text-[#363636]'>
-                                        <div className='w-fit h-fit relative'>
-                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
-                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
-                                                <p className='text-[14px]'>Saffron</p>
-                                            </label>
-                                        </div>
-                                        <div className='w-fit h-fit relative'>
-                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
-                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
-                                                <p className='text-[14px]'>Hyaluronic Acid</p>
-                                            </label>
-                                        </div>
-                                        <div className='w-fit h-fit relative'>
-                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
-                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
-                                                <p className='text-[14px]'>Ferulic Acid</p>
-                                            </label>
-                                        </div>
-                                        <div className='w-fit h-fit relative'>
-                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
-                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
-                                                <p className='text-[14px]'>Vitamin C</p>
-                                            </label>
-                                        </div>
-                                        <div className='w-fit h-fit relative'>
-                                            <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
-                                                <input type="radio" className='w-6 h-6 border-nav-pink ' name="addition" id="" />
-                                                <p className='text-[14px]'>Vitamin E</p>
-                                            </label>
-                                        </div>
-                                                
+                                        {
+                                            pdpInformationData?.product_type.map((radio_type, i)=>{
+                                                return <>
+                                                <div key={i} className='w-fit h-fit relative'>
+                                                    <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
+                                                        <input id='product-type-container' onClick={(event)=> updateProductPdpData(event, radio_type)} aria-selected={radio_type?.selected} value={radio_type?.value} type="radio" className='w-6 h-6 border-nav-pink ' name="product_type"  />
+                                                        <p className='text-[14px]'>{radio_type?.label}</p>
+                                                    </label>
+                                                </div>
+                                                </>
+                                            })
+                                        }         
                                                 
                                 </div>
                             </div> 
@@ -94,15 +197,17 @@ const ProductPdpInformationComp = () => {
                                     <h1 className='text-[#363636] font-playfair text-[18px] lg:text-[20px] lg:font-[600] '>Weight</h1>
                                 </div>
                                 <div className='flex w-full justify-start gap-2 '>
-                                    <div>
-                                        <button className='text-xs text-white bg-[#363636] px-5 py-2 lg:py-3 lg:text-[14px]'>30ml</button>
-                                    </div>
-                                    <div>
-                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2 lg:py-3 lg:text-[14px]'>50ml</button>
-                                    </div>
-                                    <div>
-                                        <button className='text-xs text-[#363636] bg-[#E8968933] px-5 py-2 lg:py-3 lg:text-[14px]'>100ml</button>
-                                    </div>
+                                {
+                                    pdpInformationData?.product_weight?.map((weight_button, i)=>{
+                                        return <>
+                                        <div key={i}>
+                                            <button id='weight-container' onClick={(event)=> updateProductPdpData(event, weight_button)} className={`text-xs ${weight_button?.selected ? "text-white bg-[#363636] " : "text-[#363636] bg-[#E8968933]"}  px-5 py-2 lg:py-3 lg:text-[14px]`}>{weight_button?.weight_label}</button>
+                                        </div>
+                                        </>
+                                    })
+                                }
+                                    
+                                   
                                 </div>
                             </div>
                               
@@ -113,22 +218,20 @@ const ProductPdpInformationComp = () => {
                                             </div>
                                             <div className='button-container flex w-full h-fit gap-[1.3rem] lg:items-center lg:justify-between  lg:space-y-0'>
                                                 <div className='lg:w-4/12 w-7/12 h-fit relative '>
-                                                    <div className='w-auto h-fit py-[1px] lg:py-[4px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
-                                                        <button onClick={()=> itemCount <= 0 ? alert("minimum one product is selected!") : setItemCount(itemCount - 1)}>
+                                                    <div id='item-count-container' className='w-auto h-fit py-[1px] lg:py-[4px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
+                                                        <button onClick={(event)=>handleProductQuantity(event, 'decrement', pdpInformationData.pdp_link)}>
                                                             <LuMinus className='text-[1rem] text-[#E89689] font-thin'/>
                                                         </button>
-                                                        <input type="text" value={itemCount} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
-                                                        <button onClick={()=> setItemCount(itemCount + 1)}>
+                                                        <input type="text" value={itemCount.productCount} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
+                                                        <button onClick={(event)=>handleProductQuantity(event, 'increment', pdpInformationData.pdp_link)}>
                                                             <LuPlus className='text-[1rem] text-[#E89689] font-thin'/>
                                                         </button>
                                                     </div>
                                                 </div>
                                                 <div className='lg:w-8/12 w-full  h-fit relative '>
-                                                    <button className='w-full py-2 lg:py-[10px] flex items-center justify-center gap-3 lg:gap-4 border-[0.01rem] border-[#E89689]'>
-                                                        
-                                                            <HiOutlineShoppingBag className='text-[16px] lg:text-[20px] text-[#E89689]'/>
-                                                            <span className='text-[16px] text-[#E89689] lg:text-[20px]'>Add to cart</span>
-                                                       
+                                                    <button onClick={handleAddToCart} className='w-full py-2 lg:py-[10px] flex items-center justify-center gap-3 lg:gap-4 text-[#E89689] border-[0.01rem] border-[#E89689] active:bg-[#E89689] active:text-white'>
+                                                            <HiOutlineShoppingBag className='text-[16px] lg:text-[20px] '/>
+                                                            <span className='text-[16px] lg:text-[20px]'>Add to cart</span>
                                                     </button>
                                                 </div>
                                             </div>
@@ -262,3 +365,4 @@ const iconsArray = [
 ]
 
 export default ProductPdpInformationComp;
+

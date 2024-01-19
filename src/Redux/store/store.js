@@ -4,6 +4,8 @@ import userAuthSlice from "../reducer/userAuthSlice";
 import pdppopupSlice from "../reducer/pdppopupSlice";
 import filterProductSlice from "../reducer/filterProductSlice";
 import createContactSlice from "../reducer/createContactSlice";
+import productDescriptionSlice from "../reducer/productDescriptionSlice";
+import addToCartSlice from "../reducer/addToCartSlice";
 
 const store = configureStore({
     reducer: {
@@ -11,7 +13,9 @@ const store = configureStore({
         users : userAuthSlice,
         pdpSlice : pdppopupSlice,
         filterProducts : filterProductSlice,
-        contactUser : createContactSlice
+        contactUser : createContactSlice,
+        pdpProductData : productDescriptionSlice,
+        productQty : addToCartSlice
     }
 })
 

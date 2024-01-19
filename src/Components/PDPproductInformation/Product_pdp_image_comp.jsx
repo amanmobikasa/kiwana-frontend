@@ -6,11 +6,15 @@ import PdpImageThree from '../../Assest/images/pdp_images_2.png';
 // import ReactImageMagnify from 'react-image-magnify';
 import Magnifier from "react-magnifier";
 import pdpImageMagnifier from '../../Assest/images/magnifier_img.png';
+import { useSelector } from 'react-redux';
 
 const ProductPdpImageComp = ({setShowPopup, setActivePopUpImage}) => {
     const [activeImage , setActiveImage] = useState(null);
 
+    const pdp_description_data = useSelector((state)=> state.pdpProductData.pdpData)
 
+    // console.log("testest", pdp_description_data);
+    
     useEffect(()=>{
         pdp_images_api.forEach((images)=>{
             if(images?.active == true){
@@ -29,6 +33,8 @@ const ProductPdpImageComp = ({setShowPopup, setActivePopUpImage}) => {
         setActiveImage(image_pdp);
         setActivePopUpImage(image_pdp);
     }
+
+
 
     return <>
         <article className='w-full lg:w-11/12  h-fit relative overflow-auto lg:overflow-hidden'>
@@ -71,30 +77,7 @@ const ProductPdpImageComp = ({setShowPopup, setActivePopUpImage}) => {
     </>
 }
 
-// image magnifier
-// const ImageMagnifier = ({imageSrc, largeImageSrc}) => {
-//     return <>
-//          <ReactImageMagnify
-//          className='h-full lg:h-[40rem] w-full lg:w-11/12 lg:mx-auto'
-//       {...{
-//         smallImage: {
-//           alt: 'Your image',
-//           isFluidWidth: true,
-//           src: imageSrc,
-//         },
-//         largeImage: {
-//           src: imageSrc,
-//           width: 1200,
-//           height: 1800,
-//         },
-//         lensStyle: { backgroundColor: 'rgba(0,0,0,0.6)' },
-//         lensBorderSize: 1,
-//         lensBorderColor: '#000',
-        
-//       }}
-//     />
-//     </>
-// }
+
 
 const pdp_images_api = [
     {

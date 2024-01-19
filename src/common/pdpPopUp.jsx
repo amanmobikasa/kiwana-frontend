@@ -5,7 +5,7 @@ import { LuMinus, LuPlus } from "react-icons/lu";
 import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 const PdpPopup = ({hidePdp, pdpPopUpData}) => {
 
@@ -170,7 +170,7 @@ const PdpPopup = ({hidePdp, pdpPopUpData}) => {
                                         <button className='w-full bg-nav-pink text-[20px] font-[500] text-center py-3 text-white uppercase'>Buy now</button>
                                     </div>
                                     <div>
-                                        <NavLink to={pdpPopUpDataState?.pdp_link} className='text-[14px] underline underline-offset-2 text-[#363636] flex items-center gap-1'>View Full Details <span> <IoIosArrowRoundForward className='text-[24px] ' /> </span></NavLink>
+                                        <Link to={`pdp-product/${pdpPopUpDataState?.pdp_link}`} className='text-[14px] underline underline-offset-2 text-[#363636] flex items-center gap-1'>View Full Details <span> <IoIosArrowRoundForward className='text-[24px] ' /> </span></Link>
                                     </div>
                                 </div>
                             </div>
