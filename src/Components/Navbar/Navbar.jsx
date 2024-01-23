@@ -5,6 +5,7 @@ import MegaMenuComp from "./MegaMenu";
 import { Navsidebar } from "./Sidebar";
 import { globalSearchHook } from "../../Customhooks/globalSearchHook";
 import { SearchList } from "./ListGroup";
+import CartSideBar from "../../common/cartSidebar";
 
 const NavbarComp = () => {
 
@@ -13,6 +14,7 @@ const NavbarComp = () => {
   const [showSidebar , setShowSidebar] = useState(false); 
   const [searchResultArray, setSearchResultArray] = useState([]);
   const [showSearchList, setShowSearchList] = useState(false);
+  const [showCartSidebar, setShowCartSidebar] = useState(false);
 
   const handleGlobalSearch = (event) => {
     try {
@@ -39,6 +41,10 @@ const NavbarComp = () => {
 
   // console.log("searchResultArray : ",searchResultArray) // searching the products using the search custom hook.
   
+  const handleCartSideBar = () => {
+    setShowCartSidebar(true);
+    console.log(showCartSidebar)
+  }
 
 
   return (
@@ -48,6 +54,8 @@ const NavbarComp = () => {
    { showSidebar ? <Navsidebar setShowSidebar={setShowSidebar} /> : null }
 
     { showSearchList ? <SearchList searchResultArray = {searchResultArray} setShowSearchList={setShowSearchList}  />  : null}
+    
+    { showCartSidebar ? <CartSideBar setShowCartSidebar={setShowCartSidebar} showCartSidebar={showCartSidebar}  /> : null }
    
       <nav className="bg-[#FCEBE8] w-full relative overflow-auto h-fit">
         <div className="md:px-[3rem] lg:px-19 px-6  py-4 lg:py-7  flex items-center lg:justify-between justify-between">
@@ -143,7 +151,7 @@ const NavbarComp = () => {
                 <span className="text-white text-[8px]">3</span>
               </div>
             </div>
-            <div className="relative">
+            <div onClick={handleCartSideBar} className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="27"
@@ -157,7 +165,7 @@ const NavbarComp = () => {
                 />  
               </svg>
               <div className="absolute -top-3 -right-3 flex justify-center items-center h-5 w-5 rounded-full bg-nav-pink">
-                <span className="text-white text-[8px]">3</span>
+                <span className="text-white text-[8px]">2</span>
               </div>
             </div>
           </div>

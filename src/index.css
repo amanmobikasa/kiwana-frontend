@@ -180,3 +180,27 @@
     @apply hidden
   }
 }
+
+.dropdown-container button{
+  @apply bg-transparent text-nav-pink border-[0.01rem] py-1 border-nav-pink rounded-none w-full  text-lg flex justify-between dark:enabled:bg-nav-pink dark:enabled:text-white dark:hover:bg-nav-pink hover:bg-nav-pink focus:ring-0 enabled:hover:bg-nav-pink enabled:hover:text-white
+}
+.dropdown-container button span svg{
+  @apply hidden
+}
+.dropdown-container button span{
+  @apply text-[1rem]
+}
+
+/* handling the cartsidebar css */
+
+#cart-container{
+  @apply p-0
+}
+
+#cart-container>div{
+  @apply w-full rounded-none
+}
+
+.main-container{
+  @apply  rounded-none h-[100vh] 
+}
