@@ -7,6 +7,8 @@ import { useFetcher, useParams } from "react-router-dom";
 import { productCollectionList_api } from "../Components/ProductCollectionComp/ProductGrid";
 import { useDispatch } from "react-redux";
 import { pdpDescription } from "../Redux/reducer/productDescriptionSlice";
+import PdpScrollComp from "../Components/PdpScrollComp/PdpScrollComp";
+import { motion } from "framer-motion";
 
 const PdpProducts = () => {
   const [showPopup, setShowPopup] = useState(false)
@@ -14,6 +16,7 @@ const PdpProducts = () => {
   const [pdpProductData, setPdpProductData] = useState(); // store the pdp data get from useeffect
   const { productId } = useParams(); // getting the product id from the url;
   const dispatch = useDispatch();
+  const [showScrollComp, setShowScrollComp] = useState(false);
 
   console.log("prodyctId", productId)
 
@@ -31,6 +34,15 @@ const PdpProducts = () => {
   console.log("pdpProductData", pdpProductData);
   dispatch(pdpDescription(pdpProductData)); // dispatching the data to the store;
   
+
+  window.addEventListener("scroll",()=>{
+    if(window.scrollY > 300){
+      setShowScrollComp(true)
+    }else{
+      setShowScrollComp(false)
+    }
+    
+  })
 
   return (
     <>
@@ -52,6 +64,7 @@ const PdpProducts = () => {
           <ProductCollectionAlsoLike mainTitle = {"Recently Viewed Products"} />
         </div>
       </section>
+      { showScrollComp ? <motion.div initial={{ opacity : 0, y : -100 }} animate={{ opacity : 1, y : 0 }} transition={{ duration : 0.5, delay : 0.5, ease : "easeOut" }}> <PdpScrollComp /> </motion.div> : null }
     </>
   );
 };
