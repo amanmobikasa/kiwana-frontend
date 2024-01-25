@@ -14,7 +14,7 @@ function CartSideBar({setShowCartSidebar, showCartSidebar}) {
 
   return <>
       <Modal id='cart-container' dismissible show={showCartSidebar} onClose={showCartSidebar} >
-        <div className='main-container'>
+        <div className='main-container-cart-popup'>
             <div className='content-container w-11/12 mx-auto py-[2.2rem] '>
                 <div className='w-full flex justify-between h-fit items-center px-3'>
                     <div className='flex justify-start gap-2 '>
