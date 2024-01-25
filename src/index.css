@@ -201,6 +201,20 @@
   @apply w-full rounded-none
 }
 
-.main-container{
+.main-container-cart-popup{
   @apply  rounded-none h-[100vh] 
+}
+
+/* handle pagination */
+
+.pagination>ul{
+  @apply flex gap-2
+}
+
+.pagination>ul>li>button{
+  @apply rounded-full h-[60px] w-[60px] enabled:hover:bg-nav-pink enabled:hover:text-white hover:bg-nav-pink hover:text-white text-[#363636] bg-white enabled:dark:hover:bg-pink-500 enabled:dark:hover:text-white border-none 
+}
+
+.pagination>ul>li:nth-of-type(1)>button{
+  @apply hidden
 }
