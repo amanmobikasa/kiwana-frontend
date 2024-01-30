@@ -13,7 +13,10 @@ module.exports = {
         'poppins' : ['Poppins', 'sans-serif'],
         'playfair' : ['Playfair Display', 'serif'],
         'montycarlo' : ['MonteCarlo', 'serif']
-      }
+      },
+      maxHeight:{
+        '2xl' : '70rem',
+      },
     },
     screens:{
       xs : '480px',

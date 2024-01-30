@@ -12,6 +12,7 @@ const PdpProducts = React.lazy(()=> import('../Pages/PdpofProducts'));
 const ProductCartPage = React.lazy(()=> import('../Pages/productCartPage'));
 const MyAccount = React.lazy(()=> import('../Pages/MyAccontUser'));
 const BlogListingPage = React.lazy(()=> import('../Pages/BlogListingPage'));
+const BlogDescriptionPage = React.lazy(()=> import('../Pages/BlogPageDescription'));
 
 const pagesRoutes = [
     { path: '/', name: 'LandingPage', element: <LandingPage />, exact: true  },
@@ -19,10 +20,11 @@ const pagesRoutes = [
     { path : '/about-us', name:"aboutUsPage", element:<AboutUsPage />, exact : true },
     { path : '/login', name:"Login", element:<LoginPage />, exact : true },
     { path : '/collection', name:"ProductCollection", element:<ProductCollection />, exact : true },
-    { path : 'collection/pdp-product/:productId', name:"Product Pdp Page", element:<PdpProducts />, exact : true },
+    { path : '/pdp-product/:productId', name:"Product Pdp Page", element:<PdpProducts />, exact : true },
     { path : '/cartpage', name:"ProductCartPage", element:<ProductCartPage />, exact : true },
     { path : '/myaccount', name:"UserAccount", element:<MyAccount />, exact : true },
     { path : '/blog', name:"BlogListingPage", element:<BlogListingPage />, exact : true },
+    { path : '/blogdesc/:id', name:"BlogListingPage", element:<BlogDescriptionPage />, exact : true },
 
 
 

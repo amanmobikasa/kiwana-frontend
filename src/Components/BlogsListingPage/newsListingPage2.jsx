@@ -33,7 +33,7 @@ const newsCards_api2 = [
             newsDate : "October 21, 2023",
             newsTitle : "5 Benefits of using Sun Screen",
             newsDesc : "Lorem ipsum dolor sit amet consectetur. Tellus id sit orci ac congue consectetur. Velit nisi integer sed feugiat sit nunc posuere odio placerat.",
-            btnLink : "/"
+            btnLink : "/blogdesc/4"
         },
         {
             id : 5,
@@ -43,7 +43,7 @@ const newsCards_api2 = [
             newsDate : "October 21, 2023",
             newsTitle : "5 Benefits of using Sun Screen",
             newsDesc : "Lorem ipsum dolor sit amet consectetur. Tellus id sit orci ac congue consectetur. Velit nisi integer sed feugiat sit nunc posuere odio placerat.",
-            btnLink : "/"
+            btnLink : "/blogdesc/4"
         },
         {
             id : 6,
@@ -53,6 +53,6 @@ const newsCards_api2 = [
             newsDate : "October 21, 2023",
             newsTitle : "5 Benefits of using Sun Screen",
             newsDesc : "Lorem ipsum dolor sit amet consectetur. Tellus id sit orci ac congue consectetur. Velit nisi integer sed feugiat sit nunc posuere odio placerat.",
-            btnLink : "/"
+            btnLink : "/blogdesc/4"
         },
 ]
