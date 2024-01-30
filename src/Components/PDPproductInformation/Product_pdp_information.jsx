@@ -3,18 +3,19 @@ import { FaStar } from "react-icons/fa6";
 import { HiOutlineShoppingBag } from 'react-icons/hi2';
 import { LuMinus, LuPlus } from 'react-icons/lu';
 import pdpImage2 from '../../Assest/images/pdp_image_2.png';
-import pdpImage3 from '../../Assest/images/pdp_image_3.png';
-import pdpImage4 from '../../Assest/images/pdp_image_4.png';
+// import pdpImage3 from '../../Assest/images/pdp_image_3.png';
+// import pdpImage4 from '../../Assest/images/pdp_image_4.png';
 import play from '../../Assest/images/play.png';
 import { Accordion } from 'flowbite-react';
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { IoEllipseSharp, IoShareSocial } from "react-icons/io5";
+import { IoShareSocial } from "react-icons/io5";
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { calcLength } from 'framer-motion';
 import { useDispatch } from 'react-redux';
 import { pdpDescription } from '../../Redux/reducer/productDescriptionSlice';
+import { toastFailed, toastSuccess } from '../../common/toast';
+import { productQuantityReducer } from '../../Redux/reducer/addToCartSlice';
 
 
 const ProductPdpInformationComp = () => {
@@ -33,10 +34,6 @@ const ProductPdpInformationComp = () => {
     useEffect(()=>{
         setPdpInformationData(pdp_description_data);
     },[pdp_description_data])
-
-    console.log("pdpInformationData : ", pdpInformationData);
-
-
 
     const updateProductPdpData = (event, radio_type) => {
         const id = event.target.id;
@@ -58,20 +55,12 @@ const ProductPdpInformationComp = () => {
                     // No modification needed for other objects
                     return radio_data;
                 });
-        
-                // Dispatch an action to update the state in Redux
-                // Example: dispatch(updateProductTypesAction(updatedProductTypes));
-        
-                // console.log("testest : ", updatedProductTypes);
                 setUpdateProductTypeState(updatedProductTypes)
             }
         }
-
-        // handle the product weight
         if(id == "weight-container"){
             console.log(radio_type)
             const indexToUpdate = pdpInformationData.product_weight.findIndex(item_weight => item_weight.weight_label === radio_type.weight_label)
-            
             if(indexToUpdate !== -1){
                 const updateProductWeight = pdpInformationData.product_weight.map((item_weight, index)=>{
                     if(index === indexToUpdate){
@@ -88,7 +77,6 @@ const ProductPdpInformationComp = () => {
                     }
                     
                 })
-                // console.log("updateProductWeight : ", updateProductWeight);
                 setUpdateProductWeightState(updateProductWeight)
             }
         }
@@ -107,9 +95,9 @@ const ProductPdpInformationComp = () => {
         setItemCount({ productId: productID, productCount: newCount });
     
         if (newCount >= pdpInformationData.product_stock) {
-            alert(`Quantity can't be more than ${pdpInformationData.product_stock}`);
+            toastFailed(`Quantity can't be more than ${pdpInformationData.product_stock}`);
         } else if (newCount < 0) {
-            alert("Quantity can't be negative");
+            toastFailed("Quantity can't be negative");
         }
 
         // now dispatch the state to the addtocart reducer
@@ -129,10 +117,12 @@ const ProductPdpInformationComp = () => {
                 product_weight : productWeightState,
             })
             console.log("pdpInformationData : ", pdpInformationData);
-            dispatch(pdpDescription(pdpInformationData))
+            dispatch(productQuantityReducer(pdpInformationData)) 
+            toastSuccess("Product added to cart");
 
         }else{
             alert("error!!!!!")
+            toastFailed("something went wrong 😒");
         }
     }
     
@@ -177,7 +167,7 @@ const ProductPdpInformationComp = () => {
                             <div className='option-container w-full h-fit hidden lg:block lg:pt-7'>
                                 <div className='lg:grid lg:grid-cols-3 grid-cols-2 items-center w-full h-fit justify-center lg:gap-y-5 space-y-0 gap-y-8  text-[#363636]'>
                                         {
-                                            pdpInformationData?.product_type.map((radio_type, i)=>{
+                                            pdpInformationData?.product_type?.map((radio_type, i)=>{
                                                 return <>
                                                 <div key={i} className='w-fit h-fit relative'>
                                                     <label htmlFor="" className='flex w-fit items-center lg:gap-2 gap-3'>
@@ -192,7 +182,7 @@ const ProductPdpInformationComp = () => {
                                 </div>
                             </div> 
 
-                            <div className='weight-container pt-4 lg:pt-6 w-full space-y-2 h-fit'>
+                            <div className=' pt-4 lg:pt-6 w-full space-y-2 h-fit'>
                                 <div>
                                     <h1 className='text-[#363636] font-playfair text-[18px] lg:text-[20px] lg:font-[600] '>Weight</h1>
                                 </div>

@@ -5,6 +5,7 @@ import { filterandshort_api } from './filterandshortJSON';
 import MultiRangeSlider from "multi-range-slider-react";
 import { useDispatch } from 'react-redux';
 import { productFilter } from '../../Redux/reducer/filterProductSlice';
+import '../../index.css';
 
 const FilterAndShortDesktop = () => {
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
@@ -187,7 +188,7 @@ const RangeComponent = () => {
     }
     return <>
         <MultiRangeSlider
-        className='w-full border-0 rounded-none p-0 drop-shadow-none shadow-none'
+        className=' w-full price-container'
 			min={0}
 			max={120}
 			step={1}

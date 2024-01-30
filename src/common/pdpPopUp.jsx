@@ -6,8 +6,9 @@ import { HiOutlineShoppingBag } from "react-icons/hi2";
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 import { Link, NavLink } from 'react-router-dom';
+import { Modal } from 'flowbite-react';
 
-const PdpPopup = ({hidePdp, pdpPopUpData}) => {
+const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
 
     const [pdpPopUpDataState, setPdpPopUpDataState] = useState(pdpPopUpData);
 
@@ -71,8 +72,9 @@ const PdpPopup = ({hidePdp, pdpPopUpData}) => {
                                             <p className=''>Only Item is <span>{pdpPopUpDataState?.product_stock}</span> In stock!</p>
                                         </div>
                                     </div>
-                                    <div className='lg:pt-3  lg:w-11/12 w-full'>
-                                        <input type="range" className='w-full h-[0.5rem] bg-nav-pink outline-none border-none ' min="50" max="100" value="0" step="1" />
+                                    <div className='lg:pt-3 relative lg:w-11/12 w-full h-2 bg-gray-200 rounded-full '>
+                                        <div className='h-full lg:w-[60%] bg-nav-pink absolute top-0 left-0 rounded-full'></div>
+                                        {/* <input type="range" className='w-full h-[0.5rem] bg-nav-pink outline-none border-none ' min="50" max="100" value="0" step="1" /> */}
                                     </div>
                                     <div className='grid lg:grid-cols-4 grid-cols-2 items-center w-full h-fit justify-center lg:gap-y-5 space-y-0 gap-y-8  text-[#363636]'>
                                     {
@@ -170,7 +172,7 @@ const PdpPopup = ({hidePdp, pdpPopUpData}) => {
                                         <button className='w-full bg-nav-pink text-[20px] font-[500] text-center py-3 text-white uppercase'>Buy now</button>
                                     </div>
                                     <div>
-                                        <Link to={`pdp-product/${pdpPopUpDataState?.pdp_link}`} className='text-[14px] underline underline-offset-2 text-[#363636] flex items-center gap-1'>View Full Details <span> <IoIosArrowRoundForward className='text-[24px] ' /> </span></Link>
+                                        <NavLink to={`/pdp-product/${pdpPopUpDataState?.pdp_link}`} className='text-[14px] underline underline-offset-2 text-[#363636] flex items-center gap-1'>View Full Details <span> <IoIosArrowRoundForward className='text-[24px] ' /> </span></NavLink>
                                     </div>
                                 </div>
                             </div>
@@ -185,6 +187,7 @@ const PdpPopup = ({hidePdp, pdpPopUpData}) => {
             </div>
         </div>
     </section>
+    
     </>
 }
 export default PdpPopup;

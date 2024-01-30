@@ -8,11 +8,13 @@ import FilterAndShortDesktop from '../Components/ProductCollectionComp/filteAndS
 import PdpPopup from '../common/pdpPopUp';
 import { useSelector } from 'react-redux';
 import pdppopupSlice from '../Redux/reducer/pdppopupSlice';
+import { IoReturnUpBackOutline } from 'react-icons/io5';
 
 const ProductCollection = () => {
 
-    const [hidePdpPopup, setHidePDPPopUp] = useState(false);
+    const [hidePdpPopup, setHidePDPPopUp] = useState(false); // true means show, and false means hide
     const [pdpPopupDataNew, setPdpPopUpDataNew] = useState([]);
+    const [scrollDisable, setScrollDisable] = useState(false);
 
     
         const pdpPopUpData = useSelector(state => state.pdpSlice.pdpProducts);
@@ -21,17 +23,31 @@ const ProductCollection = () => {
         useEffect(()=>{
             // console.log(pdpPopUpData.product_title)
             if(pdpPopUpData.product_title){
-                setHidePDPPopUp(true)     
+                setHidePDPPopUp(true) 
+                setScrollDisable(true) // disable the scroll when the pdp popup is open
             }
+
+            if(!hidePdpPopup){
+                setScrollDisable(false);
+            }
+
         },[pdpPopUpData])
-        
-        
 
-   
+        useEffect(()=>{
+            const handleScroll = () =>{
+                if(scrollDisable){
+                    window.scroll(0,50);
+                }
+            }
+            window.addEventListener('scroll', handleScroll);
 
+            return () => {
+                window.removeEventListener('scroll', handleScroll);
+              };
+        },[scrollDisable])
 
     return <>
-    { hidePdpPopup ? <PdpPopup hidePdp={setHidePDPPopUp} pdpPopUpData={pdpPopUpData} />  : null}
+    { hidePdpPopup ? <PdpPopup hidePdp={setHidePDPPopUp} hidePdpPopup={hidePdpPopup} pdpPopUpData={pdpPopUpData} />  : null}
     <section className='w-full relative h-fit '>
         <div className='inner-container bg-white w-full h-fit px-[25px]'>
             <div className='content-container w-full h-fit pt-[37px] md:pt-[8rem] lg:pt-[6.5rem]'>

@@ -8,11 +8,14 @@ import BannerAlert from './Components/Banner';
 import FooterComp from './Components/footer';
 import SubscribeBox from './Components/SubscribeBox';
 import LandingPage from './Pages/LandingPage';
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   return <>
   <BrowserRouter>
     <Suspense fallback={<div>Loading...</div>}>
+    <ToastContainer 
+    />
     <BannerAlert />
     <NavbarComp />
     <Routes>

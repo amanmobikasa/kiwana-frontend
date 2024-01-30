@@ -20,6 +20,8 @@ const PdpScrollComp = () => {
             // setWeightDropdown(pdp_information_data.product_weight)
         },[pdp_information_data])
 
+        console.log("pdpInfoData", pdpInformationData);
+
         useEffect(()=>{
             if(pdpInformationData && pdpInformationData.product_weight){
                 setWeightDropdown(pdpInformationData.product_weight); 
@@ -102,7 +104,7 @@ const PdpScrollComp = () => {
                                         <button onClick={(event)=> handleProductQuantity(event, "decrement", parseInt(pdpInformationData.pdp_link))}>
                                             <LuMinus className='text-[1rem] text-[#E89689] font-thin'/>
                                         </button>
-                                        <input type="text" value={itemCount.productCount} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
+                                        <input type="text" value={pdpInformationData?.product_quantity ? pdpInformationData.product_quantity : itemCount.productCount} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
                                         <button onClick={(event)=> handleProductQuantity(event, "increment", parseInt(pdpInformationData.pdp_link))}>
                                             <LuPlus className='text-[1rem] text-[#E89689] font-thin'/>
                                         </button>

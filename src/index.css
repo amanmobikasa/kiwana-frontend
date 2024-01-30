@@ -118,17 +118,42 @@
 }
 
 
-.multi-range-slider {
+.inner-container.w-full.flex .multi-range-slider {
   display: flex;
   position: relative;
-  /* border: solid 1px gray; */
-  /* border-radius: 10px; */
-  /* padding: 20px 10px; */
-  /* box-shadow: 1px 1px 4px black; */
+  border: none;
+  border-radius: 10px;
+  padding: 0;
+  box-shadow: 1px 1px 4px black;
   flex-direction: column;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
+}
+
+.inner-container.w-full.flex  .multi-range-slider.price-container .thumb::before {
+  content: '';
+  background-color: inherit;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid 1px rgb(255, 216, 223);
+  box-shadow: none;
+  border-radius: 50%;
+  z-index: 1;
+  margin: -8px -12px;
+  cursor: pointer;
+}
+
+.inner-container.w-full.flex .multi-range-slider .bar-inner {
+  background-color: transparent;
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  position: relative;
+  border: 0px;
+  justify-content: space-between;
+  box-shadow: 0px;
 }
 
 .multi-range-slider .ruler {
@@ -217,4 +242,10 @@
 
 .pagination>ul>li:nth-of-type(1)>button{
   @apply hidden
+}
+
+
+/* handle the pdp popup */
+.pdppopup-container>div{
+  @apply max-w-3xl
 }
