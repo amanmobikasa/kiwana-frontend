@@ -10,7 +10,7 @@ import { Accordion } from 'flowbite-react';
 import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoShareSocial } from "react-icons/io5";
-import { NavLink } from 'react-router-dom';
+import { NavLink, redirect, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { pdpDescription } from '../../Redux/reducer/productDescriptionSlice';
@@ -20,68 +20,79 @@ import { productQuantityReducer } from '../../Redux/reducer/addToCartSlice';
 
 const ProductPdpInformationComp = () => {
 
-    const [pdpInformationData, setPdpInformationData] = useState(null);
+    const [pdpInformationData, setPdpInformationData] = useState({});
     const [itemCount, setItemCount] = useState({
         productId : null,
         productCount : 1,
     });
-    const [productWeightState, setUpdateProductWeightState] = useState(null) // handling the updated json of weight
-    const [updateProductTypeState, setUpdateProductTypeState] = useState(null) // handling the updated json of product types
+    const [productWeightState, setUpdateProductWeightState] = useState({}) // handling the updated json of weight
+    const [updateProductTypeState, setUpdateProductTypeState] = useState({}) // handling the updated json of product types
+    const [addtocartState, setAddtoCartState] = useState(null);
+    const navigate = useNavigate()
 
-    const pdp_description_data = useSelector((state)=> state.pdpProductData.pdpData)
+    const pdp_description_data =  useSelector((state)=> state.pdpProductData.pdpData)
     const dispatch = useDispatch();
    
     useEffect(()=>{
-        setPdpInformationData(pdp_description_data);
-    },[pdp_description_data])
+         setPdpInformationData(pdp_description_data);
+    },[pdp_description_data, pdpInformationData])
+
+    
 
     const updateProductPdpData = (event, radio_type) => {
-        const id = event.target.id;
-        // console.log("id : ", id);
-        if(id == "product-type-container"){
-            // Find the index of the object to be updated
-            const indexToUpdate = pdpInformationData.product_type.findIndex(radio_data => radio_data.label === radio_type.label);
-            console.log("indexToUpdate : ", indexToUpdate);
-            // If the object is found, update it by creating a new object
-            if (indexToUpdate !== -1) {
-                const updatedProductTypes = pdpInformationData.product_type.map((radio_data, index) => {
-                    if (index === indexToUpdate) {
-                        // Create a new object with 'selected' set to true
-                        return {
-                            ...radio_data,
-                            selected: true
-                        };
-                    }
-                    // No modification needed for other objects
-                    return radio_data;
-                });
-                setUpdateProductTypeState(updatedProductTypes)
-            }
-        }
-        if(id == "weight-container"){
-            console.log(radio_type)
-            const indexToUpdate = pdpInformationData.product_weight.findIndex(item_weight => item_weight.weight_label === radio_type.weight_label)
-            if(indexToUpdate !== -1){
-                const updateProductWeight = pdpInformationData.product_weight.map((item_weight, index)=>{
-                    if(index === indexToUpdate){
-                        return {
-                            ...item_weight,
-                            selected : true
-                        }
-                    }
-                    else{
-                        return {
-                            ...item_weight,
-                            selected : false
-                        }
-                    }
-                    
-                })
-                setUpdateProductWeightState(updateProductWeight)
-            }
-        }
-    };
+    const id = event.target.id;
 
+  if (id === "product-type-container") {
+    const indexToUpdate = pdpInformationData.product_type.findIndex(
+      (radio_data) => radio_data.label == radio_type.label
+    );
+    // console.log("id", indexToUpdate);
+
+    if (indexToUpdate !== -1) {
+      const updatedProductTypes = pdpInformationData.product_type.map(
+        (radio_data, index) => {
+          if (parseInt(index) === parseInt(indexToUpdate)) {
+            return {
+              ...radio_data,
+              selected: true,
+            };
+            
+          }
+          return radio_data;
+        }
+      );
+      // Update the state with the new product types
+      setUpdateProductTypeState(updatedProductTypes);
+    
+    }
+  }
+
+  if (id === "weight-container") {
+    const indexToUpdate = pdpInformationData.product_weight.findIndex(
+      (item_weight) => item_weight.weight_label === radio_type.weight_label
+    );
+
+    if (indexToUpdate !== -1) {
+      const updatedProductWeight = pdpInformationData.product_weight.map(
+        (item_weight, index) => {
+          if (index === indexToUpdate) {
+            return {
+              ...item_weight,
+              selected: true,
+            };
+          } else {
+            return {
+              ...item_weight,
+              selected: false,
+            };
+          }
+        }
+      );
+      // Update the state with the new product weight
+      setUpdateProductWeightState(updatedProductWeight);
+    }
+  }
+};
 
     const handleProductQuantity = (event, type, productID) => {
         let newCount;
@@ -99,36 +110,40 @@ const ProductPdpInformationComp = () => {
         } else if (newCount < 0) {
             toastFailed("Quantity can't be negative");
         }
-
-        // now dispatch the state to the addtocart reducer
     };
 
-    // console.log("itemCount :", itemCount)
+    
 
-    // addtocart functionality for update the json and dispatch it.
-    const handleAddToCart = () => {
-        // console.log("updateProductWeight : ", productWeightState);
-        // console.log("testest : ", updateProductTypeState);
+    const handleAddtocart = () => {
         if(productWeightState || updateProductTypeState || itemCount){
-            setPdpInformationData({
-                ...pdpInformationData,
-                product_quantity : itemCount,
-                product_type : updateProductTypeState,
-                product_weight : productWeightState,
-            })
-            console.log("pdpInformationData : ", pdpInformationData);
-            dispatch(productQuantityReducer(pdpInformationData)) 
+            setPdpInformationData((prevData) => {
+                const updatedData = {
+                  ...prevData,
+                  product_quantity: itemCount,
+                  product_type: Array.isArray(updateProductTypeState) ? updateProductTypeState : prevData.product_type,
+                  product_weight: Array.isArray(productWeightState) ? productWeightState : prevData.product_weight,
+                };
+                setAddtoCartState(updatedData)
+                return updatedData;
+              });
             toastSuccess("Product added to cart");
-
-        }else{
-            alert("error!!!!!")
+            setAddtoCartState(pdpInformationData) 
+            
+        }  else{
             toastFailed("something went wrong 😒");
         }
     }
+   useEffect(()=>{
+    if(addtocartState !== null){
+        dispatch(productQuantityReducer(addtocartState))
+        navigate('/cartpage');
+    } 
+   },[addtocartState])
+     
     
-    
-    
+   
 
+    
     return <>
         <article className='product-information-comp w-full h-full relative overflow-hidden'>
             <div className="outer-container">
@@ -188,7 +203,7 @@ const ProductPdpInformationComp = () => {
                                 </div>
                                 <div className='flex w-full justify-start gap-2 '>
                                 {
-                                    pdpInformationData?.product_weight?.map((weight_button, i)=>{
+                                    Array.isArray(pdpInformationData?.product_weight)  && pdpInformationData?.product_weight?.map((weight_button, i)=>{
                                         return <>
                                         <div key={i}>
                                             <button id='weight-container' onClick={(event)=> updateProductPdpData(event, weight_button)} className={`text-xs ${weight_button?.selected ? "text-white bg-[#363636] " : "text-[#363636] bg-[#E8968933]"}  px-5 py-2 lg:py-3 lg:text-[14px]`}>{weight_button?.weight_label}</button>
@@ -219,7 +234,7 @@ const ProductPdpInformationComp = () => {
                                                     </div>
                                                 </div>
                                                 <div className='lg:w-8/12 w-full  h-fit relative '>
-                                                    <button onClick={handleAddToCart} className='w-full py-2 lg:py-[10px] flex items-center justify-center gap-3 lg:gap-4 text-[#E89689] border-[0.01rem] border-[#E89689] active:bg-[#E89689] active:text-white'>
+                                                    <button onClick={handleAddtocart} className='w-full py-2 lg:py-[10px] flex items-center justify-center gap-3 lg:gap-4 text-[#E89689] border-[0.01rem] border-[#E89689] active:bg-[#E89689] active:text-white'>
                                                             <HiOutlineShoppingBag className='text-[16px] lg:text-[20px] '/>
                                                             <span className='text-[16px] lg:text-[20px]'>Add to cart</span>
                                                     </button>

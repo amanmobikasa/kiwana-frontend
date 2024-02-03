@@ -1,24 +1,26 @@
-import React, { useState } from 'react'
-import cartImage1 from '../../Assest/images/cartImage1.png';
+import React, { useEffect, useState } from 'react'
+// import cartImage1 from '../../Assest/images/cartImage1.png';
 import { LuMinus, LuPlus } from 'react-icons/lu';
+import { useSelector } from 'react-redux';
+import { useFetcher } from 'react-router-dom';
+import { RemoveCartProduct } from './RemoveCartProduct';
 
 const CartProductList = () => {
 
-    const [productQuantity , setProductQuantity] = useState({
-        productId : null,
-        quantity : 1
-    });
+    const [cartItemsState, setCartItemsState] = useState([]);
 
-    const handleCartProductQuantity = (event, type, productId) => {
-        if(type === 'increment'){
-            setProductQuantity({productId : productId, quantity : productQuantity.quantity + 1});
-        }
-        if(type === 'decrement'){
-            setProductQuantity({productId : productId, quantity : productQuantity.quantity - 1});
-        }
-    }
+    const cartItems = useSelector((state)=> state.productQty.addtoCartQty);
 
-    console.log("productid : ", productQuantity);
+    useEffect(()=>{
+        setCartItemsState(cartItems)
+    },[cartItems])
+   
+
+  
+
+    
+
+    // console.log("productid : ", productQuantity);
 
 
 
@@ -38,8 +40,14 @@ const CartProductList = () => {
             </div>
             <div className='table-container w-full border-y-[0.01rem] border-[#d1cccc] h-fit'>
                 <div className='table-inner-container py-[30px] lg:py-[60px]  space-y-[37px]'>
-                    <ItemContainerofCart handleCartProductQuantity={handleCartProductQuantity} productQuantity={productQuantity} />
-                    <ItemContainerofCart handleCartProductQuantity={handleCartProductQuantity} productQuantity={productQuantity} />
+                {
+                   cartItemsState.length > 0 ? cartItemsState?.map((cart_data, i)=>{
+                        return <>
+                        <ItemContainerofCart key={i} CartData = {cart_data} cartItemsState={cartItemsState}   />
+                        </>
+                    }) : <h1 className='text-center w-full text-[3rem] font-[500] capitalize'>Cart is Empty</h1>
+                }
+                    
                 </div>
             </div>
         </div>
@@ -50,25 +58,69 @@ const CartProductList = () => {
 
 // item-container of table cart page.
 
-const ItemContainerofCart = ({handleCartProductQuantity, productQuantity}) => {
+const ItemContainerofCart = ({CartData, cartItemsState}) => {
+    const [singleCartData, setSingleCartData] = useState(CartData);
+    const [productSelectedWeight, setProductSelectedWeight] = useState(()=>{
+        const filterWeight = singleCartData?.product_weight?.filter((weight)=> weight.selected === true)
+            return filterWeight[0]?.weight_label
+    })
+    const [productSelectedQuantity, setProductSelectedQuantity] = useState(()=>{
+        if(singleCartData?.product_quantity.productCount){
+            return singleCartData?.product_quantity 
+        }
+        else{
+            return { productId : 1, productCount : 3 }
+        }
+    })
+    const [cartPriceState, setCartPriceState] = useState(0);
+    const [openModal, setOpenModal] = useState(false) // true means open and false means close.
 
-    const handleProductQuantity = (event, type, productId) => {
-        handleCartProductQuantity(event, type, productId); // calling the parent function
-    }
+    useEffect(()=>{
+        const priceUpdate = parseInt(singleCartData?.product_price) * parseInt(productSelectedQuantity?.productCount)
+        setCartPriceState(priceUpdate);
+    },[productSelectedQuantity]);
 
+
+
+    
+   
+    const handleCartProductQuantity = (event, type, productId) => {
+        if (type === 'increment') {
+          setProductSelectedQuantity((prevQuantity) => {
+            const newQuantity = parseInt(prevQuantity.productCount, 10) + 1;
+            return { productId: productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
+          });
+        }
+      
+        if (type === 'decrement') {
+          setProductSelectedQuantity((prevQuantity) => {
+            const newQuantity = parseInt(prevQuantity.productCount, 10) - 1;
+            return { productId: productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
+          });
+        }
+      };
+
+      const handleRemoveProduct = () => {
+        setOpenModal(true);
+      }
+      
+  
+    
+    // console.log("qty", productSelectedQuantity)
     return <>
+    { openModal ? <RemoveCartProduct setOpenModal={setOpenModal} openModal = {openModal} singleCartData={singleCartData} cartItemsState={cartItemsState}   /> : null} 
     <div className='item-container grid grid-cols-4 items-center justify-start'>
                         <div className='image-container w-full h-fit lg:col-span-2  lg:flex lg:items-center'>
                             <div className='object-contain w-[5rem] lg:w-[143px] lg:h-[168px] shadow-sm drop-shadow-md bg-white h-[6rem] flex items-center justify-center'>
-                                <img src={cartImage1} className='lg:h-fit lg:w-full' alt="cart_image_1" />
+                                <img src={singleCartData?.product_image} className='lg:h-fit lg:w-full' alt={singleCartData?.product_title} />
                                 
                             </div>
                             <div className='hidden lg:block lg:space-y-1 lg:px-[3.6rem] lg:-mt-5'>
                                     <div>
-                                        <h1 className='font-[600] font-playfair text-[#363636] lg:text-[20px] '>Ultra Brightening Face Serum</h1>
+                                        <h1 className='font-[600] font-playfair text-[#363636] lg:text-[20px] '>{singleCartData?.product_title}</h1>
                                     </div>
                                     <div>
-                                        <p className='text-[10px] text-[#363636] font-[400] lg:text-[15px] '>Weight : <span>30 ml</span></p>
+                                        <p className='text-[10px] text-[#363636] font-[400] lg:text-[15px] '>Weight : <span>{productSelectedWeight ? productSelectedWeight : "30ml"}</span></p>
                                     </div>
                             </div>
                         </div>
@@ -78,27 +130,27 @@ const ItemContainerofCart = ({handleCartProductQuantity, productQuantity}) => {
                                     <h1 className='font-[600] font-playfair text-[#363636]'>Ultra Brightening Face Serum</h1>
                                 </div>
                                 <div className='lg:hidden'>
-                                    <p className='text-[10px] text-[#363636] font-[400] '>Weight : <span>30 ml</span></p>
+                                    <p className='text-[10px] text-[#363636] font-[400] '>Weight : <span>{productSelectedWeight ? productSelectedWeight : "30ml" }</span></p>
                                 </div>
                                 <div className='flex items-center lg:justify-end gap-1 lg:gap-[1.3rem]'>
                                     <div id='item-count-container' className='w-8/12 lg:w-5/12 h-fit py-[1px] lg:py-[2px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
-                                        <button onClick={(event)=> handleProductQuantity(event, 'decrement', 3)}>
+                                        <button onClick={(event)=> handleCartProductQuantity(event, 'decrement', productSelectedQuantity?.productId)} >
                                             <LuMinus className='text-[1rem] text-[#E89689] font-thin'/>
                                         </button>
-                                        <input type="text" value={productQuantity?.quantity} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
-                                        <button onClick={(event)=> handleProductQuantity(event, 'increment', 3)}>
+                                        <input type="text" disabled={true} value={productSelectedQuantity?.productCount} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
+                                        <button onClick={(event)=> handleCartProductQuantity(event, 'increment', productSelectedQuantity?.productId)}>
                                             <LuPlus className='text-[1rem] text-[#E89689] font-thin'/>
                                         </button>
                                     </div>
                                     <div>
-                                        <button className='text-[12px] underline lg:text-[19px] lg:font-[500] '>Remove</button>
+                                        <button onClick={handleRemoveProduct} className='text-[12px] underline lg:text-[19px] lg:font-[500] '>Remove</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div className='w-full flex justify-end'>
                             <div className='mt-4'>
-                                <h1 className='text-[22px] font-[500] text-[#363636] '>$350</h1>
+                                <h1 className='text-[22px] font-[500] text-[#363636] '>${cartPriceState}</h1>
                             </div>
                         </div>
                     </div>
