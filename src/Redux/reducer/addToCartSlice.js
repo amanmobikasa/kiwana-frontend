@@ -9,11 +9,15 @@ const addToCartSliceProduct = createSlice({
     initialState,
     reducers : {
         productQuantityReducer : (state, action)=>{
-            return state.addtoCartQty.push(action.payload);
+             void state.addtoCartQty.push(action.payload);
+        },
+        removeFromCart : (state, action)=>{
+            state.addtoCartQty.splice(action.payload, 1);
         }
+
     }
 
 })
 
-export const {productQuantityReducer} = addToCartSliceProduct.actions; 
+export const {productQuantityReducer, removeFromCart} = addToCartSliceProduct.actions; 
 export default addToCartSliceProduct.reducer;

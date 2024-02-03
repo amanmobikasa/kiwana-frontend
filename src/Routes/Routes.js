@@ -13,6 +13,7 @@ const ProductCartPage = React.lazy(()=> import('../Pages/productCartPage'));
 const MyAccount = React.lazy(()=> import('../Pages/MyAccontUser'));
 const BlogListingPage = React.lazy(()=> import('../Pages/BlogListingPage'));
 const BlogDescriptionPage = React.lazy(()=> import('../Pages/BlogPageDescription'));
+const ProductCheckout = React.lazy(()=> import('../Pages/ProductCheckout'));
 
 const pagesRoutes = [
     { path: '/', name: 'LandingPage', element: <LandingPage />, exact: true  },
@@ -25,8 +26,7 @@ const pagesRoutes = [
     { path : '/myaccount', name:"UserAccount", element:<MyAccount />, exact : true },
     { path : '/blog', name:"BlogListingPage", element:<BlogListingPage />, exact : true },
     { path : '/blogdesc/:id', name:"BlogListingPage", element:<BlogDescriptionPage />, exact : true },
-
-
+    { path : '/checkout', name:"ProductCheckout", element:<ProductCheckout />, exact : true },
 
 ]
 

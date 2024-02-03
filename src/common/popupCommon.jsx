@@ -3,6 +3,7 @@ import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import image1 from '../Assest/images/pdp_image_1.png';
 import Magnifier from "react-magnifier";
+import ImageMagnifier from './imageMagnifier';
 
 function PopUpCommon({setShowPopup, activePopUpImage}) {
 //   const [openModal, setOpenModal] = useState(true);
@@ -17,6 +18,7 @@ function PopUpCommon({setShowPopup, activePopUpImage}) {
           <div className='w-9/12 mx-auto h-fit object-cover  box-content'>
             {/* <img src={activePopUpImage} className='h-full w-full' alt="" /> */}
             <Magnifier src={activePopUpImage} className='h-full w-full' mgWidth={300} mgHeight={300} mgShape='square'  />
+            {/* <ImageMagnifier imageUrl={activePopUpImage} /> */}
           </div>
         </Modal.Body>
       </Modal>

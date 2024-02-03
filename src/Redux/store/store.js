@@ -6,6 +6,7 @@ import filterProductSlice from "../reducer/filterProductSlice";
 import createContactSlice from "../reducer/createContactSlice";
 import productDescriptionSlice from "../reducer/productDescriptionSlice";
 import addToCartSlice from "../reducer/addToCartSlice";
+import orderinstructionSlice from "../reducer/orderinstructionSlice";
 
 const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
         filterProducts : filterProductSlice,
         contactUser : createContactSlice,
         pdpProductData : productDescriptionSlice,
-        productQty : addToCartSlice
+        productQty : addToCartSlice,
+        orderInstruction : orderinstructionSlice
     }
 })
 

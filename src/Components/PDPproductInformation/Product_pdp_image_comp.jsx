@@ -7,6 +7,7 @@ import PdpImageThree from '../../Assest/images/pdp_images_2.png';
 import Magnifier from "react-magnifier";
 import pdpImageMagnifier from '../../Assest/images/magnifier_img.png';
 import { useSelector } from 'react-redux';
+import ImageMagnifier from '../../common/imageMagnifier';
 
 const ProductPdpImageComp = ({setShowPopup, setActivePopUpImage}) => {
     const [activeImage , setActiveImage] = useState(null);
@@ -44,6 +45,7 @@ const ProductPdpImageComp = ({setShowPopup, setActivePopUpImage}) => {
                         <div className='object-contain h-fit lg:h-full w-full lg:flex lg:items-center aspect-square'>
                             {/* <img src={activeImage} className='h-full lg:h-[40rem] w-full lg:w-11/12 lg:mx-auto' alt="" /> */}
                             <Magnifier src={activeImage} className='h-full lg:h-[40rem] w-full lg:w-11/12 lg:mx-auto'  />;
+                            {/* <ImageMagnifier imageUrl={activeImage}/> */}
                             {/* <ImageMagnifier imageSrc={activeImage ? activeImage : PdpImageOne} largeImageSrc={pdpImageMagnifier}   /> */}
                             {/* yha karo */}
                         </div>

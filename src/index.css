@@ -249,3 +249,45 @@
 .pdppopup-container>div{
   @apply max-w-3xl
 }
+
+/*  for magnifier */
+.magnifier {
+  position: relative;
+  cursor: cell;
+  background-color: white
+}
+
+.magnifier img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.magnifier-lens {
+  position: absolute;
+  z-index: 999;
+  left: calc(100% + 10px);
+  top: 0;
+  border: 1px solid #cccccc;
+  width: 545px;
+  height: 545px;
+  
+  cursor: none;
+  overflow: hidden;
+  background-size: 200% 200%;
+  background-repeat: no-repeat;
+  pointer-events: none;
+  background-color: white;
+  display: none;
+}
+
+@media(max-width:1024px) {
+.magnifier-lens {
+  width: 300px;
+  height: 300px;
+}
+}
+
+.magnifier.zoomed .magnifier-lens {
+  display: block;
+}
