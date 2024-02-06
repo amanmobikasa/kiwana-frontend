@@ -9,7 +9,7 @@ const contactSlice = createSlice({
     initialState,
     reducers : {
         contactCreateSlice : (state, action)=>{
-            return state.contactState = action.payload;
+            void state.contactState.push(action.payload);
         }
     }
 })

@@ -140,10 +140,7 @@ const ProductPdpInformationComp = () => {
     } 
    },[addtocartState])
      
-    
-   
 
-    
     return <>
         <article className='product-information-comp w-full h-full relative overflow-hidden'>
             <div className="outer-container">

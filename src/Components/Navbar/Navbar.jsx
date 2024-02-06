@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../Assest/images/icon.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import MegaMenuComp from "./MegaMenu";
@@ -15,6 +15,7 @@ const NavbarComp = () => {
   const [searchResultArray, setSearchResultArray] = useState([]);
   const [showSearchList, setShowSearchList] = useState(false);
   const [showCartSidebar, setShowCartSidebar] = useState(false);
+  const [loginDetailsState, setLoginDetailsState] = useState(null);
 
   const handleGlobalSearch = (event) => {
     try {
@@ -45,6 +46,14 @@ const NavbarComp = () => {
     setShowCartSidebar(true);
     console.log(showCartSidebar)
   }
+
+  useEffect(()=>{
+    const loginDetails = JSON.parse(sessionStorage.getItem("userLogin"));
+    // console.log("payment", loginDetails);
+    setLoginDetailsState(loginDetails);
+  },[]);
+  
+  console.log("payment", loginDetailsState);
 
 
   return (
@@ -130,6 +139,10 @@ const NavbarComp = () => {
           </div>
           <div className="flex items-center md:gap-[2rem] gap-5 pt-2  pr-3">
             <div className="relative lg:block hidden">
+            {/* render the image here */}
+            { loginDetailsState !== null ? <div className="h-[2rem] w-[2rem] rounded-full ">
+              <img src={loginDetailsState?.imageUrl} className="rounded-full object-cover" alt="" />
+            </div> : 
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="27"
@@ -142,6 +155,8 @@ const NavbarComp = () => {
                   fill="#363636"
                 />
               </svg>
+            }
+                
             </div>
             <div className="relative">
             <svg xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 22 22" fill="none">

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { contactCreateSlice } from '../../Redux/reducer/createContactSlice';
+import { toastSuccess } from '../../common/toast';
 
 const SendMessageContact = () => {
 
@@ -15,12 +16,16 @@ const SendMessageContact = () => {
             data.value = value;
         }   
     }
+
+    
     // handle the submit contact details;
     const handleSubmitContactDetails = (event) => {
         event.preventDefault();
-        dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
-        alert("message is delievered!")
-        setContactData({});
+        if(contactData){
+            dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
+            toastSuccess("message is delievered, We will reach out you soon!")
+            setContactData(sendMessageContact_api);
+        }
     }
     
     return <>
