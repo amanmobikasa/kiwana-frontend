@@ -1,8 +1,5 @@
 // creating the routes for project
 import React from 'react'
-// import MyAccount from '../Pages/MyAccontUser';
-// import ProductCartPage from '../Pages/productCartPage';
-// import PdpProducts from '../Pages/PdpofProducts';
 const LandingPage = React.lazy(() => import('../Pages/LandingPage'));
 const ContactPage = React.lazy(()=> import('../Pages/Contactpage'))
 const AboutUsPage = React.lazy(()=> import('../Pages/AboutPage'));
@@ -14,7 +11,7 @@ const MyAccount = React.lazy(()=> import('../Pages/MyAccontUser'));
 const BlogListingPage = React.lazy(()=> import('../Pages/BlogListingPage'));
 const BlogDescriptionPage = React.lazy(()=> import('../Pages/BlogPageDescription'));
 const ProductCheckout = React.lazy(()=> import('../Pages/ProductCheckout'));
-
+const Signupcomp = React.lazy(()=> import('../Components/SignUp/Signup'));
 const pagesRoutes = [
     { path: '/', name: 'LandingPage', element: <LandingPage />, exact: true  },
     { path: '/contact-page', name: 'contactPage', element: <ContactPage /> , exact: true  },
@@ -27,6 +24,7 @@ const pagesRoutes = [
     { path : '/blog', name:"BlogListingPage", element:<BlogListingPage />, exact : true },
     { path : '/blogdesc/:id', name:"BlogListingPage", element:<BlogDescriptionPage />, exact : true },
     { path : '/checkout', name:"ProductCheckout", element:<ProductCheckout />, exact : true },
+    { path : '/signup', name:"SignUpForm", element:<Signupcomp />, exact : true },
 
 ]
 
