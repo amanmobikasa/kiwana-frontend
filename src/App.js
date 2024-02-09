@@ -4,12 +4,15 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import pagesRoutes from './Routes/Routes';
 import NavbarComp from './Components/Navbar/Navbar';
 import BannerAlert from './Components/Banner';
-// import { NewsletterPopup } from './Components/NewsletterPopup/NewsletterPopup';
 import FooterComp from './Components/footer';
 import SubscribeBox from './Components/SubscribeBox';
 import LandingPage from './Pages/LandingPage';
 import { ToastContainer } from 'react-toastify';
 import { gapi } from 'gapi-script'
+import LoginPage from './Pages/Login';
+import MyAccount from './Pages/MyAccontUser';
+import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes';
+import ProtectedRoute from './ProtectedRoutes/ProtectedRoutes';
 
 
 const CLIENT_ID = "826747554533-t0h1gs01tcprer0jt1gl38gqsvso36nf.apps.googleusercontent.com" // for google
@@ -75,3 +78,4 @@ function App() {
 }
 
 export default App;
+
