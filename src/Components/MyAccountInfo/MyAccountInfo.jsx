@@ -1,13 +1,37 @@
 import React, {  useEffect, useState } from 'react'
+import { toastResult } from '../../common/toast';
+import { useFetcher, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const MyAccountInfo = () => {
     const [tabNav, setTabNav] = useState([])
+    const [userInformation, setUserInformation] = useState({});
+
+    const navigate = useNavigate();
+    const USER_JWT_TOKEN = useSelector((state)=> state.userJwtToken.userJwtToken);
 
     useEffect(()=>{
         setTabNav([...tabButton]);
     },[tabButton])
 
+    const USER_PERSONAL_INFO = sessionStorage.getItem("userLogin");
+
+    useEffect(()=>{
+        if(USER_PERSONAL_INFO || USER_JWT_TOKEN){
+            setUserInformation(JSON.parse(USER_PERSONAL_INFO));
+        }
+    },[USER_PERSONAL_INFO])
+
+    // console.log("personal data", userInformation)
+
+
     const handleTabNav = (event, tab_button) => {
+        if(tab_button.heading == "Logout"){
+            sessionStorage.clear();
+            toastResult("success", "Logout Successfully");
+            setUserInformation({})
+            navigate('/login')
+        }
         const updatedTabs = tabNav.map((tab) => ({
             ...tab,
             active: tab.tabId === tab_button.tabId,
@@ -23,7 +47,7 @@ const MyAccountInfo = () => {
         <div className='inner-container-my-account-info'>
             <div className='content-container-my-account-info '>
                 <div className='py-3 lg:py-0'>
-                    <p className='text-[#363636] text-[16px] font-[600] lg:text-[19px]'>Hello, Soumya M welcome to your dashboard!</p>
+                    <p className='text-[#363636] text-[16px] font-[600] lg:text-[19px]'>Hello, {userInformation?.name} welcome to your dashboard!</p>
                 </div>
                 <div className='w-full border-t-[0.01rem] py-5 lg:py-8'>
                     <div className='inner-container w-full h-fit'>
@@ -55,7 +79,7 @@ const MyAccountInfo = () => {
                                                 <h1 className='text-[20px] font-[600] text-[#363636] lg:text-[27px]'>Account Details</h1>
                                             </div>
                                             <div className='space-y-1 lg:space-y-0'>
-                                                <p className='text-[15px] font-[400] text-[#363636] lg:text-[19px]'>Soumya M</p>
+                                                <p className='text-[15px] font-[400] text-[#363636] lg:text-[19px]'>{userInformation?.name}</p>
                                                 <p className='text-[15px] font-[400] text-[#363636] lg:text-[19px]'>India</p>
                                             </div>
                                             <div className='lg:pt-5'>

@@ -9,6 +9,7 @@ import addToCartSlice from "../reducer/addToCartSlice";
 import orderinstructionSlice from "../reducer/orderinstructionSlice";
 import payementSlice from "../reducer/payementSlice";
 import signupSlice from "../reducer/signupSlice";
+import userAuthTokenSlice from "../reducer/userAuthTokenSlice";
 
 const store = configureStore({
     reducer: {
@@ -21,7 +22,8 @@ const store = configureStore({
         productQty : addToCartSlice,
         orderInstruction : orderinstructionSlice,
         paymentMethod : payementSlice,
-        signUp : signupSlice 
+        signUp : signupSlice,
+        userJwtToken : userAuthTokenSlice
     }
 })
 

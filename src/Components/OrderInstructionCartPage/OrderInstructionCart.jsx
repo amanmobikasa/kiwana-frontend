@@ -5,31 +5,47 @@ import { useNavigate } from 'react-router-dom';
 import { toastFailed, toastSuccess } from '../../common/toast';
 
 const OrderInstructionCart = () => {
-    debugger;
+   
     const [orderInstruction, setHandleInstruction] = useState("");
     const [getCartProductsState, setGetCartProductsState] = useState([]);
     const dispatch = useDispatch()
     const navigate = useNavigate();
+    const [userAuthToken , setUserAuthToken] = useState("");
+    const [userJwtToken , setUserJwtToken] = useState("");
     const getCartProducts = useSelector((state)=> state.productQty.addtoCartQty);
+
+    const USER_AUTH_TOKEN = sessionStorage.getItem("userLoginToken");
+    const USER_JWT_TOKEN = useSelector((state)=> state.userJwtToken.userJwtToken);
+    useEffect(()=>{
+        if(USER_AUTH_TOKEN || USER_JWT_TOKEN){
+            setUserAuthToken(USER_AUTH_TOKEN);
+            setUserJwtToken(USER_JWT_TOKEN);
+        }
+    },[])
+
+
+
     useEffect(()=>{
         setGetCartProductsState(getCartProducts); // setting the cart products array to state.
     },[])
+
 
     const handleOrderInstruction = (e) => {
         setHandleInstruction(e.target.value); 
     }
     const handleCheckOut = (e) => {
-        navigate("/checkout")
-        // if (getCartProductsState.length > 0) {
-        //   toastSuccess("Redirecting to Checkout Page");
-        //   navigate("/");
-        //   console.log("testest")
-        // } else {
-        //   toastFailed("Please Add Products to Cart");
-        //   navigate("/collection");
-        // }
-     
-          
+        if(userAuthToken == "" && userJwtToken == ""){
+            toastFailed("Please Login First")
+            navigate("/login")
+        }else{
+            if(getCartProductsState.length > 0) {
+                toastSuccess("Redirecting to Checkout Page");
+                navigate("/checkout"); 
+            }else{
+                toastFailed("Please Add Products to Cart");
+                navigate("/collection");
+            } 
+        } 
       };
 
       const saveOrderInstruction = () => {
@@ -37,6 +53,8 @@ const OrderInstructionCart = () => {
             dispatch(setOrderInstruction(orderInstruction));
             toastSuccess("Order Instructions Added Successfully");
             setHandleInstruction("")
+        }else{
+            toastFailed("Please Add Order Instructions");
         }
       }
 
@@ -69,7 +87,7 @@ const OrderInstructionCart = () => {
                             <p className='text-[16px] lg:text-[15px] text-[#999] font-[400] '>Taxes and shipping calculated at checkout</p>
                         </div>
                         <div className='w-7/12 mx-auto lg:w-full flex justify-center lg:justify-end pt-1 lg:pt-6'>
-                            <button onClick={handleCheckOut} className='uppercase lg:w-8/12 w-full bg-nav-pink text-white tracking-widest font-[400] lg:text-[19px] py-3 hover:bg-transparent hover:text-nav-pink hover:border-nav-pink '>check out</button>
+                            <button onClick={handleCheckOut} className='uppercase lg:w-8/12 w-full bg-nav-pink text-white tracking-widest font-[400] lg:text-[19px] py-3 hover:bg-transparent hover:text-nav-pink border-[0.01rem] hover:border-nav-pink '>check out</button>
                         </div>
                     </div>
                 </div>

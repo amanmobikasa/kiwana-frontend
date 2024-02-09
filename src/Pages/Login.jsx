@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import LoginComp from '../Components/LoginComp/LoginComp';
 import { GoogleLogin, GoogleLogout } from 'react-google-login'
-import { toastSuccess } from '../common/toast';
+import { toastFailed, toastSuccess } from '../common/toast';
 import { useNavigate } from 'react-router-dom';
 import GoogleLogoutbutton from '../Components/GoogleLogoutbutton/GoogleLogoutbutton';
 import FacebookLoginComp from '../Components/FacebookLogin/FacebookLogin';
@@ -10,24 +10,33 @@ import FacebookLoginComp from '../Components/FacebookLogin/FacebookLogin';
 const CLIENT_ID = "826747554533-t0h1gs01tcprer0jt1gl38gqsvso36nf.apps.googleusercontent.com"; 
 
 const LoginPage = () => {
+    const [userToken, setUserToken] = useState("");
     const navigate = useNavigate()
+
+    const USER_TOKEN = sessionStorage.getItem("userLoginToken");
+    useEffect(()=>{
+        if(USER_TOKEN){
+            setUserToken(USER_TOKEN)
+            toastSuccess("You are already logged in!");
+        }
+    },[USER_TOKEN])
+
 
     const responseSuccess = (res) => {
         console.log("success login", res.profileObj)
-        const getLoginData = JSON.parse(sessionStorage.getItem("userLogin"));
+        // const getLoginData = JSON.parse(sessionStorage.getItem("userLogin"));
         if(res.profileObj){
             sessionStorage.setItem("userLogin", JSON.stringify(res.profileObj))
+            sessionStorage.setItem("userLoginToken", JSON.stringify(res.googleId))
             toastSuccess(`Login Success, Welcome ${res.profileObj.givenName} `)
-            // navigate("/");
+        }else{
+            return toastFailed("Login Failed, Please retry again");
         }
-
-        if(getLoginData){
-            toastSuccess("You're already logged in")
-        } 
+        
     }
     const responseFailure = (res) => {
         console.log("failure login", res)
-    
+        
     }
 
     return <>
@@ -39,13 +48,13 @@ const LoginPage = () => {
                 <div className='content-container w-6/12 mx-auto flex justify-center mb-[2rem] relative gap-x-3'>
                     <div className='w-full '>
                         <GoogleLogin
-                                clientId={CLIENT_ID}
-                                buttonText='Sign Up with Google'
-                                onSuccess={responseSuccess}
-                                onFailure={responseFailure}
-                                cookiePolicy='single_host_origin'
-                                className='w-full py-3 rounded-md shadow-sm font-[500] font-poppins text-[#363636]'
-                                isSignedIn={true}
+                            clientId={CLIENT_ID}
+                            buttonText='Sign Up with Google'
+                            onSuccess={userToken ? false : responseSuccess}
+                            onFailure={responseFailure}
+                            cookiePolicy='single_host_origin'
+                            className='w-full py-3 rounded-md shadow-sm font-[500] font-poppins text-[#363636]'
+                            isSignedIn={true}
                             />
                     </div>
                     <div className='w-full'>

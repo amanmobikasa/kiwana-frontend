@@ -6,6 +6,7 @@ import { Navsidebar } from "./Sidebar";
 import { globalSearchHook } from "../../Customhooks/globalSearchHook";
 import { SearchList } from "./ListGroup";
 import CartSideBar from "../../common/cartSidebar";
+import { NavLink } from "react-router-dom";
 
 const NavbarComp = () => {
 
@@ -141,7 +142,7 @@ const NavbarComp = () => {
             <div className="relative lg:block hidden">
             {/* render the image here */}
             { loginDetailsState !== null ? <div className="h-[2rem] w-[2rem] rounded-full ">
-              <img src={loginDetailsState?.imageUrl} className="rounded-full object-cover" alt="" />
+             <NavLink to={"/myaccount"}><img src={loginDetailsState?.imageUrl} className="rounded-full object-cover" alt="" /></NavLink>
             </div> : 
               <svg
                 xmlns="http://www.w3.org/2000/svg"

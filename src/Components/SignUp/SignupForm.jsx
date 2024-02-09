@@ -1,14 +1,16 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { signUpData } from '../../Redux/reducer/signupSlice';
 import { MdTry } from 'react-icons/md';
 import { toastFailed, toastSuccess } from '../../common/toast';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { setUserJwtToken } from '../../Redux/reducer/userAuthTokenSlice';
 
 export default function SignupForm() {
 
     const [signUpDataState, setSignUpDataState] = useState(null);
+    const [userAuthToken, setUserAuthToken] = useState("")
     const dispatch = useDispatch();
     const naviagte = useNavigate()
 
@@ -23,21 +25,25 @@ export default function SignupForm() {
         event.preventDefault();
         if(signUpDataState!==null){
             dispatch(signUpData(signUpDataState));
-        }
-        const { first_name , last_name, user_email, date_of_birth, phone_number, user_address, user_password} = signUpDataState
+         }
+
+        const { first_name , last_name, user_email, date_of_birth, phone_number, user_address, password} = signUpDataState
         try {
             const response = await axios.post('http://localhost:4000/signup', {
                 username : first_name + " " + last_name,
                 email : user_email,
-                password : user_password,
+                password : password,
                 phone_number : phone_number,
                 address : user_address,
                 date_of_birth : date_of_birth,
             })
-            if(response.status === 200){
-                console.log("response", response);
+            if(response.data.success){
+                setUserAuthToken(response.data);
                 toastSuccess("Signup Successfully");
-                naviagte('/');
+                // dispatch(setUserJwtToken())
+            }else{
+                console.log("response", response);
+                toastFailed("Something Went Wrong");
             }
             
         } catch (error) {
@@ -45,6 +51,13 @@ export default function SignupForm() {
             toastFailed("Something Went Wrong");
         }
     }
+
+    useEffect(()=>{
+        if(userAuthToken!==""){
+            dispatch(setUserJwtToken(userAuthToken.jwtToken));
+            sessionStorage.setItem("userJwtTokens", userAuthToken.jwtToken);
+        }
+    },[userAuthToken])
 
 
   return (
@@ -128,7 +141,7 @@ const signup_data = [
         label_name  : "Enter your password",
         input_type : "password",
         placeholder : "*********",
-        name : "date_of_birth",
+        name : "password",
         value : "",
     },
     {
@@ -136,7 +149,7 @@ const signup_data = [
         label_name  : "Enter your password again",
         input_type : "text",
         placeholder : "",
-        name : "date_of_birth",
+        name : "re_password",
         value : "",
     },
     {

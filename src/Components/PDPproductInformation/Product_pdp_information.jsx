@@ -207,9 +207,7 @@ const ProductPdpInformationComp = () => {
                                         </div>
                                         </>
                                     })
-                                }
-                                    
-                                   
+                                } 
                                 </div>
                             </div>
                               

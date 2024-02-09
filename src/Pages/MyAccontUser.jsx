@@ -20,4 +20,4 @@ const MyAccount = () => {
     </section>
     </>
 }
-export default MyAccount;
+export default  MyAccount;
