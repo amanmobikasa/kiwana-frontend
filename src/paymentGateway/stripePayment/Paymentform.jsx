@@ -76,13 +76,15 @@ export default function Paymentform() {
     <>
 
     {
-        !success ? <form onSubmit={handleSubmit}>
+        !success ? <form onSubmit={handleSubmit} className=' space-y-3 '>
             <fieldset className='formGroup text-white bg-[#333]'>
                 <div className="FormRow">
                     <CardElement options={CARD_OPTIONS}/>
                 </div>
             </fieldset>
-            <button type='submit' className='bg-nav-pink text-white px-4 py-2 '>pay</button>
+            <div className='flex justify-end w-full '>
+                <button type='submit' className='bg-nav-pink text-white px-4 py-2 '>pay</button>
+            </div>
         </form> : 
         <div>
             <h1>This is a temp text integrating the strip payment</h1>

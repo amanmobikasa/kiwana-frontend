@@ -31,7 +31,7 @@ const PdpProducts = () => {
     }
   },[productId, productCollectionList_api]) // getting the data from the product id;
 
-  console.log("pdpProductData", pdpProductData);
+  // console.log("pdpProductData", pdpProductData);
   dispatch(pdpDescription(pdpProductData)); // dispatching the data to the store;
   
 
@@ -41,7 +41,6 @@ const PdpProducts = () => {
     }else{
       setShowScrollComp(false)
     }
-    
   })
 
   return (

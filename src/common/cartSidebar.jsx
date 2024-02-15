@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import cartImage from '../Assest/images/cartimg1.png';
 import { LuMinus, LuPlus } from 'react-icons/lu';
+import CouterCommon from './CouterCommon';
 
 
 function CartSideBar({setShowCartSidebar, showCartSidebar}) {
@@ -88,7 +89,6 @@ function CartSideBar({setShowCartSidebar, showCartSidebar}) {
         </div>
       </Modal>
     </>
-  
 }
 
 const CartItems = () => {
@@ -110,15 +110,7 @@ const CartItems = () => {
                             <p className='text-nav-pink text-[18px] font-[600] '>$450</p>
                         </div>
                         <div className='quantity-container flex items-center gap-2'>
-                            <div id='item-count-container' className='w-5/12 lg:w-4/12 h-fit py-[1px] lg:py-[2px] px-6 flex justify-between items-center border-[0.01rem] border-[#E89689]'>
-                                <button>
-                                    <LuMinus className='text-[1rem] text-[#E89689] font-thin'/>
-                                </button>
-                                <input type="text" value={0} className='bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]' />
-                                <button>
-                                    <LuPlus className='text-[1rem] text-[#E89689] font-thin'/>
-                                </button>
-                            </div>
+                            <CouterCommon />
                             <div>
                                 <button className='underline font-[600] text-[14px]'>Remove</button>
                             </div>
@@ -130,4 +122,4 @@ const CartItems = () => {
     </>
 }
 
-export default CartSideBar;
+export {CartItems,CartSideBar}; 

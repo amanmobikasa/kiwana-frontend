@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 // import cartImage1 from '../../Assest/images/cartImage1.png';
 import { LuMinus, LuPlus } from 'react-icons/lu';
-import { useSelector } from 'react-redux';
-import { useFetcher } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import {  } from 'react-router-dom';
 import { RemoveCartProduct } from './RemoveCartProduct';
+import { productQuantityReducer, updateProductQuantityReducer } from '../../Redux/reducer/addToCartSlice';
 
-const CartProductList = () => {
+const CartProductList = ({setProductPrice}) => {
 
     const [cartItemsState, setCartItemsState] = useState([]);
 
@@ -14,15 +15,6 @@ const CartProductList = () => {
     useEffect(()=>{
         setCartItemsState(cartItems)
     },[cartItems])
-   
-
-  
-
-    
-
-    // console.log("productid : ", productQuantity);
-
-
 
     return <>
     <section className='main-container w-full h-fit relative'>
@@ -43,7 +35,7 @@ const CartProductList = () => {
                 {
                    cartItemsState.length > 0 ? cartItemsState?.map((cart_data, i)=>{
                         return <>
-                        <ItemContainerofCart key={i} CartData = {cart_data} cartItemsState={cartItemsState}   />
+                        <ItemContainerofCart key={i} CartData = {cart_data} cartItemsState={cartItemsState} setProductPrice={setProductPrice}   />
                         </>
                     }) : <h1 className='text-center w-full text-[3rem] font-[500] capitalize'>Cart is Empty</h1>
                 }
@@ -56,57 +48,73 @@ const CartProductList = () => {
 }
 
 
-// item-container of table cart page.
+const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPrice}) => {
 
-const ItemContainerofCart = ({CartData, cartItemsState}) => {
     const [singleCartData, setSingleCartData] = useState(CartData);
     const [productSelectedWeight, setProductSelectedWeight] = useState(()=>{
         const filterWeight = singleCartData?.product_weight?.filter((weight)=> weight.selected === true)
             return filterWeight[0]?.weight_label
     })
-    const [productSelectedQuantity, setProductSelectedQuantity] = useState(()=>{
-        if(singleCartData?.product_quantity.productCount){
-            return singleCartData?.product_quantity 
-        }
-        else{
-            return { productId : 1, productCount : 3 }
-        }
-    })
+    const [productSelectedQuantity, setProductSelectedQuantity] = useState(0)
+
+    useEffect(()=>{
+        setProductSelectedQuantity((prevVal)=>{
+            if(prevVal?.product_quantity){
+                return prevVal?.product_quantity 
+            }
+            else{
+                return { productId : 1, productCount : 1 }
+            }
+        })
+        
+     },[])
+
     const [cartPriceState, setCartPriceState] = useState(0);
     const [openModal, setOpenModal] = useState(false) // true means open and false means close.
+    // const [updatedSingleCartData, setUpdatedSingleCartData] = useState({});
+    const dispatch = useDispatch();
+   
 
     useEffect(()=>{
         const priceUpdate = parseInt(singleCartData?.product_price) * parseInt(productSelectedQuantity?.productCount)
         setCartPriceState(priceUpdate);
+        setProductPrice(priceUpdate); // updating the price of orderinstruction comp.
     },[productSelectedQuantity]);
 
-
-
-    
-   
-    const handleCartProductQuantity = (event, type, productId) => {
+    const updateProductQuantity = (type, productId, prevQuantity) => {
+        let newQuantity;
         if (type === 'increment') {
-          setProductSelectedQuantity((prevQuantity) => {
-            const newQuantity = parseInt(prevQuantity.productCount, 10) + 1;
-            return { productId: productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
-          });
+          newQuantity = parseInt(prevQuantity.productCount, 10) + 1;
+        } else if (type === 'decrement') {
+          newQuantity = parseInt(prevQuantity.productCount, 10) - 1;
         }
       
-        if (type === 'decrement') {
-          setProductSelectedQuantity((prevQuantity) => {
-            const newQuantity = parseInt(prevQuantity.productCount, 10) - 1;
-            return { productId: productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
-          });
-        }
+        return { productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
+      };
+
+      const handleCartProductQuantity = (event, type, productId) => {
+        setProductSelectedQuantity((prevQuantity) => updateProductQuantity(type, productId, prevQuantity));
       };
 
       const handleRemoveProduct = () => {
         setOpenModal(true);
       }
-      
-  
-    
-    // console.log("qty", productSelectedQuantity)
+
+    const handleSaveProductObject = () => {
+        // debugger;
+        setSingleCartData((prevData) => {
+          const updatedData = {
+            ...prevData,
+            product_price: cartPriceState,
+            product_quantity: productSelectedQuantity,
+          };
+          if (cartPriceState !== prevData.product_price) {
+            dispatch(updateProductQuantityReducer(updatedData));
+          }
+          return updatedData;
+        });
+      };
+
     return <>
     { openModal ? <RemoveCartProduct setOpenModal={setOpenModal} openModal = {openModal} singleCartData={singleCartData} cartItemsState={cartItemsState}   /> : null} 
     <div className='item-container grid grid-cols-4 items-center justify-start'>
@@ -142,8 +150,9 @@ const ItemContainerofCart = ({CartData, cartItemsState}) => {
                                             <LuPlus className='text-[1rem] text-[#E89689] font-thin'/>
                                         </button>
                                     </div>
-                                    <div>
-                                        <button onClick={handleRemoveProduct} className='text-[12px] underline lg:text-[19px] lg:font-[500] '>Remove</button>
+                                    <div className='flex gap-2 items-center'>
+                                        <button onClick={handleRemoveProduct} className='text-[12px] hover:underline lg:text-[19px] lg:font-[500] '>Remove</button>
+                                        { productSelectedQuantity?.productCount > 1 ? <button onClick={handleSaveProductObject} className='text-[12px] hover:underline lg:text-[19px] lg:font-[500] px-4 py-1 text-white bg-nav-pink'>Save</button> : null}
                                     </div>
                                 </div>
                             </div>
@@ -156,6 +165,6 @@ const ItemContainerofCart = ({CartData, cartItemsState}) => {
                     </div>
 
     </>
-}
+})
 
 export default CartProductList;

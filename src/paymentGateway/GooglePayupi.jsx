@@ -5,6 +5,7 @@ import { toastFailed } from '../common/toast';
 const GooglePayUpi = () => {
   return (
     <GooglePayButton
+    className=''
       environment="TEST"
       paymentRequest={{
         apiVersion: 2,

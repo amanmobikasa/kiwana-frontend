@@ -3,16 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setOrderInstruction } from '../../Redux/reducer/orderinstructionSlice';
 import { useNavigate } from 'react-router-dom';
 import { toastFailed, toastSuccess } from '../../common/toast';
+import { setFinalCartProduct } from '../../Redux/reducer/payementSlice';
 
-const OrderInstructionCart = () => {
-   
+const OrderInstructionCart = ({productPrice}) => {
     const [orderInstruction, setHandleInstruction] = useState("");
     const [getCartProductsState, setGetCartProductsState] = useState([]);
+    const [updatedProductCartDataState, setUpdatedProductCartDataState] = useState({});
+    // const [priceOfProduct, setPriceOfProduct] = useState(productPrice);
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [userAuthToken , setUserAuthToken] = useState("");
     const [userJwtToken , setUserJwtToken] = useState("");
-    const getCartProducts = useSelector((state)=> state.productQty.addtoCartQty);
+    // const getCartProducts = useSelector((state)=> state.productQty.addtoCartQty);
 
     const USER_AUTH_TOKEN = sessionStorage.getItem("userLoginToken");
     const USER_JWT_TOKEN = useSelector((state)=> state.userJwtToken.userJwtToken);
@@ -23,11 +25,19 @@ const OrderInstructionCart = () => {
         }
     },[])
 
+    // useEffect(()=>{
+    //     setGetCartProductsState(getCartProducts); // setting the cart products array to state.
+    // },[])
 
+    // get the data initial or update data from redux store.
+    const updatedProductCartData = useSelector((state)=> state.productQty);
+    // console.log("updatedProductCart", updatedProductCartData);
 
     useEffect(()=>{
-        setGetCartProductsState(getCartProducts); // setting the cart products array to state.
-    },[])
+        setUpdatedProductCartDataState(updatedProductCartData); // setting the data from redux to state.
+    },[updatedProductCartData])
+
+    // console.log("dataUpdated", updatedProductCartDataState);
 
 
     const handleOrderInstruction = (e) => {
@@ -38,15 +48,35 @@ const OrderInstructionCart = () => {
             toastFailed("Please Login First")
             navigate("/login")
         }else{
-            if(getCartProductsState.length > 0) {
-                toastSuccess("Redirecting to Checkout Page");
-                navigate("/checkout"); 
-            }else{
+            // debugger;
+            // console.log("length", updatedProductCartDataState.updateCartQty);
+            if(updatedProductCartDataState.updateCartQty.length > 0 ){
+                const productArr = [ ...updatedProductCartDataState.updateCartQty ];
+                productArr.forEach((product)=>{
+                    dispatch(setFinalCartProduct(product));
+                })
+                toastSuccess("Proceed to Payment Page");
+                return navigate('/checkout')
+            }
+            else if(updatedProductCartDataState.addtoCartQty.length >= 1) {
+                // for addtocart logic
+                const productArr = [ ...updatedProductCartDataState.addtoCartQty ]
+                productArr.forEach((product)=>{
+                    console.log("test", product)
+                    dispatch(setFinalCartProduct(product));
+                })
+                toastSuccess("Proceed to Payment Page");
+                return navigate('/checkout')
+            }
+            else{
                 toastFailed("Please Add Products to Cart");
                 navigate("/collection");
-            } 
+            }
+            
         } 
       };
+
+    //   console.log('length', updatedProductCartDataState.updateCartQty.length)
 
       const saveOrderInstruction = () => {
         if(orderInstruction !== ""){
@@ -57,7 +87,6 @@ const OrderInstructionCart = () => {
             toastFailed("Please Add Order Instructions");
         }
       }
-
     return <>
     <section className='order-instruction-container w-full relative h-fit mt-[3rem] lg:mt-[3.5rem] '>
         <div className='content-container w-full h-fit'>
@@ -80,7 +109,7 @@ const OrderInstructionCart = () => {
                                 <h5 className='text-[20px] font-[600] text-[#363636] '>Subtotal</h5>
                             </div>
                             <div>
-                                <h5 className='font-[600] text-[20px] text-[#363636]'>$<span className='font-[400]'>700</span></h5>
+                                <h5 className='font-[600] text-[20px] text-[#363636]'>$<span className='font-[400]'>{productPrice}</span></h5>
                             </div>
                         </div>
                         <div>

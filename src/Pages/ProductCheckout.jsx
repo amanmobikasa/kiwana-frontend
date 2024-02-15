@@ -1,37 +1,43 @@
 import { Label, Radio } from "flowbite-react";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback, memo } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentMethod } from "../Redux/reducer/payementSlice";
-import { toastSuccess } from "../common/toast";
 import GooglePayUpi from "../paymentGateway/GooglePayupi";
 import StripeContainer from "../paymentGateway/stripePayment/StripeContainer";
+import ModalWrapper from "../common/ModalWrapper";
+import UserReviewCommon from "../common/UserReviewCommon";
+import { useFetchData } from "../Customhooks/useFetchData";
 
 
-const ProductCheckout = () => {
+const ProductCheckout = memo(() => {
     const [payementState, setPaymentState] = useState(payement_api);
     const [currentPaymentMethod, setCurrentPaymentMethod] = useState("upi payment");
+    const [showPaymentModal, setShowPaymentModal] = useState(false);
+    const [signUpUserData, setSignUpUserData] = useState(null);
     const dispatch = useDispatch();
     
 
-    const handleChangePayment = (event, payment_option) => {
-      const { id , value } = event.target;
-      setCurrentPaymentMethod(id)
-      if(payement_api){
-        const updatedPaymentState = payement_api.map((payment_method, i)=>{
-          if(payment_method?.name == id){
+    const handleChangePayment = useCallback((event, payment_option) => {
+      const { id, value } = event.target;
+      setCurrentPaymentMethod(id);
+    
+      if (payement_api) {
+        const updatedPaymentState = payement_api.map((payment_method, i) => {
+          if (payment_method?.name === id) {
             return {
               ...payment_method,
               checked: true,
-            }
-          }else{
-            return { ...payment_method, checked : false }
+            };
+          } else {
+            return { ...payment_method, checked: false };
           }
-          
-        })
-        setPaymentState(updatedPaymentState)
-      }  
-    }
+        });
+        setPaymentState(updatedPaymentState);
+      }
+    }, [setCurrentPaymentMethod, payement_api, setPaymentState]);
+
+    // console.log("paymentMethod", payementState)
 
     // dispatch the payment method to the redux store
     const handleSubmitPayment = () => {
@@ -39,11 +45,41 @@ const ProductCheckout = () => {
         return payment_method.checked;
       })
       dispatch(setPaymentMethod(paymentMethod[0].name))
-      toastSuccess("Payment method selected successfully");
+      setShowPaymentModal(true);
+      // toastSuccess("Payment method selected successfully");
     }
 
+    const { data , error } = useFetchData('http://localhost:4000/signup');
+
+    useEffect(() => {
+      if (error) {
+        console.log('Error:', error);
+      }
+    }, [error]);
+
+    // console.log("dataNow", data)
   return (
     <>
+
+    { showPaymentModal ? <ModalWrapper editModalState={showPaymentModal} setEditModalState={setShowPaymentModal} paymentType={currentPaymentMethod} modalName={"Payment Method"} hideButton={currentPaymentMethod === "Cash on delivery (COD)" ? true : false} > {/* true means show and false means hide*/}
+    <div className="my-[2rem]">
+            {currentPaymentMethod === "upi payment" ? (
+              <div className="w-full flex justify-center">
+                <GooglePayUpi  />
+              </div>
+          ) : currentPaymentMethod === "credit/debit card" ? (
+            <StripeContainer />
+          ) : currentPaymentMethod === "Cash on delivery (COD)" ? (
+            <div>
+              <UserReviewCommon disableArea = {true} placeholderText={"House No. / Loacality / Landmark / City / State / (Pincode)"} labelName={"Address (Primary)"} />
+            </div>
+          ) : (
+            <h1 className="text-center text-2xl font-[500] ">Coming Soon</h1>
+            
+          )}
+    </div>
+    </ModalWrapper> : null }
+
       <section className="main-container-checkout w-full relative' h-fit">
         <div className="inner-container-checkout w-11/12 mx-auto bg-[#fff8f7] py-[2rem] ">
           <div className="text-container-checkout space-y-[2rem]">
@@ -63,7 +99,7 @@ const ProductCheckout = () => {
                 <div className="inner-container-payment-options px-3 flex items-center w-full h-full  ">
                     <div className="text-container-payment-opions w-full h-fit relative space-y-[2rem]">
                         <div>
-                            <h1 className="text-[1.7rem] font-playfair font-[500] ">Payment Options : Choose One of them mention below</h1>
+                            <h1 className="text-[1.7rem] font-playfair font-[500] ">Payment Options : <span className="font-poppins text-[1.5rem]">Choose One of them mention below</span></h1>
                         </div>
                         <div className="flex my-4 justify-evenly gap-4 w-full">
                             
@@ -80,11 +116,11 @@ const ProductCheckout = () => {
                                 
                         </div>
                         <div className="w-full flex justify-end pt-[2rem] items-end h-full ">
-                            <button onClick={handleSubmitPayment} className="px-8 py-3 bg-nav-pink text-white flex justify-center items-center gap-3 hover:text-nav-pink hover:border-nav-pink border-[0.01rem] hover:bg-transparent font-[500] active:bg-nav-pink active:text-white">{currentPaymentMethod}<span><FaArrowRightLong /></span></button>
+                            <button onClick={handleSubmitPayment} className="px-8 py-3 bg-nav-pink text-white flex justify-center items-center gap-3 hover:text-nav-pink hover:border-nav-pink border-[0.01rem] hover:bg-transparent font-[500] active:bg-nav-pink active:text-white uppercase">{currentPaymentMethod}<span><FaArrowRightLong /></span></button>
                         </div>
                         <div className="">
-                            {/* <GooglePayUpi /> */}
-                            <StripeContainer />
+                            
+                            {/* <StripeContainer /> */}
                           
                         </div>
                     </div>
@@ -95,7 +131,7 @@ const ProductCheckout = () => {
       </section>
     </>
   );
-};
+})
 
 // payment json
 
