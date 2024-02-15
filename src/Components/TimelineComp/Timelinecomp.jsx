@@ -1,11 +1,16 @@
 import { Button, Timeline, Tooltip } from 'flowbite-react'
-import React, { memo } from 'react'
+import React, { memo, useEffect } from 'react'
 import IlustratorAnimation from './IlustratorAnimation'
 import { FcOk } from "react-icons/fc";
 // import { HiCalendar } from 'react-icons/hi'
 
 
-export default memo(function Timelinecomp() {
+export default memo(function Timelinecomp({setOrderStatusApi}) {
+
+  useEffect(()=>{
+    setOrderStatusApi(delivery_status)
+  },[delivery_status])
+
   return (
     <>
         <Timeline className='w-11/12 mx-auto' horizontal>
@@ -21,14 +26,18 @@ export default memo(function Timelinecomp() {
               <Timeline.Point className='' icon={ item?.orderStatus !== "pending" ? FcOk : null }  />
               <IlustratorAnimation {...animationProps} />
               <Timeline.Content>
-                <Timeline.Time>February 2022</Timeline.Time>
-            <Tooltip placement='bottom' style='' className='bg-white ' content={item?.tooltipText}>
+                {
+                  item?.orderStatus !== "pending" ?
+                 <><Timeline.Time>February 2022</Timeline.Time>
+            <Tooltip placement='bottom' style='' className='bg-white text-gray-400' content={ item?.tooltipText }>
                 <Timeline.Title>{item?.status_name}</Timeline.Title>
-            </Tooltip>
-                {/* <Timeline.Body>
-                  Get access to over 20+ pages including a dashboard layout, charts, kanban board, calendar, and pre-order
-                  E-commerce & Marketing pages.
-                </Timeline.Body> */}
+            </Tooltip> </>
+                : <>
+                <Timeline.Time>Date : Pending</Timeline.Time>
+                <Timeline.Title>{"Pending"}</Timeline.Title>
+                </>
+                }
+                
               </Timeline.Content>
             </Timeline.Item>
             </>
@@ -59,7 +68,7 @@ const delivery_status = [
       imageSrc : "https://lottie.host/469223b9-b6fa-4b8b-b9b4-f64a0c973981/pOpWcDRanz.json",
       visible : false,
       tooltipText : "Your Order has been Shipped.",
-      orderStatus : "order-shipped",
+      orderStatus : "order_shipped"
     },
     {
       id : 3,
@@ -67,7 +76,7 @@ const delivery_status = [
       imageSrc : "https://lottie.host/52f7f019-de67-447e-9c15-2abb20cceefc/B4ZcBogWT1.json",
       visible : false,
       tooltipText : "Your Order is Out of Delivery.",
-      orderStatus : "out_of_delivery"
+      orderStatus : "pending"
 
     },
     {
@@ -76,7 +85,7 @@ const delivery_status = [
       imageSrc : "https://lottie.host/6d08eedf-467f-43ea-ac04-1f8801f92c49/zoH2y2MsF4.json",
       visible : false,
       tooltipText : "Your Order is Delivered.",
-      orderStatus : "delivered"
+      orderStatus : "pending"
     },
 
 ]

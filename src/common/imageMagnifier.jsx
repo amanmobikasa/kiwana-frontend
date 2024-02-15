@@ -21,7 +21,7 @@ export default function ImageMagnifier({ imageUrl }) {
       onMouseEnter={() => setZoomed(true)}
       onMouseLeave={() => setZoomed(false)}
     >
-      <img src={imageUrl} alt="Product" />
+      <img loading='lazy' src={imageUrl} alt="Product" />
       {zoomed && (
         <div
           className="magnifier-lens bg-white"

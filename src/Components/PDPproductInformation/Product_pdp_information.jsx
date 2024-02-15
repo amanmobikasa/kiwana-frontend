@@ -22,7 +22,7 @@ const ProductPdpInformationComp = () => {
 
     const [pdpInformationData, setPdpInformationData] = useState({});
     const [itemCount, setItemCount] = useState({
-        productId : null,
+        productId : parseInt(pdpInformationData?.pdp_link),
         productCount : 1,
     });
     const [productWeightState, setUpdateProductWeightState] = useState({}) // handling the updated json of weight
@@ -52,6 +52,7 @@ const ProductPdpInformationComp = () => {
       const updatedProductTypes = pdpInformationData.product_type.map(
         (radio_data, index) => {
           if (parseInt(index) === parseInt(indexToUpdate)) {
+            setItemCount({productId : parseInt(pdpInformationData?.pdp_link), productCount : parseInt(pdpInformationData?.product_quantity)})
             return {
               ...radio_data,
               selected: true,
@@ -76,15 +77,19 @@ const ProductPdpInformationComp = () => {
       const updatedProductWeight = pdpInformationData.product_weight.map(
         (item_weight, index) => {
           if (index === indexToUpdate) {
+            setItemCount({productId : parseInt(pdpInformationData?.pdp_link), productCount : parseInt(pdpInformationData?.product_quantity)})
             return {
               ...item_weight,
               selected: true,
             };
+            
           } else {
+            setItemCount({productId : parseInt(pdpInformationData?.pdp_link), productCount : parseInt(pdpInformationData?.product_quantity)})
             return {
               ...item_weight,
               selected: false,
             };
+            
           }
         }
       );
@@ -112,29 +117,39 @@ const ProductPdpInformationComp = () => {
         }
     };
 
-    
+  
 
+    
     const handleAddtocart = () => {
-        if(productWeightState || updateProductTypeState || itemCount){
-            setPdpInformationData((prevData) => {
-                const updatedData = {
-                  ...prevData,
-                  product_quantity: itemCount,
-                  product_type: Array.isArray(updateProductTypeState) ? updateProductTypeState : prevData.product_type,
-                  product_weight: Array.isArray(productWeightState) ? productWeightState : prevData.product_weight,
-                };
-                setAddtoCartState(updatedData)
-                return updatedData;
-              });
-            toastSuccess("Product added to cart");
-            setAddtoCartState(pdpInformationData) 
-            
-        }  else{
-            toastFailed("something went wrong 😒");
-        }
+    if (productWeightState || updateProductTypeState || itemCount) {
+        console.log("productQty", itemCount);
+      
+        setPdpInformationData((prevData) => {
+          const updatedData = {
+            ...prevData,
+            product_quantity: {
+              productId: isNaN(itemCount?.productId) ? parseInt(prevData?.pdp_link) : itemCount.productId,
+              productCount: isNaN(itemCount?.productCount) ? 1 : itemCount.productCount,
+            },
+            product_type: Array.isArray(updateProductTypeState) ? updateProductTypeState : prevData.product_type,
+            product_weight: Array.isArray(productWeightState) ? productWeightState : prevData.product_weight,
+          };
+      
+          // console.log("updatedDataItemCount", updatedData);
+          // setAddtoCartState(updatedData);
+          toastSuccess("Product added to cart");
+        //   console.log("pdpData", updatedData);
+          setAddtoCartState(updatedData);
+          return updatedData;
+        });
+      } else {
+        toastFailed("Something went wrong 😒");
+      }
     }
+      
    useEffect(()=>{
     if(addtocartState !== null){
+        console.log("addtocartstate", addtocartState);
         dispatch(productQuantityReducer(addtocartState))
         navigate('/cartpage');
     } 

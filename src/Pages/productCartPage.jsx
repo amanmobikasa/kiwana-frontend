@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CartProductList from '../Components/CartProductList/CartProductList';
 import OrderInstructionCart from '../Components/OrderInstructionCartPage/OrderInstructionCart';
 import ProductCollectionAlsoLike from '../Components/ProductCollectionComp/ProductCollectionAlsoLike';
 
 const ProductCartPage = () => {
+    const [productPrice, setProductPrice] = useState(0)
     return <>
         <section className='main-container w-full bg-[#FFF8F7] h-full relative pb-[6rem] lg:pb-[0.5rem]'>
             <div className='content-container  mx-auto h-full'>
@@ -17,10 +18,10 @@ const ProductCartPage = () => {
                         </div>
                     </div>
                     <div className='w-11/12 mx-auto'>
-                        <CartProductList />
+                        <CartProductList  setProductPrice={setProductPrice} />
                     </div>
                     <div className='w-11/12 mx-auto'>
-                        <OrderInstructionCart />
+                        <OrderInstructionCart productPrice={productPrice} />
                     </div>
                     <div className='mt-4 lg:mt-[6rem]'>
                     <ProductCollectionAlsoLike mainTitle = {"Recommended Products"} />

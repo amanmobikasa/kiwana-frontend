@@ -5,7 +5,7 @@ import MegaMenuComp from "./MegaMenu";
 import { Navsidebar } from "./Sidebar";
 import { globalSearchHook } from "../../Customhooks/globalSearchHook";
 import { SearchList } from "./ListGroup";
-import CartSideBar from "../../common/cartSidebar";
+import {CartSideBar} from "../../common/cartSidebar";
 import { NavLink } from "react-router-dom";
 
 const NavbarComp = () => {

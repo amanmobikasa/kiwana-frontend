@@ -10,6 +10,7 @@ import orderinstructionSlice from "../reducer/orderinstructionSlice";
 import payementSlice from "../reducer/payementSlice";
 import signupSlice from "../reducer/signupSlice";
 import userAuthTokenSlice from "../reducer/userAuthTokenSlice";
+import orderStatusSlice from "../reducer/orderStatusSlice";
 
 const store = configureStore({
     reducer: {
@@ -23,7 +24,8 @@ const store = configureStore({
         orderInstruction : orderinstructionSlice,
         paymentMethod : payementSlice,
         signUp : signupSlice,
-        userJwtToken : userAuthTokenSlice
+        userJwtToken : userAuthTokenSlice,
+        orderStatus : orderStatusSlice
     }
 })
 
