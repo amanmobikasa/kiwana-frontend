@@ -1,5 +1,5 @@
 import React, {  useEffect, useState } from 'react'
-import { toastResult } from '../../common/toast';
+import { toastResult, toastSuccess } from '../../common/toast';
 import { useFetcher, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -28,9 +28,9 @@ const MyAccountInfo = () => {
     const handleTabNav = (event, tab_button) => {
         if(tab_button.heading == "Logout"){
             sessionStorage.clear();
-            toastResult("success", "Logout Successfully");
+            toastSuccess("Logout Successfully");
             setUserInformation({})
-            navigate('/login')
+            navigate('/')
         }
         const updatedTabs = tabNav.map((tab) => ({
             ...tab,

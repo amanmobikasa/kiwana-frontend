@@ -40,7 +40,7 @@ export default function SignupForm() {
             if(response.data.success){
                 setUserAuthToken(response.data);
                 toastSuccess("Signup Successfully");
-                // dispatch(setUserJwtToken())
+                naviagte("/login");
             }else{
                 console.log("response", response);
                 toastFailed("Something Went Wrong");
@@ -51,13 +51,14 @@ export default function SignupForm() {
             toastFailed("Something Went Wrong");
         }
     }
-
-    useEffect(()=>{
-        if(userAuthToken!==""){
-            dispatch(setUserJwtToken(userAuthToken.jwtToken));
-            sessionStorage.setItem("userJwtTokens", userAuthToken.jwtToken);
-        }
-    },[userAuthToken])
+     
+    // this block of code send the jwt token to session storage.
+    // useEffect(()=>{
+    //     if(userAuthToken!==""){
+    //         dispatch(setUserJwtToken(userAuthToken.jwtToken));
+    //         sessionStorage.setItem("userJwtTokens", userAuthToken.jwtToken);
+    //     }
+    // },[userAuthToken])
 
 
   return (

@@ -68,7 +68,7 @@ const delivery_status = [
       imageSrc : "https://lottie.host/469223b9-b6fa-4b8b-b9b4-f64a0c973981/pOpWcDRanz.json",
       visible : false,
       tooltipText : "Your Order has been Shipped.",
-      orderStatus : "order_shipped"
+      orderStatus : "pending"
     },
     {
       id : 3,

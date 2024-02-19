@@ -1,5 +1,5 @@
 import { Label, Radio } from "flowbite-react";
-import React, { useEffect, useState, useRef, useCallback, memo } from "react";
+import React, { useEffect, useState, useRef, useCallback, memo, Children } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { setPaymentMethod } from "../Redux/reducer/payementSlice";
@@ -7,15 +7,24 @@ import GooglePayUpi from "../paymentGateway/GooglePayupi";
 import StripeContainer from "../paymentGateway/stripePayment/StripeContainer";
 import ModalWrapper from "../common/ModalWrapper";
 import UserReviewCommon from "../common/UserReviewCommon";
-import { useFetchData } from "../Customhooks/useFetchData";
+import { userLogin } from "../Redux/reducer/userAuthSlice";
+import { toastFailed, toastSuccess } from "../common/toast";
+import useUpdateUserAddress from "../Customhooks/usePutData";
+import { useNavigate } from "react-router-dom";
 
 
 const ProductCheckout = memo(() => {
     const [payementState, setPaymentState] = useState(payement_api);
     const [currentPaymentMethod, setCurrentPaymentMethod] = useState("upi payment");
     const [showPaymentModal, setShowPaymentModal] = useState(false);
-    const [signUpUserData, setSignUpUserData] = useState(null);
+    const [userInfoState, setUserInfoState] = useState({}); 
+    const [valueOfAddress, setValueOfAddress] = useState("");
+    const [disableTextArea, setDisableTextArea] = useState(true); // true means disable and false means enable
+    const [buttonText, setButtonText] = useState("Edit");
     const dispatch = useDispatch();
+    const btnref = useRef(null); // reference for button text
+    const {updateUserAddress, loading, error, responseData} = useUpdateUserAddress()
+    const navigate = useNavigate();
     
 
     const handleChangePayment = useCallback((event, payment_option) => {
@@ -37,7 +46,25 @@ const ProductCheckout = memo(() => {
       }
     }, [setCurrentPaymentMethod, payement_api, setPaymentState]);
 
-    // console.log("paymentMethod", payementState)
+    
+    const user_info = useSelector((state)=> state.users.usersData[state.users.usersData.length-1]); // getting the user data from redux store
+    useEffect(()=>{ // setting the retrive data to state.
+      if(user_info){
+        setUserInfoState(user_info)
+        setValueOfAddress(user_info?.address); // setting the value address of user.
+      }
+    },[user_info])
+
+    // for getting the response of successful update the address
+    useEffect(()=>{
+      if(responseData){
+        console.log("responseData", responseData)
+        toastSuccess(responseData?.message)
+        navigate("/delivery-status")
+      }else{
+        console.log("responseDataError", error)
+      }
+    },[responseData])
 
     // dispatch the payment method to the redux store
     const handleSubmitPayment = () => {
@@ -46,22 +73,49 @@ const ProductCheckout = memo(() => {
       })
       dispatch(setPaymentMethod(paymentMethod[0].name))
       setShowPaymentModal(true);
-      // toastSuccess("Payment method selected successfully");
     }
 
-    const { data , error } = useFetchData('http://localhost:4000/signup');
-
-    useEffect(() => {
-      if (error) {
-        console.log('Error:', error);
+    // handle the edit address of modal
+    const handleEditAddress = (event) => {
+      const { value } = event.target;
+      setValueOfAddress(value); // updating the value of address.
+      if(valueOfAddress !== ""){
+        setButtonText("Save")
+      }else{
+        toastFailed("Please enter the address");
       }
-    }, [error]);
+    }
 
-    // console.log("dataNow", data)
+    // handle the button function
+    const handleButtonFunction = () => {
+      const btnInnerText = btnref.current.innerText;
+      if(btnInnerText === "Edit"){
+        setDisableTextArea(false);
+      }
+      else if(btnInnerText === "Save"){
+        setUserInfoState((preVal)=>{
+          const updatedData = {
+            ...preVal, 
+            address: valueOfAddress
+          }
+          dispatch(userLogin(updatedData)); // dispatch the updated data to the redux store.
+          return updatedData;
+        })
+        setDisableTextArea(true);
+        setButtonText("Edit")
+        updateUserAddress("/change-address", { email : userInfoState?.email, newAddress : valueOfAddress })
+      }
+    }
+
+    // render to the order status page;
+    const handleOrderStatusPage = ()=>{
+      navigate("/delivery-status");
+    }
+
   return (
     <>
 
-    { showPaymentModal ? <ModalWrapper editModalState={showPaymentModal} setEditModalState={setShowPaymentModal} paymentType={currentPaymentMethod} modalName={"Payment Method"} hideButton={currentPaymentMethod === "Cash on delivery (COD)" ? true : false} > {/* true means show and false means hide*/}
+    { showPaymentModal ? <ModalWrapper handleOrderStatusPage={handleOrderStatusPage} editModalState={showPaymentModal} setEditModalState={setShowPaymentModal} paymentType={currentPaymentMethod} modalName={"Payment Method"} hideButton={currentPaymentMethod === "Cash on delivery (COD)" ? true : false} > {/* true means show and false means hide*/}
     <div className="my-[2rem]">
             {currentPaymentMethod === "upi payment" ? (
               <div className="w-full flex justify-center">
@@ -70,8 +124,11 @@ const ProductCheckout = memo(() => {
           ) : currentPaymentMethod === "credit/debit card" ? (
             <StripeContainer />
           ) : currentPaymentMethod === "Cash on delivery (COD)" ? (
-            <div>
-              <UserReviewCommon disableArea = {true} placeholderText={"House No. / Loacality / Landmark / City / State / (Pincode)"} labelName={"Address (Primary)"} />
+            <div className="">
+              <UserReviewCommon onChangeModal={handleEditAddress} disableArea = {disableTextArea} placeholderText={"House No. / Loacality / Landmark / City / State / (Pincode)"} valueAddress = {valueOfAddress} labelName={"Address (Primary)"} />
+              <div className="flex justify-end w-full mt-4">
+                <button ref={btnref} onClick={handleButtonFunction} className="bg-nav-pink text-white px-6 py-2 active:bg-transparent active:text-nav-pink border-[0.01rem] active:border-nav-pink">{buttonText}</button>
+              </div>
             </div>
           ) : (
             <h1 className="text-center text-2xl font-[500] ">Coming Soon</h1>

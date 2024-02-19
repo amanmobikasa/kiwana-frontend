@@ -9,9 +9,9 @@ const userAuthJwtTokenSlice  =  createSlice({
     initialState,
     reducers : {
         setUserJwtToken : (state, action) => {
-            state.userJwtToken = action.payload
+             state.userJwtToken = action.payload
         },
-        deleteUserJwtToken : (state) => {
+        deleteUserJwtToken :(state) => {
             state.userJwtToken = ""
         }
     }
