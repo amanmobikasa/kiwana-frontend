@@ -41,24 +41,29 @@ const BestSellerProducts = () => {
 
 
     const handleBestSellerButton = () => {
-        if(productTypeState || itemCount){
+        if (productTypeState || itemCount) {
             setBestSellerProduct((prevData) => {
                 const updatedData = {
-                  ...prevData,
-                  product_quantity: itemCount,
-                  product_type: Array.isArray(productTypeState) ? productTypeState : prevData.product_type,
+                    ...prevData,
+                    pdpPopup: prevData.pdpPopup.map((popup) => {
+                        return {
+                            ...popup,
+                            product_quantity: itemCount,
+                            product_type: Array.isArray(productTypeState) ? productTypeState : popup.product_type,
+                        };
+                    }),
                 };
                 toastSuccess("Product added to cart");
                 setAddtoCartState(updatedData);
                 return updatedData;
-              });
-        }
-        else{
+            });
+        } else {
             toastFailed("Something went wrong 😒");
-        } 
-    }
+        }
+    };
+    
 
-    // console.log("addtocartState", addToCartState.pdpPopup[0]);
+    // console.log("addtocartState", addToCartState);
     useEffect(()=>{
         if(addToCartState !== null){
             console.log("addtocartstate", addToCartState);

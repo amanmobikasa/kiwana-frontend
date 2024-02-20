@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialUser = {
-    usersData : null,
+    usersData : [],
 
 }
 

@@ -11,6 +11,8 @@ function RemoveCartProduct({setOpenModal,openModal, singleCartData, cartItemsSta
     const [allCartProducts, setAllCartProducts] = useState([]);
     const dispatch = useDispatch();
 
+    console.log("testest", cartItemsState);
+
     useEffect(()=>{
       setAllCartProducts(cartItemsState)
     },[cartItemsState, allCartProducts])
