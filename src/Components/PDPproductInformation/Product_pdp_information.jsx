@@ -122,7 +122,7 @@ const ProductPdpInformationComp = () => {
     
     const handleAddtocart = () => {
     if (productWeightState || updateProductTypeState || itemCount) {
-        console.log("productQty", itemCount);
+        // console.log("productQty", itemCount);
       
         setPdpInformationData((prevData) => {
           const updatedData = {

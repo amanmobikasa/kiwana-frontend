@@ -37,7 +37,8 @@ const TimeLineProducts =()=> {
 
   return (
     <>
-        <BasicLayout> 
+        <BasicLayout className='bg-white w-full relative h-fit'
+        > 
         { showModal ? <CommonModal showModal = {showModal} setShowModal={setShowModal} /> : null }
         {
           editModalState ? <ModalWrapper editModalState={editModalState} setEditModalState={setEditModalState}  >

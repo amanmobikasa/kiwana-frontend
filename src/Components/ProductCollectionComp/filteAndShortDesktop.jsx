@@ -154,7 +154,7 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
                                         <div key={i} className='inner-container w-full flex justify-between items-center'>
                                             <label htmlFor="" className='flex gap-2 items-center justify-start w-full'>
                                                 { sub_items?.input_type === "range" ? <RangeComponent  handlePrieChangeFunction="" />  :  <input onChange={(e)=> handleFilterInputValue(e, sub_items, inputItems)} checked={sub_items?.default_check} type={sub_items?.input_type} name={sub_items?.input_name} value={sub_items?.input_value}  className='accent-nav-pink ' />   }
-                                                <p className='text-[16px] text-[#363636] font-[500] '>{sub_items?.input_label}</p>
+                                                <p className='text-[16px] text-[#363636] font-[500]'>{sub_items?.input_label}</p>
                                             </label>
                                            {sub_items?.input_type === "range" ? null : <div>
                                                 <h3 className='text-[14px]'>({sub_items?.input_item_value})</h3>
