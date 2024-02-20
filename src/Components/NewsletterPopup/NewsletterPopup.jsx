@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import newsletterimg from '../../Assest/images/newsletterimg.png'
 import { RxCross1 } from "react-icons/rx";
 import { motion } from 'framer-motion'
+import GlobalPostData from '../../Customhooks/usePostData';
+import { toastFailed, toastSuccess } from '../../common/toast';
 
 const NewsletterPopup = () => {
 
     const [newsLetterEmail, setNewsLetterEmail] = useState("");
     const [showNewsletter, setShowNewsletter] = useState(true);
     const [disableScroll, setDisableScroll] = useState(true);
+    const {response, error, isLoading, postData, message} = GlobalPostData();
 
     const handleNewsLetter = (e) => {
         const {value} = e.target;
@@ -16,14 +19,31 @@ const NewsletterPopup = () => {
 
     const submitNewsLetter = (e) => {
         e.preventDefault();
-        console.log(newsLetterEmail);
-        setNewsLetterEmail("");
+        try {
+            console.log(newsLetterEmail);
+            postData("http://localhost:4000/subscribe", {email : newsLetterEmail})
+            setNewsLetterEmail("");
+            // if(response !== null){
+            //     toastSuccess(message);
+            // }
+            handleShowNewsLetter();
+            
+        } catch (error) {
+             console.log("error is", error);
+        }
     }
 
     const handleShowNewsLetter = () => {
         setShowNewsletter(false);
         setDisableScroll(false);
     }
+
+    useEffect(()=>{
+        if(response !== null){
+            toastSuccess(message);
+        }
+        
+    },[response])
 
 
 
@@ -45,7 +65,7 @@ const NewsletterPopup = () => {
                     </div>
                     <form onSubmit={submitNewsLetter} className='flex flex-col justify-center items-center w-full lg:w-11/12 mt-10 space-y-8'>
                         <input type="email" onChange={handleNewsLetter} value={newsLetterEmail}  placeholder='Enter email' className=' border-[0.01rem] py-4 px-5 placeholder:text-gray-300 placeholder:tracking-widest placeholder:font-[300] placeholder:text-[12px] text-black w-full border-gray-300'/>
-                        <button type='submit' className='text-white bg-nav-pink w-full py-4 tracking-widest font-[400] text-[14px] uppercase hover:text-nav-pink hover:bg-transparent hover:border-nav-pink border-[0.01rem]'>Subscribe</button>
+                        <button type='submit' className='text-white bg-nav-pink w-full py-4 tracking-widest font-[400] text-[14px] uppercase hover:text-nav-pink hover:bg-transparent hover:border-nav-pink border-[0.01rem]'>{isLoading ? "Loading..." :"Subscribe"}</button>
                     </form>
                 </div>
                 <div onClick={handleShowNewsLetter} id='cross' className='absolute top-[1rem] rounded-full right-[1rem] h-[1.8rem] w-[1.8rem] bg-[#FFF7F3] flex justify-center items-center'>

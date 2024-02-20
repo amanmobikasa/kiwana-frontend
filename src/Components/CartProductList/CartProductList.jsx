@@ -49,6 +49,7 @@ const CartProductList = ({setProductPrice}) => {
 
 
 const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPrice}) => {
+    console.log("cartdata", CartData);
 
     const [singleCartData, setSingleCartData] = useState(CartData);
     const [productSelectedWeight, setProductSelectedWeight] = useState(()=>{
@@ -68,6 +69,18 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
         })
         
      },[])
+
+     console.log("cartdata", CartData)
+
+    //  useEffect(()=>{
+    //     // debugger;
+    //         setProductSelectedWeight((prevVal)=>{
+    //             const filterWeight = CartData?.product_weight?.filter((weight)=> weight.selected === true)
+    //             console.log("filterWeight", filterWeight);
+    //             return filterWeight[0].weight_label ? filterWeight[0].weight_label : "30ml" 
+    //         })
+
+    //  },[])
 
     const [cartPriceState, setCartPriceState] = useState(0);
     const [openModal, setOpenModal] = useState(false) // true means open and false means close.

@@ -1,19 +1,84 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import productOne from '../../Assest/images/product_1.png';
 import limited_offer from '../../Assest/images/limited_offer.png'
 import Timer from './Timer';
 import moment from 'moment';
+import { toastFailed, toastSuccess } from '../../common/toast';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { productQuantityReducer, updateProductQuantityReducer } from '../../Redux/reducer/addToCartSlice';
+
 const BestSellerProducts = () => {
+    const [BestSellerProduct, setBestSellerProduct] = useState(BestSellerProduct_api);
+    const [itemCount, setItemCount] = useState({ productId : 1, productCount : 1 })
+    const [productTypeState, setProductTypeState] = useState([]);
+    const [addToCartState, setAddtoCartState] = useState(null)
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleProductTypeChange = (product_type_obj) => {
+        const indexToUpdate = BestSellerProduct?.pdpPopup[0]?.product_type.findIndex(
+            (radio_data) => radio_data.label == product_type_obj.label
+          );
+      
+          if (indexToUpdate !== -1) {
+            const updatedProductTypes = BestSellerProduct?.pdpPopup[0]?.product_type?.map(
+              (radio_data, index) => {
+                if (parseInt(index) === parseInt(indexToUpdate)) {
+                  setItemCount({productId : parseInt(BestSellerProduct?.pdpPopup[0]?.pdp_link), productCount : parseInt(BestSellerProduct?.pdpPopup[0]?.product_quantity)})
+                  return {
+                    ...radio_data,
+                    selected: true,
+                  };
+                }
+                return radio_data;
+              }
+            );
+            // Update the state with the new product types
+            setProductTypeState(updatedProductTypes);
+        }
+    }
+
+
+    const handleBestSellerButton = () => {
+        if(productTypeState || itemCount){
+            setBestSellerProduct((prevData) => {
+                const updatedData = {
+                  ...prevData,
+                  product_quantity: itemCount,
+                  product_type: Array.isArray(productTypeState) ? productTypeState : prevData.product_type,
+                };
+                toastSuccess("Product added to cart");
+                setAddtoCartState(updatedData);
+                return updatedData;
+              });
+        }
+        else{
+            toastFailed("Something went wrong 😒");
+        } 
+    }
+
+    // console.log("addtocartState", addToCartState.pdpPopup[0]);
+    useEffect(()=>{
+        if(addToCartState !== null){
+            console.log("addtocartstate", addToCartState);
+            dispatch(productQuantityReducer(addToCartState.pdpPopup[0]))
+            navigate('/cartpage');
+        } 
+       },[addToCartState])
+
+    
+
     return <>
     <section className='bg-[#FCEBE8] w-auto h-fit lg:h-auto relative py-[3rem] lg:py-[4.5rem]'>
         <div className='relative h-fit w-full lg:w-[55%]  '>
-            <img src={productOne} alt='product_one' className='w-full lg:w-full lg:h-[40rem] lg:object-cover h-auto'/>
+            <img src={BestSellerProduct?.pdpPopup[0]?.product_image} alt='product_one' className='w-full lg:w-full lg:h-[40rem] lg:object-cover h-auto'/>
             <div className='limited-offer absolute -top-14 left-2 md:-top-14 md:left-18 lg:-top-7  lg:left-5'>
                 <div className='relative w-fit h-fit'>
                     <img src={limited_offer} alt='limited_offer'  className='h-[8rem] w-[8rem] md:h-[10rem] md:w-[10rem] lg:h-[13rem] lg:w-[13rem] relative z-0'/>
                     {/* <h5 className='uppercase text-white -rotate-45 absolute top-6 md:top-10 md:w-[6rem] md:mx-auto text-[0.90rem] md:text-[1rem]  left-8 md:left-11 z-10 '>limited <span className='text-center'>offer</span></h5> */}
-                    <div className='absolute lg:top-[4rem] top-[3.1rem] flex justify-center text-center items-center w-full -rotate-[22deg]'>
-                        <h1 className='lg:text-[1.5rem] text-xs  w-6/12 text-white font-[500] uppercase'>
+                    <div className='absolute lg:top-[30%] top-[3.1rem] flex justify-center text-center items-center w-full -rotate-[22deg]'>
+                        <h1 className='lg:text-[1.5rem] text-xs leading-normal  w-6/12 text-white font-[500] uppercase'>
                             Limited Offer
                         </h1>
                     </div>
@@ -22,16 +87,23 @@ const BestSellerProducts = () => {
             </div>
         </div>
         <div id='special_offer_card' className=' lg:w-6/12 lg:absolute lg:right-0 lg:top-[6rem] '>
-            <SpecialOfferCard />
+            <SpecialOfferCard pdpData = {BestSellerProduct?.pdpPopup[0]} handleBestSellerButton={handleBestSellerButton} handleProductTypeChange={handleProductTypeChange}  />
         </div>
     </section>
     </>
 }
 
-const SpecialOfferCard = () =>{
+const SpecialOfferCard = ({pdpData, handleBestSellerButton, handleProductTypeChange}) =>{
+    // const [endTimeState, setEndTimeState] = useState(null);
+    const endTime = moment().add(1,'day');
 
-    const endTime = moment().add(1,'hours');
+    const handleBuyNow = (event) => {
+        handleBestSellerButton(event)
+    }
 
+    const handleProductType = (event, product_type_obj) => {
+        handleProductTypeChange(product_type_obj);
+    }
 
     return <>
         <div className='bg-white w-11/12 md:w-10/12 lg:w-full lg:h-[35rem] h-[36.5rem] mx-auto -mt-[3.5rem] md:-mt-[7rem] lg:mt-0 shadow-lg drop-shadow-md relative'>
@@ -41,8 +113,8 @@ const SpecialOfferCard = () =>{
                     <button className='px-2 py-1 text-sm  bg-[#E89689] text-white md:px-3 md:py-1 md:text-lg lg:text-[14px] lg:py-[1px] lg:px-2'>-20%</button>
                 </div>
                 <div className='title text-start space-y-4  lg:mt-[10px] lg:space-y-1'>
-                    <h1 className='text-[30px] tracking-wide md:text-[30px] lg:text-[38px] lg:font-[600]  font-playfair text-[#363636] lg:tracking-wider overflow-hidden '>Ultra Brightening Face...</h1>
-                    <p className='text-[25px] md:text-[22px]  font-[400] lg:text-[35px] flex items-center w-full'>$272 <strike className="text-gray-300 ml-2 text-[14px] md:text-[18px] lg:text-[20px]">$340</strike> </p>
+                    <h1 className='text-[30px] tracking-wide md:text-[30px] lg:text-[38px] lg:font-[600]  font-playfair text-[#363636] lg:tracking-wider overflow-hidden '>{pdpData?.product_title}...</h1>
+                    <p className='text-[25px] md:text-[22px]  font-[400] lg:text-[35px] flex items-center w-full'>${pdpData?.product_price}.00 <strike className="text-gray-300 ml-2 text-[14px] md:text-[18px] lg:text-[20px]">$600.00</strike> </p>
                 </div>
                 {/* rating for it */}
                 <div className='flex items-center justify-start gap-5 pt-6 lg:pt-0'>
@@ -53,15 +125,15 @@ const SpecialOfferCard = () =>{
                             <path d="M71.218 16.2596L75.6947 19.1519C76.2721 19.5225 76.9826 18.9712 76.8139 18.2933L75.5171 13.1051C75.482 12.9613 75.4876 12.8104 75.5331 12.6696C75.5787 12.5289 75.6624 12.4042 75.7746 12.3097L79.7895 8.90221C80.3135 8.45932 80.047 7.5645 79.3631 7.51931L74.1225 7.17584C73.9795 7.16738 73.8421 7.11671 73.7269 7.03003C73.6118 6.94335 73.5239 6.82442 73.4741 6.68776L71.52 1.6804C71.4683 1.53569 71.374 1.41069 71.2501 1.32236C71.1262 1.23403 70.9785 1.18665 70.8272 1.18665C70.6759 1.18665 70.5282 1.23403 70.4043 1.32236C70.2803 1.41069 70.1861 1.53569 70.1344 1.6804L68.1802 6.68776C68.1304 6.82442 68.0426 6.94335 67.9274 7.03003C67.8123 7.11671 67.6748 7.16738 67.5318 7.17584L62.2913 7.51931C61.6073 7.5645 61.3409 8.45932 61.8649 8.90221L65.8797 12.3097C65.9919 12.4042 66.0757 12.5289 66.1212 12.6696C66.1668 12.8104 66.1724 12.9613 66.1373 13.1051L64.9382 17.9137C64.7339 18.7271 65.5866 19.3869 66.2705 18.944L70.4364 16.2596C70.5532 16.184 70.6887 16.1439 70.8272 16.1439C70.9656 16.1439 71.1012 16.184 71.218 16.2596Z" fill="#E89689"/>
                             <path d="M91.7473 16.2596L96.224 19.1519C96.8013 19.5225 97.5119 18.9712 97.3432 18.2933L96.0464 13.1051C96.0113 12.9613 96.0169 12.8104 96.0624 12.6696C96.108 12.5289 96.1917 12.4042 96.3039 12.3097L100.319 8.90221C100.843 8.45932 100.576 7.5645 99.8924 7.51931L94.6518 7.17584C94.5088 7.16738 94.3714 7.11671 94.2562 7.03003C94.1411 6.94335 94.0532 6.82442 94.0034 6.68776L92.0493 1.6804C91.9976 1.53569 91.9033 1.41069 91.7794 1.32236C91.6555 1.23403 91.5078 1.18665 91.3565 1.18665C91.2052 1.18665 91.0575 1.23403 90.9336 1.32236C90.8096 1.41069 90.7154 1.53569 90.6637 1.6804L88.7095 6.68776C88.6597 6.82442 88.5719 6.94335 88.4567 7.03003C88.3416 7.11671 88.2041 7.16738 88.0611 7.17584L82.8206 7.51931C82.1366 7.5645 81.8701 8.45932 82.3942 8.90221L86.409 12.3097C86.5212 12.4042 86.605 12.5289 86.6505 12.6696C86.6961 12.8104 86.7017 12.9613 86.6666 13.1051L85.4675 17.9137C85.2632 18.7271 86.1159 19.3869 86.7998 18.944L90.9657 16.2596C91.0825 16.184 91.218 16.1439 91.3565 16.1439C91.4949 16.1439 91.6305 16.184 91.7473 16.2596Z" stroke="#E89689" stroke-width="0.828804" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
-                    <p className="text-black text-[16px] md:text-[18px] font-[300] mt-1">(212)</p>
+                    <p className="text-black text-[16px] md:text-[18px] font-[300] mt-1">({pdpData?.product_review})</p>
                 </div>
                 {/* radio buttons */}
                 <div className={`radio_buttons flex flex-col lg:space-y-0 lg:grid lg:grid-cols-3 space-y-4 flex-wrap h-[7rem] lg:h-[5rem]  mt-[1.5rem]   justify-start items-start`}>
                 {
-                    products_choice_radio.map((data, i)=>{
+                    pdpData?.product_type.map((data, i)=>{
                         return <>
                         <label key={i} className='space-x-2 md:space-x-3 ' htmlFor={data.name} >
-                            <input type='radio' value="" name={"product_type"} className='bg-[#FCEBE8] border-nav-pink lg:h-5 lg:w-5'/>
+                            <input onChange={(event)=>handleProductType(event, data)} type='radio' aria-selected={pdpData?.selected} value={pdpData?.value} name={"product_type"} className='bg-[#FCEBE8] border-nav-pink lg:h-5 lg:w-5'/>
                             <span className='font-poppins text-black text-[12px] md:text-[16px]  font-[400]'>{data.label}</span>
                         </label>
                         </>
@@ -71,39 +143,85 @@ const SpecialOfferCard = () =>{
                 {/* timer */}
                 <Timer endTime={endTime.valueOf()} />
                 <div className='mt-[1.5rem] lg:pt-[1rem] lg:w-8/12'>
-                    <button className='bg-[#E89689] text-white tracking-wider font-[400] text-[14px] md:text-[18px] md:tracking-widest uppercase w-full py-3 hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.02rem] '>BUY NOW</button>
+                    <button onClick={handleBuyNow} className='bg-[#E89689] text-white tracking-wider font-[400] text-[14px] md:text-[18px] md:tracking-widest uppercase w-full py-3 hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.02rem] '>BUY NOW</button>
                 </div>
             </div>
         </div>
     </>
 } 
 
-const products_choice_radio = [
-    {
-        id : 1,
-        label : "Saffron",
-        name : "saffron",
-    },
-    {
-        id : 2,
-        label : "Vitamin C",
-        name : "vitamin c",
-    },
-    {
-        id : 3,
-        label : "Ferulic Acid",
-        name : "ferulic acid",
-    },
-    {
-        id : 4,
-        label : "Hyaluronic Acid",
-        name : "hyaluronic acid",
-    },
-    {
-        id : 5,
-        label : "Vitamin E",
-        name : "vitamin e",
-    },
-]
+const BestSellerProduct_api = {
+    id : 1,
+    product_type : "hair",
+    in_stock : "In stock",
+    imgLink : productOne,
+    title : "hair conditioner",
+    price : 272,
+    reviews : 4,
+    reviewsCount : 2947,
+    pdpPopup : [
+        {
+            product_image: productOne,
+            product_title : "Hair Conditionar",
+            product_price : 272,
+            product_rating : [
+                {
+                    rating : 4,
+                }
+            ],
+            product_review : 212,
+            product_stock : 58,
+            product_type : [
+                {
+                    name : "saffron",
+                    label : "Saffron",
+                    selected : false,
+                    value : "saffron"
+                },
+                {
+                    name : "hyaluronic_acid",
+                    label : "Hyaluronic Acid",
+                    selected : false,
+                    value : "hyaluronic_acid"
+                },
+                {
+                    name : "ferulic_acid",
+                    label : "Ferulic Acid",
+                    selected : false,
+                    value : "ferulic_acid"
+                },
+                {
+                    name : "vitamin_c",
+                    label : "Vitamin C",
+                    selected : false,
+                    value : "vitamin_c"
+                },
+                {
+                    name : "vitamin_e",
+                    label : "Vitamin E",
+                    selected : false,
+                    value : "vitamin_e"
+                },
+            ],
+            product_weight : [
+                {
+                    weight_label : "30ml",
+                    selected : true
+                },
+                {
+                    weight_label : "50ml",
+                    selected : false
+                },
+                {
+                    weight_label : "100ml",
+                    selected : false
+                },
+            ],
+            product_quantity : 1,
+            pdp_link : "1"
+
+        }
+    ]
+}
 
 export default BestSellerProducts;

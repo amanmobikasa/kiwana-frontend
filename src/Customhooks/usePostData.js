@@ -6,12 +6,14 @@ const GlobalPostData = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [message , setMessage] = useState("");
 
   const postData = async (endpoint, postData) => {
     setIsLoading(true);
     try {
       const res = await axios.post(endpoint, postData);
       setResponse(res.data);
+      setMessage(res.message)
       console.log("data response", response);
     } catch (error) {
       setError('Error while posting data');
@@ -21,7 +23,7 @@ const GlobalPostData = () => {
   };
 
 
-  return { response, error, isLoading, postData };
+  return { response, error, isLoading, postData, message };
 };
 
 
