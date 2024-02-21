@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadcrumbComp from '../Components/Breadcrumb/Breadcrumb';
 import ContactAddress from '../Components/ContactAdress/ContactAddress';
 import SendMessageContact from '../Components/SendMessageContact/SendMessageContact';
+import { useParams, useRoutes } from 'react-router-dom';
 // import GoogleMapComp from '../Components/Googlemap/Googlemap';
 const ContactPage = () => {
+    
     return <>
     <section id='contact-page' className='w-full lg:px-[50px] xs:px-[15px] mx-auto h-fit bg-white py-[3rem]'>
         <div>

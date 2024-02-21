@@ -1,43 +1,55 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 import cartImage from '../Assest/images/cartimg1.png';
-import { LuMinus, LuPlus } from 'react-icons/lu';
+// import { LuMinus, LuPlus } from 'react-icons/lu';
 import CouterCommon from './CouterCommon';
+import { ItemContainerofCart } from '../Components/CartProductList/CartProductList';
+import { useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
 
 
 function CartSideBar({setShowCartSidebar, showCartSidebar}) {
-//   const [openModal, setOpenModal] = useState(true);
+    const [cartItemsState, setCartItemsState] = useState([]);
+    const cartItems = useSelector((state)=> state.productQty.addtoCartQty);
+    const [productPrice, setProductPrice] = useState(0)
+    useEffect(()=>{
+        setCartItemsState(cartItems)
+    },[cartItems])
 
     // const hideCartPopUp = 
 
   return <>
-      <Modal id='cart-container' dismissible show={showCartSidebar} onClose={showCartSidebar} >
-        <div className='main-container-cart-popup'>
+      <Modal size={"3xl"} id='cart-container' dismissible show={showCartSidebar}  >
+        <div className='main-container-cart-popup lg:h-[100%]'>
             <div className='content-container w-11/12 mx-auto py-[2.2rem] '>
                 <div className='w-full flex justify-between h-fit items-center px-3'>
                     <div className='flex justify-start gap-2 '>
-                        <div onClick={()=> setShowCartSidebar(false)}>
+                        <div>
                             <IoMdCheckmark className='text-lg text-[#363636]'/>
                         </div>
                         <div>
                             <p className='text-[13px] font-[600] font-poppins text-[#363636] '>Items added to your cart</p>
                         </div>
                     </div>
-                    <div>
+                    <div onClick={()=> setShowCartSidebar(false)}>
                         <RxCross2 className='text-lg text-[#363636]' />
                     </div>
                 </div>
                 <div className='mt-[3rem] overflow-scroll relative '>
-                    <div className='snap-x snap-mandatory  w-[30rem] space-y-[2.5rem] '>
-                        <div>
-                            <CartItems />
+                    <div className='snap-x snap-mandatory  w-[70rem] mx-2 space-y-[2.5rem] '>
+                        <div className='w-full '>
+                        {
+                   cartItemsState.length > 0 ? cartItemsState?.map((cart_data, i)=>{
+                        return <>
+                        <ItemContainerofCart key={i} CartData = {cart_data} cartItemsState={cartItemsState} setProductPrice={setProductPrice}     />
+                        </>
+                    }) : <h1 className='text-center w-full text-[3rem] font-[500] capitalize'>Cart is Empty</h1>
+                }
                         </div>
-                        <div>
-                            <CartItems />
-                        </div>
+                        
                     </div>
                 </div>
                 <div className='w-full overflow-hidden relative '>
@@ -64,7 +76,7 @@ function CartSideBar({setShowCartSidebar, showCartSidebar}) {
                                                 <h1 className='text-[1.8rem] font-playfair font-[600] capitalize text-[#363636]'>subtotal</h1>
                                             </div>
                                             <div>
-                                                <h1 className='text-[1.7rem] font-[600]'>$700</h1>
+                                                <h1 className='text-[1.7rem] font-[600]'>${productPrice}</h1>
                                             </div>
                                         </div>
                                     </div>
@@ -74,10 +86,10 @@ function CartSideBar({setShowCartSidebar, showCartSidebar}) {
                                 </div>
                                 <div className='button-container flex items-center justify-evenly w-full gap-3 mt-4'>
                                     <div className='w-6/12'>
-                                        <button className='text-[15px] font-[400] uppercase w-full py-3  border-[0.01rem] border-nav-pink '>View Cart</button>
+                                        <NavLink to={"/cartpage"}><button className='text-[15px] font-[400] uppercase w-full py-3  border-[0.01rem] border-nav-pink '>View Cart</button></NavLink>
                                     </div>
                                     <div className='w-6/12'>
-                                        <button className='text-[15px] font-[400] uppercase w-full py-3 bg-nav-pink border-[0.01rem] border-nav-pink text-white'>Buy now</button>
+                                        <NavLink to={"/checkout"}><button className='text-[15px] font-[400] uppercase w-full py-3 bg-nav-pink border-[0.01rem] border-nav-pink text-white'>Buy now</button></NavLink>
                                     </div>
                                 </div>
 

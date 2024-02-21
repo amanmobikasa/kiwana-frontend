@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+/* handle the cart popup css */
+#cart-container>div{
+    max-height: 100vh;
+}

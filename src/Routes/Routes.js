@@ -18,6 +18,9 @@ const Signupcomp = React.lazy(()=> import('../Components/SignUp/Signup'));
 const TimeLineProducts = React.lazy(()=> import('../Pages/TimeLineProducts'));
 
 const USER_TOKEN = sessionStorage.getItem("userLoginToken");
+const jwtToken = sessionStorage.getItem("userJwtToken");
+
+
 
 const pagesRoutes = [
     { path: '/', name: 'LandingPage', element: <LandingPage />, exact: true  },
@@ -27,7 +30,7 @@ const pagesRoutes = [
     { path : '/collection', name:"ProductCollection", element:<ProductCollection />, exact : true },
     { path : '/pdp-product/:productId', name:"Product Pdp Page", element:<PdpProducts />, exact : true },
     { path : '/cartpage', name:"ProductCartPage", element:<ProductCartPage />, exact : true },
-    { path : '/myaccount', name:"UserAccount", element: USER_TOKEN ? <MyAccount /> : <LoginPage /> , exact : true },
+    { path : '/myaccount', name:"UserAccount", element: USER_TOKEN || jwtToken ? <MyAccount /> : <LoginPage /> , exact : true },
     { path : '/blog', name:"BlogListingPage", element:<BlogListingPage />, exact : true },
     { path : '/blogdesc/:id', name:"BlogListingPage", element:<BlogDescriptionPage />, exact : true },
     { path : '/checkout', name:"ProductCheckout", element:<ProductCheckout />, exact : true },

@@ -180,4 +180,4 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
     </>
 })
 
-export default CartProductList;
+export { ItemContainerofCart, CartProductList};

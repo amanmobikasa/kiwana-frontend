@@ -31,7 +31,7 @@ const LandingPage = () => {
                 <div className='w-full h-fit text-center pt-5'>
                     <h1 className='lg:text-[43px] text-[30px] font-[500] font-playfair text-[#333] '>Bestseller Products</h1>
                 </div>
-                <div>
+                <div id='bestseller'>
                     <BestSellerProduct />
                 </div>
             </div>

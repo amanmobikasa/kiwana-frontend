@@ -48,13 +48,14 @@ const LoginPage = () => {
                 <div className='content-container w-6/12 mx-auto flex justify-center mb-[2rem] relative gap-x-3'>
                     <div className='w-full '>
                         <GoogleLogin
+                            
                             clientId={CLIENT_ID}
                             buttonText='Sign Up with Google'
                             onSuccess={userToken ? false : responseSuccess}
                             onFailure={responseFailure}
                             cookiePolicy='single_host_origin'
                             className='w-full py-3 rounded-md shadow-sm font-[500] font-poppins text-[#363636]'
-                            isSignedIn={true}
+                            isSignedIn={false}
                             />
                     </div>
                     <div className='w-full'>
