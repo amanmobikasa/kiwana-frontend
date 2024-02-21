@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { contactCreateSlice } from '../../Redux/reducer/createContactSlice';
-import { toastSuccess } from '../../common/toast';
+import { toastFailed, toastSuccess } from '../../common/toast';
+import GlobalPostData from '../../Customhooks/usePostData';
 
 const SendMessageContact = () => {
 
     const [contactData, setContactData] = useState({})
     const dispatch = useDispatch();
+    const {error, isLoading, message, postData, response} = GlobalPostData()
 
     // handle the contact details;
     const handleContactDetails = (event, data) => {
@@ -23,8 +25,16 @@ const SendMessageContact = () => {
         event.preventDefault();
         if(contactData){
             dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
+            postData("http://localhost:4000/contactus", contactData);
             toastSuccess("message is delievered, We will reach out you soon!")
             setContactData(sendMessageContact_api);
+        }
+        if(response){
+            toastSuccess(message);
+        }
+        else if(error){
+            toastFailed(error);
+        
         }
     }
     
@@ -56,11 +66,10 @@ const SendMessageContact = () => {
                             </>
                         })
                     }
-
                     <div className='w-full xs:pr-3 lg:pr-0'>
-                        <button type='submit' className='uppercase py-3 px-12 text-white bg-nav-pink tracking-wider text-[18px] hover:bg-transparent hover:text-nav-pink hover:border-nav-pink border-[0.01rem] xs:w-full lg:w-auto'>Submit</button>
+                        <button type='submit' className='uppercase py-3 px-12 text-white bg-nav-pink tracking-wider text-[18px] hover:bg-transparent hover:text-nav-pink hover:border-nav-pink border-[0.01rem] xs:w-full lg:w-auto'>{ isLoading ? "Loading..." : "Submit"}</button>
                     </div>
-                        
+                         
                     </div>
 
                 </form>
@@ -78,7 +87,7 @@ const sendMessageContact_api = [
         children : [{
         inputType : "text",
         placeholder : "Your Name",
-        name : "user_name",
+        name : "name",
         value : "",
         inputCss : ""
     },
@@ -86,7 +95,7 @@ const sendMessageContact_api = [
        
         inputType : "email",
         placeholder : "Email Address",
-        name : "user_email",
+        name : "email",
         value : "",
         inputCss : ""
     }]},
@@ -96,7 +105,7 @@ const sendMessageContact_api = [
         
         inputType : "text",
         placeholder : "Phone Number",
-        name : "user_phone",
+        name : "phone_number",
         value : "",
         inputCss : ""
     },
@@ -104,7 +113,7 @@ const sendMessageContact_api = [
         
         inputType : "text",
         placeholder : "Subject",
-        name : "user_subject",
+        name : "subject",
         value : "",
         inputCss : ""
     }]},
@@ -114,7 +123,7 @@ const sendMessageContact_api = [
         
         inputType : "textarea",
         placeholder : "Message",
-        name : "user_message",
+        name : "message",
         value : "",
         inputCss : ""
     },

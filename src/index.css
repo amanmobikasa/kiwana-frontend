@@ -6,6 +6,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
 @layer base{
     body{
       @apply  text-nav-pink
@@ -291,3 +296,5 @@
 .magnifier.zoomed .magnifier-lens {
   display: block;
 }
+
+

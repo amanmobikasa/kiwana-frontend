@@ -1,7 +1,7 @@
 import { Label, Textarea } from "flowbite-react";
 import React, { memo, useState } from "react";
 
-const UserReviewCommon = ({onChangeModal, placeholderText, disableArea, labelName, valueAddress})=> {
+const UserReviewCommon = ({onChangeModal, placeholderText, disableArea, labelName, valueAddress, size})=> {
 
   // const [valueAddressState, setValueAddressState] = useState(valueAddress);
 
@@ -20,13 +20,14 @@ const UserReviewCommon = ({onChangeModal, placeholderText, disableArea, labelNam
         </div>
         <Textarea
           onChange={handleAddressChange}
-          className="rounded-none resize-none "
+          className={`rounded-none resize-none ${size === "2xl" ? "w-full" : ""}`}
           id="comment"
           placeholder={placeholderText ? placeholderText : "Leave a review..."}
           required
           value={valueAddress ? valueAddress : ""}
           disabled = {disableArea ? disableArea : false}
           rows={5}
+          
         />
         {/* <div className="flex justify-end w-full mt-4">
             <button className="bg-nav-pink text-white px-6 py-2 active:bg-transparent active:text-nav-pink border-[0.01rem] active:border-nav-pink">Save</button>

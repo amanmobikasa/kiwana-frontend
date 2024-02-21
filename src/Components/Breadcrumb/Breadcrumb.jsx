@@ -1,16 +1,17 @@
 import { Breadcrumb } from 'flowbite-react';
+import { useEffect, useState } from 'react';
 import { HiHome } from 'react-icons/hi';
+import { NavLink } from 'react-router-dom';
 
-function BreadcrumbComp() {
-
+function  BreadcrumbComp({}) {
 
   return (
     <Breadcrumb aria-label="Default breadcrumb example">
-      <Breadcrumb.Item href="#">
+      <NavLink to={"/"}><Breadcrumb.Item href="#">
         Home
-      </Breadcrumb.Item>
-      <Breadcrumb.Item href="#">Projects</Breadcrumb.Item>
-      <Breadcrumb.Item>Flowbite React</Breadcrumb.Item>
+      </Breadcrumb.Item></NavLink>
+      <Breadcrumb.Item >My account</Breadcrumb.Item>
+      
     </Breadcrumb>
   );
 }

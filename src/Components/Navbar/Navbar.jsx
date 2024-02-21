@@ -6,7 +6,8 @@ import { Navsidebar } from "./Sidebar";
 import { globalSearchHook } from "../../Customhooks/globalSearchHook";
 import { SearchList } from "./ListGroup";
 import {CartSideBar} from "../../common/cartSidebar";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import profile1 from '../../Assest/images/profile1.png'
 
 const NavbarComp = () => {
 
@@ -16,7 +17,11 @@ const NavbarComp = () => {
   const [searchResultArray, setSearchResultArray] = useState([]);
   const [showSearchList, setShowSearchList] = useState(false);
   const [showCartSidebar, setShowCartSidebar] = useState(false);
-  const [loginDetailsState, setLoginDetailsState] = useState(null);
+  const [loginDetailsState, setLoginDetailsState] = useState({
+    googleToken : null,
+    jwtToken : ""
+  });
+  const navigate = useNavigate()
 
   const handleGlobalSearch = (event) => {
     try {
@@ -47,12 +52,18 @@ const NavbarComp = () => {
     setShowCartSidebar(true);
     console.log(showCartSidebar)
   }
+  const loginDetails =  JSON.parse(sessionStorage.getItem("userLogin"));
+  const jwtToken = sessionStorage.getItem("userJwtToken");
 
-  useEffect(()=>{
-    const loginDetails = JSON.parse(sessionStorage.getItem("userLogin"));
-    // console.log("payment", loginDetails);
-    setLoginDetailsState(loginDetails);
-  },[]);
+  useEffect(() => {
+
+    if (loginDetails && jwtToken) {
+        setLoginDetailsState({ googleToken: loginDetails, jwtToken: jwtToken });
+    } else {
+      setLoginDetailsState({ googleToken: loginDetails, jwtToken: jwtToken });
+    }
+}, [loginDetails, jwtToken]);
+
   
   console.log("payment", loginDetailsState);
 
@@ -75,14 +86,18 @@ const NavbarComp = () => {
             <path d="M0 1H28M0 9.24242H10.2308H20.4615M0 17H12.2051" stroke="#363636" stroke-width="1.5"/>
           </svg>
         </div>
+        <NavLink to={"/"}>
           <div className="w-fit h-fit object-cover">
             <img src={logo} alt="logo" className="h-auto w-auto " />
           </div>
+        </NavLink>
           <ul className="lg:flex items-center gap-[30px] lg:gap-[33px]  text-[16px] lg:text-[16px] lg:font-[600] text-black hidden">
             <li className="">
+              <NavLink to={"/"}>
               <a href="#" className="font-[600] underline">
                 HOME
               </a>
+              </NavLink>
             </li>
             <li  onMouseEnter={()=> setShowMegaMenu(true)} onfo className="">
               <a href="#" className="hover:underline lg:flex items-center">
@@ -93,25 +108,31 @@ const NavbarComp = () => {
               </a>
             </li>
             <li className="">
-              <a href="#" className="hover:underline">
+              <a href="#bestseller" className="hover:underline">
                 BESTSELLER
               </a>
             </li>
+            <NavLink to={"/about-us"}>
             <li className="">
-              <a href="#" className="hover:underline">
+              <a className="hover:underline">
                 PAGES
               </a>
             </li>
+            </NavLink>
+            <NavLink to={"/blogs"}>
             <li className="">
-              <a href="#" className="hover:underline">
+              <a className="hover:underline">
                 BLOGS
               </a>
             </li>
+            </NavLink>
+            <NavLink to={"/contact-page"}>
             <li className="">
-              <a href="#" className="hover:underline">
+              <a className="hover:underline">
                 CONTACT
               </a>
             </li>
+            </NavLink>
           </ul>
           <div className="relative hidden lg:block">
             <input
@@ -140,23 +161,30 @@ const NavbarComp = () => {
           </div>
           <div className="flex items-center md:gap-[2rem] gap-5 pt-2  pr-3">
             <div className="relative lg:block hidden">
-            {/* render the image here */}
-            { loginDetailsState !== null ? <div className="h-[2rem] w-[2rem] rounded-full ">
-             <NavLink to={"/myaccount"}><img src={loginDetailsState?.imageUrl} className="rounded-full object-cover" alt="" /></NavLink>
-            </div> : 
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="27"
-                height="27"
-                viewBox="0 0 23 23"
-                fill="none"
-              >
-                <path
-                  d="M22.4464 21.2951C20.7489 18.4094 18.0443 16.2709 14.826 15.3451L14.7341 15.3224C17.2401 14.03 18.9236 11.4592 18.9236 8.49561C18.9236 4.26761 15.4954 0.839355 11.2674 0.839355C7.03938 0.839355 3.61112 4.26761 3.61112 8.49561C3.61112 11.4592 5.29463 14.0291 7.75775 15.3022L7.80062 15.3224C4.4905 16.27 1.78588 18.4094 0.121625 21.2339L0.0883751 21.2942C0.0332501 21.3887 0 21.5016 0 21.6232C0 21.9855 0.294 22.2795 0.65625 22.2795C0.89775 22.2795 1.10863 22.1491 1.22238 21.9549L1.22412 21.9514C3.26725 18.4619 6.99737 16.1554 11.2665 16.1554C15.5356 16.1554 19.2666 18.4619 21.2791 21.8971L21.3089 21.9522C21.4244 22.1491 21.6353 22.2795 21.8768 22.2795C22.239 22.2795 22.533 21.9855 22.533 21.6232C22.533 21.5025 22.5006 21.3887 22.4429 21.2916L22.4446 21.2951H22.4464ZM4.92362 8.49998C4.92362 4.99648 7.76387 2.15623 11.2674 2.15623C14.7709 2.15623 17.6111 4.99648 17.6111 8.49998C17.6111 12.0035 14.7709 14.8437 11.2674 14.8437C7.76562 14.8394 4.928 12.0017 4.92362 8.49998Z"
-                  fill="#363636"
-                />
-              </svg>
-            }
+                        {/* render the image here */}
+            {(loginDetailsState.googleToken  || loginDetailsState.jwtToken !== "") ? (
+                <div className="h-[2rem] w-[2rem] rounded-full">
+                <NavLink to={"/myaccount"}>
+                        {
+                          (loginDetailsState.googleToken && loginDetailsState.jwtToken) ? <img src={loginDetailsState?.imageUrl} className="rounded-full object-cover" alt="" /> : <img src={profile1} className="rounded-full object-cover" alt="" />
+                        }
+                    </NavLink>
+                </div>
+            ) : (
+                <svg
+                    
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="27"
+                    height="27"
+                    viewBox="0 0 23 23"
+                    fill="none"
+                >
+                    <path
+                        d="M22.4464 21.2951C20.7489 18.4094 18.0443 16.2709 14.826 15.3451L14.7341 15.3224C17.2401 14.03 18.9236 11.4592 18.9236 8.49561C18.9236 4.26761 15.4954 0.839355 11.2674 0.839355C7.03938 0.839355 3.61112 4.26761 3.61112 8.49561C3.61112 11.4592 5.29463 14.0291 7.75775 15.3022L7.80062 15.3224C4.4905 16.27 1.78588 18.4094 0.121625 21.2339L0.0883751 21.2942C0.0332501 21.3887 0 21.5016 0 21.6232C0 21.9855 0.294 22.2795 0.65625 22.2795C0.89775 22.2795 1.10863 22.1491 1.22238 21.9549L1.22412 21.9514C3.26725 18.4619 6.99737 16.1554 11.2665 16.1554C15.5356 16.1554 19.2666 18.4619 21.2791 21.8971L21.3089 21.9522C21.4244 22.1491 21.6353 22.2795 21.8768 22.2795C22.239 22.2795 22.533 21.9855 22.533 21.6232C22.533 21.5025 22.5006 21.3887 22.4429 21.2916L22.4446 21.2951H22.4464ZM4.92362 8.49998C4.92362 4.99648 7.76387 2.15623 11.2674 2.15623C14.7709 2.15623 17.6111 4.99648 17.6111 8.49998C17.6111 12.0035 14.7709 14.8437 11.2674 14.8437C7.76562 14.8394 4.928 12.0017 4.92362 8.49998Z"
+                        fill="#363636"
+                    />
+                </svg>
+            )}
                 
             </div>
             <div className="relative">

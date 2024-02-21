@@ -2,6 +2,7 @@ import React, {  useEffect, useState } from 'react'
 import { toastResult, toastSuccess } from '../../common/toast';
 import { useFetcher, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import UserAddress from '../UserAddress/UserAddress';
 
 const MyAccountInfo = () => {
     const [tabNav, setTabNav] = useState([])
@@ -65,12 +66,7 @@ const MyAccountInfo = () => {
                                     })
                                 }
                                     
-                                    {/* <div>
-                                        <button className='text-left w-[57%]  lg:w-full lg:text-[19px] py-[12px] bg-white  text-[#363636]'><span className='px-8 lg:px-6'>Addresses</span></button>
-                                    </div>
-                                    <div>
-                                        <button className='text-left w-[57%] lg:w-full lg:text-[19px]  py-[12px] bg-white text-[#363636]'><span className='px-8 lg:px-6'>Logout</span></button>
-                                    </div> */}
+                                    
                                 </div>
                                 <div className='user-account-details w-full mt-[2rem] lg:mt-[1.6rem] mx-1 lg:mx-0'>
                                     <div className='inner-container space-y-[2rem]'>
@@ -83,14 +79,14 @@ const MyAccountInfo = () => {
                                                 <p className='text-[15px] font-[400] text-[#363636] lg:text-[19px]'>India</p>
                                             </div>
                                             <div className='lg:pt-5'>
-                                                <a href="" className='text-[#363636] underline underline-offset-2 lg:text-[19px]'>View addresses <span>(1)</span></a>
+                                                <button onClick={(event)=>handleTabNav(event, tabNav[1])} className='text-[#363636] underline underline-offset-2 lg:text-[19px]'>View addresses <span>(1)</span></button>
                                             </div>
                                         </div>
                                         
                                     </div>
                                 </div>
                             </div>
-                            <div className='order-history-container'>
+                            <div className='order-history-container w-6/12'>
                                 <div className='inner-container space-y-3'>
                                 {
                                     tabNav.map((tabActive , i)=>{
@@ -107,7 +103,7 @@ const MyAccountInfo = () => {
                                             </>
                                         }
                                         if(tabActive.active && tabActive?.tabId === 2){
-                                            return <h1>user address</h1>
+                                            return <UserAddress/>
                                         }
                                         if(tabActive.active && tabActive?.tabId === 3){
                                             return <> <h1>Logout</h1> </>
