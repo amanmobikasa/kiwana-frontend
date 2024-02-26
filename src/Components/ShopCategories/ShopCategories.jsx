@@ -3,6 +3,7 @@ import categoryshop1 from '../../Assest/images/category1.png';
 import categoryshop2 from '../../Assest/images/category2.png';
 import categoryshop3 from '../../Assest/images/category3.png';
 import { CustomCarousel } from '../customCarousel';
+import { NavLink } from 'react-router-dom';
 
 const ShopCategory = () => {
     return <>
@@ -16,7 +17,7 @@ const ShopCategory = () => {
                 <CustomCarousel carouselData = {ShopCategory_api}/> 
             </div>
             <div className='flex justify-center w-full h-fit '>
-                <a className='underline underline-offset-2 text-[1.4rem]'>View All {">"}</a>
+                <NavLink to={"/collection"}><a className='underline underline-offset-2 text-[1.4rem]'>View All {">"}</a></NavLink>
             </div>
         </div>
     </section>

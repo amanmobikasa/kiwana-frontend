@@ -11,6 +11,7 @@ import { userLogin } from "../Redux/reducer/userAuthSlice";
 import { toastFailed, toastSuccess } from "../common/toast";
 import useUpdateUserAddress from "../Customhooks/usePutData";
 import { useNavigate } from "react-router-dom";
+import GlobalPostData from "../Customhooks/usePostData";
 
 
 const ProductCheckout = memo(() => {
@@ -21,10 +22,23 @@ const ProductCheckout = memo(() => {
     const [valueOfAddress, setValueOfAddress] = useState("");
     const [disableTextArea, setDisableTextArea] = useState(true); // true means disable and false means enable
     const [buttonText, setButtonText] = useState("Edit");
+    const [addtoCartQtyState, setAddtoCartQtyState] = useState([]); // set the addtoCartQty products.
+    const [updateCartQtyState, setUpdateCartQtyState] = useState([]); // set the updateCartQty products.
     const dispatch = useDispatch();
     const btnref = useRef(null); // reference for button text
-    const {updateUserAddress, loading, error, responseData} = useUpdateUserAddress()
+    const {updateUserAddress, loading, errorAddress, responseData} = useUpdateUserAddress()
     const navigate = useNavigate();
+    const {error,isLoading,message,postData,response} = GlobalPostData()
+    const [finalProductOrderState, setFinalProductOrderState] = useState([{
+      product_name : "",
+      product_price : "",
+      product_qty : "",
+      product_id : "",
+      product_image : "",
+      product_weight : "",
+      payment_mode : "",
+      order_status : ""
+    }]);
     
 
     const handleChangePayment = useCallback((event, payment_option) => {
@@ -48,6 +62,21 @@ const ProductCheckout = memo(() => {
 
     
     const user_info = useSelector((state)=> state.users.usersData[state.users.usersData.length-1]); // getting the user data from redux store
+    const add_to_cart_products = useSelector((state)=> state.productQty.addtoCartQty);
+    const update_cart_qty_products = useSelector((state)=> state.productQty.updateCartQty);
+
+
+    useEffect(()=>{
+      if(add_to_cart_products && update_cart_qty_products){
+        setAddtoCartQtyState(add_to_cart_products)
+        setUpdateCartQtyState(update_cart_qty_products)
+      }
+    },[add_to_cart_products, update_cart_qty_products])
+
+    console.log("addtoCartQty", addtoCartQtyState);
+    console.log("updatecartQty", updateCartQtyState);
+
+
     useEffect(()=>{ // setting the retrive data to state.
       if(user_info){
         setUserInfoState(user_info)
@@ -62,7 +91,7 @@ const ProductCheckout = memo(() => {
         toastSuccess(responseData?.message)
         navigate("/delivery-status")
       }else{
-        console.log("responseDataError", error)
+        console.log("responseDataError", errorAddress)
       }
     },[responseData])
 
@@ -107,10 +136,96 @@ const ProductCheckout = memo(() => {
       }
     }
 
-    // render to the order status page;
-    const handleOrderStatusPage = ()=>{
-      navigate("/delivery-status");
+    // render to the order status page and hit the api for the final order of products.
+    const handleOrderStatusPage = async()=>{
+      try {
+        if(updateCartQtyState.length <= 0){
+          // debugger;
+          addtoCartQtyState.forEach((product_obj)=>{
+            // console.log("obj", product_obj);
+            setFinalProductOrderState((prevVal)=>{
+              const updatedFinalProductOrder =  [...prevVal, {
+                product_id : product_obj?.pdp_link,
+                product_name : product_obj?.product_title,
+                product_price : product_obj?.product_price,
+                product_image : product_obj?.product_image,
+                product_qty : product_obj?.product_quantity?.productCount,
+                product_weight : Array.isArray(product_obj?.product_weight) ? (product_obj?.product_weight.find(prod_weight => prod_weight?.selected)?.weight_label || "30ml") : "30ml",
+                order_status : "order_placed",
+                payment_mode : currentPaymentMethod
+              }]
+              return updatedFinalProductOrder
+            })
+          })
+        }
+        else {
+          updateCartQtyState.forEach((product_obj)=>{
+            setFinalProductOrderState((prevVal=>{
+              return [...prevVal, {
+                product_id : product_obj?.pdp_link,
+                product_name : product_obj?.product_title,
+                product_price : product_obj?.product_price,
+                product_image : product_obj?.product_image,
+                product_qty : product_obj?.product_quantity?.productCount,
+                product_weight : Array.isArray(product_obj?.product_weight) ? product_obj?.product_weight.find((prod_weight)=>{
+                  if(prod_weight?.selected){
+                    return prod_weight?.weight_label
+                  }
+                }) : "30ml",
+                order_status : "order_placed",
+                payment_mode : currentPaymentMethod
+              }]
+            }))
+          })
+        }
+
+
+      // call the api for the final order of products.
+      // await postData("http://localhost:4000/order-product", finalProductOrderState[finalProductOrderState.length -1]);
+      // console.log("data now", finalProductOrderState[finalProductOrderState.length -1])
+
+      // if(response.success){
+      //   // console.log("responseOrder", response.message)
+      //   toastSuccess(response.message)
+
+      // }else{
+      //   toastFailed(error.message);
+      // }
+        
+      } catch (error){
+        console.error("something went wrong while sending the data to the server", error);
+      }
     }
+
+    useEffect(() => {
+      const sendOrderData = async () => {
+        try {
+          // Call the API for the final order of products.
+          postData("http://localhost:4000/order-product", finalProductOrderState[finalProductOrderState.length - 1]);
+          console.log("data now", finalProductOrderState[finalProductOrderState.length - 1]);
+    
+          if (response.success) {
+            toastSuccess(response.message);
+            navigate("/delivery-status");
+          } else {
+            toastFailed(error.message);
+          }
+        } catch (error) {
+          console.error("Error while sending data to the server", error);
+        }
+      };
+    
+      // Check if there are products in finalProductOrderState before making the API call
+      if (finalProductOrderState.length > 0) {
+        sendOrderData();
+      }
+    }, [finalProductOrderState]);
+
+    
+    
+    
+    // console.log("updatedFinalData", finalProductOrderState);
+
 
   return (
     <>
@@ -173,7 +288,7 @@ const ProductCheckout = memo(() => {
                                 
                         </div>
                         <div className="w-full flex justify-end pt-[2rem] items-end h-full ">
-                            <button onClick={handleSubmitPayment} className="px-8 py-3 bg-nav-pink text-white flex justify-center items-center gap-3 hover:text-nav-pink hover:border-nav-pink border-[0.01rem] hover:bg-transparent font-[500] active:bg-nav-pink active:text-white uppercase">{currentPaymentMethod}<span><FaArrowRightLong /></span></button>
+                            <button onClick={handleSubmitPayment} className="px-8 py-3 bg-nav-pink text-white flex justify-center items-center gap-3 hover:text-nav-pink hover:border-nav-pink border-[0.01rem] hover:bg-transparent font-[500] active:bg-nav-pink active:text-white uppercase">{isLoading ? "loading..." : currentPaymentMethod}<span><FaArrowRightLong /></span></button>
                         </div>
                         <div className="">
                             
@@ -222,3 +337,6 @@ const payement_api = [
 ]
 
 export default ProductCheckout;
+
+
+

@@ -1,6 +1,7 @@
 import React from 'react'
 import newsimg1 from '../../Assest/images/newsimg1.png';
 import newsimg2 from '../../Assest/images/newsimg2.png';
+import { NavLink } from 'react-router-dom';
 
 const LastestNews = () => {
     return <>
@@ -21,7 +22,7 @@ const LastestNews = () => {
                 
             </div>
             <div className='w-10/12 mx-auto flex justify-center space-y-[1rem]  '>
-            <button className='uppercase bg-nav-pink px-10  py-3 text-white tracking-widest font-[400] text-[14px] hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.01rem] lg:text-[1.2rem] lg:px-5'>view all post</button>
+            <NavLink to={"/blog"}><button className='uppercase bg-nav-pink px-10  py-3 text-white tracking-widest font-[400] text-[14px] hover:bg-white hover:text-nav-pink hover:border-nav-pink border-[0.01rem] lg:text-[1.2rem] lg:px-5'>view all post</button></NavLink>
             </div>
         </div>
         

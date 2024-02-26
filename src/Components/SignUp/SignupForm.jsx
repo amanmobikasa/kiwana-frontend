@@ -4,7 +4,7 @@ import { signUpData } from '../../Redux/reducer/signupSlice';
 import { MdTry } from 'react-icons/md';
 import { toastFailed, toastSuccess } from '../../common/toast';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { setUserJwtToken } from '../../Redux/reducer/userAuthTokenSlice';
 
 export default function SignupForm() {
@@ -91,7 +91,7 @@ export default function SignupForm() {
                             <button type='submit' className='uppercase w-full text-[20px] text-white bg-nav-pink py-3 tracking-wider hover:bg-transparent hover:text-nav-pink hover:border-nav-pink border-[0.01rem]'>Create Account </button>
                         </div>
                         <div className='pt-2 lg:pt-0'>
-                            <a className='underline text-[#363636] font-poppins text-[17px] lg:text-[14px]'>Already customer?Sign In for an account</a>
+                            <NavLink to={'/login'}><a className='underline text-[#363636] font-poppins text-[17px] lg:text-[14px]'>Already customer?Sign In for an account</a></NavLink>
                         </div>
                     </div>
             </div>
