@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const useUpdateUserAddress = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [errorAddress, setError] = useState(null);
   const [responseData, setResponseData] = useState(null)
 
   const updateUserData = async (url, data) => {
@@ -38,7 +38,7 @@ const useUpdateUserAddress = () => {
     updateUserData(url, requestData);
   };
 
-  return { updateUserAddress, loading, error, responseData};
+  return { updateUserAddress, loading, errorAddress, responseData};
 };
 
 export default useUpdateUserAddress;

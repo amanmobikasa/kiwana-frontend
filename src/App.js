@@ -12,7 +12,8 @@ import { gapi } from 'gapi-script'
 import LoginPage from './Pages/Login';
 import MyAccount from './Pages/MyAccontUser';
 import ProtectedRoutes from './ProtectedRoutes/ProtectedRoutes';
-import ProtectedRoute from './ProtectedRoutes/ProtectedRoutes';
+
+
 
 
 const CLIENT_ID = "826747554533-t0h1gs01tcprer0jt1gl38gqsvso36nf.apps.googleusercontent.com" // for google
@@ -78,4 +79,16 @@ function App() {
 }
 
 export default App;
+
+
+/*
+
+x = [1,2,3,4,5];
+rs = x.splice(1,3,5,7);
+clg : res, x
+
+
+rs : 
+*/
+
 

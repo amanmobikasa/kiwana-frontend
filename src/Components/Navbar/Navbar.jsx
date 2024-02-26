@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import logo from "../../Assest/images/icon.png";
 import { MdKeyboardArrowDown } from "react-icons/md";
 import MegaMenuComp from "./MegaMenu";
@@ -9,7 +9,7 @@ import {CartSideBar} from "../../common/cartSidebar";
 import { NavLink, useNavigate } from "react-router-dom";
 import profile1 from '../../Assest/images/profile1.png'
 
-const NavbarComp = () => {
+const NavbarComp = memo(() => {
 
   const [globalSearch, setGlobalSearch] = useState("");
   const [showMegaMenu, setShowMegaMenu] = useState(false);
@@ -52,20 +52,23 @@ const NavbarComp = () => {
     setShowCartSidebar(true);
     console.log(showCartSidebar)
   }
-  const loginDetails =  JSON.parse(sessionStorage.getItem("userLogin"));
-  const jwtToken = sessionStorage.getItem("userJwtToken");
+
 
   useEffect(() => {
+    const loginDetails = JSON.parse(sessionStorage.getItem("userLogin"));
+    const jwtToken = sessionStorage.getItem("userJwtToken");
 
     if (loginDetails && jwtToken) {
         setLoginDetailsState({ googleToken: loginDetails, jwtToken: jwtToken });
     } else {
-      setLoginDetailsState({ googleToken: loginDetails, jwtToken: jwtToken });
+        setLoginDetailsState({ googleToken: "", jwtToken: "" });
     }
-}, [loginDetails, jwtToken]);
+}, []); // Empty dependency array to ensure it runs only once on mount
+
+
 
   
-  console.log("payment", loginDetailsState);
+  // console.log("payment", loginDetailsState);
 
 
   return (
@@ -119,7 +122,7 @@ const NavbarComp = () => {
               </a>
             </li>
             </NavLink>
-            <NavLink to={"/blogs"}>
+            <NavLink to={"/blog"}>
             <li className="">
               <a className="hover:underline">
                 BLOGS
@@ -217,5 +220,5 @@ const NavbarComp = () => {
       </nav>
     </>
   );
-};
+})
 export default NavbarComp;

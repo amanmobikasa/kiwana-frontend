@@ -4,7 +4,7 @@ import { userLogin } from "../../Redux/reducer/userAuthSlice";
 import { setUserJwtToken } from "../../Redux/reducer/userAuthTokenSlice";
 import {  toastSuccess } from "../../common/toast";
 import GlobalPostData from "../../Customhooks/usePostData";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const LoginComp = () => {
   const dispatch = useDispatch();
@@ -101,9 +101,11 @@ const LoginComp = () => {
                 </button>
               </div>
               <div className="pt-2 lg:pt-0">
+                <NavLink to={"/signup"}>
                 <a className="underline text-[#363636] font-poppins text-[17px] lg:text-[14px]">
                   New customer?Sign up for an account
                 </a>
+                </NavLink>
               </div>
             </div>
           </div>

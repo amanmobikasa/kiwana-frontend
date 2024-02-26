@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useRef, useState } from 'react'
 import arrivalimg1 from '../../Assest/images/arrival1.png';
 import arrivalimg2 from '../../Assest/images/arrival2.png';
 import arrivalimg3 from '../../Assest/images/arrival3.png';
@@ -6,15 +6,48 @@ import arrivalimg4 from '../../Assest/images/arrival4.png';
 import { CarouselCards } from '../customCarousel';
 import pddPopUpImg from '../../Assest/images/pdppopupimg1.png';
 import { useSelector } from 'react-redux';
+import filterProductsByPriceRange from '../../common/priceRangeGlobalFunc';
 
 
 const ProductGrid = () => {
     const [filterArrayofObject , setFilterArrayofObject] = useState([]);
     const [productListDataApi, setProductListDataApi] = useState(productCollectionList_api);
+    const [priceRangeState, setPriceRangeState] = useState({});
+    // const prevPriceRange = useRef({ minValue: null, maxValue: null });
+
 
     // getting the filter array of object  from the redux store 
     
     const selector = useSelector((state)=> state.filterProducts.filterProductState);
+    const price_range = useSelector((state)=>state.priceRangeStore.priceRangeObj);
+
+    useEffect(()=>{
+        if(!price_range){
+            setPriceRangeState(price_range);
+        }
+    }, [price_range])
+
+    // function to filter the products based on the price range
+    useEffect(()=>{
+        if(price_range){
+            const { minValue, maxValue } = price_range
+            const updatedProducts = filterProductsByPriceRange(productListDataApi, minValue, maxValue);
+            setProductListDataApi(updatedProducts);
+        }
+    },[price_range, productListDataApi])
+    // useEffect(() => {
+    //     if (price_range) {
+    //         const { minValue, maxValue } = price_range;
+    //         // Check if the values have changed before updating the state
+    //         if (minValue !== prevPriceRange.current.minValue || maxValue !== prevPriceRange.current.maxValue) {
+    //             const updatedProducts = filterProductsByPriceRange(productListDataApi, minValue, maxValue);
+    //             setProductListDataApi(updatedProducts);
+    //             // Update the ref to store the current values
+    //             prevPriceRange.current = { minValue, maxValue };
+    //         }
+    //     }
+    // }, [price_range, productListDataApi]);
+    
 
     // render the filtered products based on ifelse condition
     function handleFilteredProducts(productType1, productType2){
@@ -132,6 +165,7 @@ const ProductGrid = () => {
     return <>
         <section id='' className='w-full lg:w-full mt-[1.7rem] relative '>
             <div className='content-container'>
+            { productListDataApi.length > 0 ?
                 <div className='grid grid-cols-2 lg:grid-cols-4  grid-rows-5 lg:grid-rows-3 gap-3 lg:gap-0 justify-between '>
                 {
                     productListDataApi.map((items, i)=>{
@@ -141,9 +175,12 @@ const ProductGrid = () => {
                             <CarouselCards cardData={items}  />
                         </div>
                         </>
-                    })
+                    }) 
                 }  
+                </div> : <div className='flex w-full justify-center items-center'>
+                    <h1 className='text-center font-[500] text-4xl'>Product Not Found</h1>
                 </div>
+            }
             </div>
         </section>       
     </>
@@ -157,7 +194,7 @@ const productCollectionList_api = [
         weight : 100,
         imgLink : arrivalimg1,
         title : "hair conditioner",
-        price : 600,
+        price : 10,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -231,7 +268,7 @@ const productCollectionList_api = [
         weight : 150,
         imgLink : arrivalimg2,
         title : "hair serum",
-        price : 600,
+        price : 12,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -305,7 +342,7 @@ const productCollectionList_api = [
         in_stock : "In Stock",
         imgLink : arrivalimg3,
         title : "skin care",
-        price : 600,
+        price : 12,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -379,7 +416,7 @@ const productCollectionList_api = [
         in_stock : "Out of Stock",
         imgLink : arrivalimg4,
         title : "hair conditionar new",
-        price : 600,
+        price : 20,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -601,7 +638,7 @@ const productCollectionList_api = [
         in_stock : "in stock",
         imgLink : arrivalimg3,
         title : "hair shampoo",
-        price : 600,
+        price : 80,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -675,7 +712,7 @@ const productCollectionList_api = [
         weight : 250,
         imgLink : arrivalimg2,
         title : "hair new shampo",
-        price : 600,
+        price : 100,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -749,7 +786,7 @@ const productCollectionList_api = [
         in_stock : "out of stock",
         imgLink : arrivalimg2,
         title : "skin care ",
-        price : 600,
+        price : 30,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -823,7 +860,7 @@ const productCollectionList_api = [
         in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "face cream",
-        price : 600,
+        price : 36,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -897,7 +934,7 @@ const productCollectionList_api = [
         weight : 750,
         imgLink : arrivalimg2,
         title : "new face cream",
-        price : 600,
+        price : 40,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -971,7 +1008,7 @@ const productCollectionList_api = [
         weight : 300,
         imgLink : arrivalimg2,
         title : "fair and lovely",
-        price : 600,
+        price : 40,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -1045,7 +1082,7 @@ const productCollectionList_api = [
         in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "hair serum ",
-        price : 600,
+        price : 40,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -1119,7 +1156,7 @@ const productCollectionList_api = [
         in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "new hair",
-        price : 600,
+        price : 60,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -1193,7 +1230,7 @@ const productCollectionList_api = [
         in_stock : "out of stock",
         imgLink : arrivalimg2,
         title : "hair conditioner 1",
-        price : 600,
+        price : 60,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [
@@ -1267,7 +1304,7 @@ const productCollectionList_api = [
         in_stock : "in stock",
         imgLink : arrivalimg2,
         title : "hair conditioner 2",
-        price : 600,
+        price : 50,
         reviews : "",
         reviewsCount : 2947,
         pdpPopup : [

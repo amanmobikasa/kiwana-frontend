@@ -1,11 +1,12 @@
 import { Accordion } from 'flowbite-react';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { RxCross1 } from 'react-icons/rx';
 import { filterandshort_api } from './filterandshortJSON';
 import MultiRangeSlider from "multi-range-slider-react";
 import { useDispatch } from 'react-redux';
 import { productFilter } from '../../Redux/reducer/filterProductSlice';
 import '../../index.css';
+import { priceRangeReducer } from '../../Redux/reducer/priceRangeSlice';
 
 const FilterAndShortDesktop = () => {
     const [showFilterValue, setShowFilterValue] = useState(filterSort);
@@ -64,9 +65,6 @@ const FilterAndShortDesktop = () => {
             setFilterBannerArrayState(filterBannerArray)
       }
 
-      
-      
-
     return <>
         <section id='filter-and-short-desktop' className='hidden lg:block w-full h-fit relative overflow-auto'>
             <div className='content-container w-10/12 mx-auto  h-fit'>
@@ -115,6 +113,10 @@ const FilterAndShortDesktop = () => {
 // accordions 
 
 const AccordionsComps = ({inputItems, handleFilterValue}) => {
+    const [priceRangeState, setPriceRangeState] = useState(null) // store the price range state
+    const dispatch = useDispatch();
+
+   
 
     const handleFilterInputValue =(event, InputData, parentInputItems) => {
         const {name, value, checked} = event.target;
@@ -130,11 +132,13 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
     }
 
     // for pricehandle
-    const handlePriceInputRange = (PriceRange) => {
-        console.log('test')
-        // const {minValue, maxValue} = PriceRange;
-        // console.log("minValue : ", minValue, " maxValue : ", maxValue);
-    }
+    const handlePriceInputRange = useCallback((PriceRange) => {
+        // console.log('test price', PriceRange);
+        if(priceRangeState === null){
+            setPriceRangeState(PriceRange);
+        }
+        dispatch(priceRangeReducer(PriceRange))
+    })
 
     return <>
     <Accordion className='border-0 rounded-none h-fit '>
@@ -153,7 +157,7 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
                                         </div> : null}
                                         <div key={i} className='inner-container w-full flex justify-between items-center'>
                                             <label htmlFor="" className='flex gap-2 items-center justify-start w-full'>
-                                                { sub_items?.input_type === "range" ? <RangeComponent  handlePrieChangeFunction="" />  :  <input onChange={(e)=> handleFilterInputValue(e, sub_items, inputItems)} checked={sub_items?.default_check} type={sub_items?.input_type} name={sub_items?.input_name} value={sub_items?.input_value}  className='accent-nav-pink ' />   }
+                                                { sub_items?.input_type === "range" ? <RangeComponent  handlePrieChangeFunction={handlePriceInputRange} />  :  <input onChange={(e)=> handleFilterInputValue(e, sub_items, inputItems)} checked={sub_items?.default_check} type={sub_items?.input_type} name={sub_items?.input_name} value={sub_items?.input_value}  className='accent-nav-pink ' />   }
                                                 <p className='text-[16px] text-[#363636] font-[500]'>{sub_items?.input_label}</p>
                                             </label>
                                            {sub_items?.input_type === "range" ? null : <div>
@@ -161,7 +165,7 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
                                             </div>}
                                         </div>
                                         {sub_items?.input_type === "range" ?  <div className=''>
-                                            <h5 className='text-[14px] text-[#363636] font-[500]'>Price: $<span>0</span> - $<span>80</span></h5>
+                                            <h5 className='text-[14px] text-[#363636] font-[500]'>Price: $<span>{priceRangeState?.minValue ? priceRangeState?.minValue  : 0}</span> - $<span>{priceRangeState?.maxValue ? priceRangeState?.maxValue : 80}</span></h5>
                                         </div> : null}
                                         </>
                                     })
@@ -176,16 +180,24 @@ const AccordionsComps = ({inputItems, handleFilterValue}) => {
     </>
 }
 
-const RangeComponent = () => {
+const RangeComponent = ({handlePrieChangeFunction}) => {
     const [priceRange, setPriceRange] = useState({
         minValue : 0,
         maxValue : 80,
     });
 
-    const handlePrieChange = (event) =>{
-      setPriceRange({minValue : event.minValue, maxValue : event.maxValue});
-      console.log(priceRange); 
-    }
+    const handlePrieChange = useCallback((event) =>{
+        setPriceRange((prev)=>{
+            const updatedPrice = {
+                ...prev,
+                minValue : event.minValue,
+                maxValue : event.maxValue,
+            }
+        handlePrieChangeFunction(updatedPrice);
+            return updatedPrice;
+        })
+    })
+
     return <>
         <MultiRangeSlider
         className=' w-full price-container'

@@ -1,7 +1,19 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import megaMenuImage from '../../Assest/images/megaMenuimg.png';
+import { NavLink, redirect, useNavigate } from 'react-router-dom';
 
 const MegaMenuComp = ({setShowMegaMenu}) => {
+    const [counter, setCounter] = useState(1)
+    const navigate = useNavigate();
+    // const ref = useRef(null)
+    // const history =     
+
+    const handleRouteMegaMenu = (event, route, index=index+1) => {
+        setCounter(counter + 1);
+        console.log("url", `${route}${counter}`)
+        navigate(`${route}${counter}`)
+        // ref.current.href(`${route}:${index}`)
+    }
     return <>
         <menu className='main-container absolute top-0 left-0 h-[100vh] w-full bg-black bg-opacity-25 z-30 '>
             <div className='child-container flex items-start justify-center absolute top-[8rem] w-full h-fit'>
@@ -15,13 +27,13 @@ const MegaMenuComp = ({setShowMegaMenu}) => {
                                 <li className='w-full '>
                                    <div className='space-y-[4px]'>
                                     <div>
-                                        <h5 className='text-[16px] font-[400] text-[#363636] '><a href={items?.title_href}>{items?.title}</a></h5>
+                                        <h5 className='text-[16px] font-[400] text-[#363636]'><NavLink to={items?.title_href}><a>{items?.title}</a></NavLink></h5>
                                     </div>
                                     {
-                                        items?.sub_list.map((sub_items, j)=>{
+                                        items?.sub_list.map((sub_items, j)=>{ 
                                             return <>
                                             <div key={j}>
-                                                <a href={sub_items?.sub_href} className='text-[13px] font-[300] text-[#333] hover:text-nav-pink hover:underline underline-offset-2'>{sub_items?.sub_title}</a>
+                                                <button onClick={(event)=>handleRouteMegaMenu(event, "/pdp-product/" , j)}><span className='text-[13px] font-[300] text-[#333] hover:text-nav-pink hover:underline underline-offset-2'>{sub_items?.sub_title}</span></button>
                                             </div>
                                             </>
                                         })
@@ -65,11 +77,11 @@ const MegaMenu_api =[
     {
         id : 1,
         title : "Hair Care",
-        title_href : "/",
+        title_href : "/collection",
         sub_list : [
             {
                 sub_title : "Shampoo",
-                sub_href : "/"
+                sub_href : "/",
             },
             {
                 sub_title : "Conditioner",
