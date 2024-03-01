@@ -6,12 +6,12 @@ const useUpdateUserAddress = () => {
   const [errorAddress, setError] = useState(null);
   const [responseData, setResponseData] = useState(null)
 
-  const updateUserData = async (url, data) => {
+  const updateUserData = async (url, dataObject) => {
     setLoading(true);
-
+    console.log("dataObject", dataObject);
     try {
       // Make PUT request using Axios
-      const response = await axios.put(url, data);
+      const response = await axios.put(url, dataObject);
 
       // Assuming the API response contains updated user data
       const updatedUserData = response.data;
@@ -28,14 +28,12 @@ const useUpdateUserAddress = () => {
   };
 
   const updateUserAddress = (endPoint, dataObj) => {
+    // const {email, newAddress, ...rest} = dataObj
     const url = `http://localhost:4000${endPoint}`;
-    const requestData = {
-      email : dataObj?.email,
-      address: dataObj?.newAddress,
-    };
+    
 
     // Use the common function to handle the API request
-    updateUserData(url, requestData);
+    updateUserData(url, dataObj);
   };
 
   return { updateUserAddress, loading, errorAddress, responseData};

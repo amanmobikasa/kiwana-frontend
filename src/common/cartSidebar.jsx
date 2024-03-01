@@ -1,14 +1,18 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useCallback, useEffect } from 'react';
 import { Modal } from 'flowbite-react';
 import { useState } from 'react';
 import { IoMdCheckmark } from "react-icons/io";
-import { RxCross2 } from "react-icons/rx";
+import { RxColumnSpacing, RxCross2 } from "react-icons/rx";
 import cartImage from '../Assest/images/cartimg1.png';
 // import { LuMinus, LuPlus } from 'react-icons/lu';
 import CouterCommon from './CouterCommon';
 import { ItemContainerofCart } from '../Components/CartProductList/CartProductList';
 import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { toastFailed, toastSuccess } from './toast';
+import { AiFillExperiment } from 'react-icons/ai';
+import useUpdateUserAddress from '../Customhooks/usePutData';
+import { toast } from 'react-toastify';
 
 
 function CartSideBar({setShowCartSidebar, showCartSidebar}) {
@@ -103,34 +107,101 @@ function CartSideBar({setShowCartSidebar, showCartSidebar}) {
     </>
 }
 
-const CartItems = () => {
-    return <>
-        <main className='cart-item-container w-full h-fit relative'>
-            <div className='content-container flex  justify-start w-full items-start gap-x-8 '>
+const CartItems = ({finalOrderProductDataState}) => {
+    const [productQuantity, setProductQuantity] = useState(1);
+    const [orderProductDataState, setOrderProductDataState] = useState(finalOrderProductDataState)
+    const {product_image, product_price, product_title, product_quantity, product_weight, pdp_link} = orderProductDataState
+
+    const [productPrice, setProductPrice] = useState(product_price);
+    const [finalProductOrderState, setFinalProductOrderState] = useState([])
+    const {errorAddress,loading,responseData,updateUserAddress} = useUpdateUserAddress()
+    const [orderDetails, setOrderDetails] = useState([]);
+    const navigate = useNavigate()
+
+    const order_details = useSelector((state)=> state.orderStatus.orderDetails);
+
+    useEffect(()=>{
+        if(order_details){
+            setOrderDetails(order_details);
+        }
+    },[order_details])
+
+
+    // console.log("orderProductDataState", orderProductDataState) 
+
+    const handleCounterQuantity = (counter)=>{
+        const {count} = counter
+        setProductPrice(productPrice * count);
+        setProductQuantity(count);
+    }
+
+    const handleSaveButton = useCallback((event) => {
+        // debugger
+        // alert(productPrice, product_price)
+       if((productQuantity > 1 ) && (productPrice > product_price)){
+        setOrderProductDataState((prevData)=>{
+            const updatedData = {
+                ...prevData,
+                product_price: productPrice,
+                product_quantity: {
+                    productId : product_quantity?.productId,
+                    productCount: productQuantity,
+                }
+            }
+            setFinalProductOrderState([...finalProductOrderState, updatedData])
+            return updatedData;
+        })
+       }else{
+        toastFailed("Failed to update the product quantity");
+       }    
+    },[productPrice, productQuantity])
+
+    useEffect(()=>{
+        if(finalProductOrderState.length > 0){  
+             updateUserAddress("/order-product", {objData : finalProductOrderState, orderId : orderDetails[orderDetails.length -1].order_id});
+        }
+    },[finalProductOrderState])
+
+    useEffect(()=>{
+        if(responseData?.success){
+            toastSuccess(responseData?.message);
+            navigate("/myaccount");
+        }
+        else if(responseData?.success === false){
+            toastFailed(responseData?.message);
+        }
+    },[responseData])
+
+    // console.log("product_dataaaa", finalProductOrderState)
+
+
+    return <>      
+            {loading ? "Loading" : <main className='cart-item-container w-full h-fit relative'>
+                <div className='content-container flex  justify-start w-full items-start gap-x-8 '>
                 <div className='image-container object-contain   h-[190px] w-[14.2rem] flex place-items-center justify-start border-[0.01rem]'>
-                    <img src={cartImage} className='h-fit w-fit' alt="cart_product_image" />
+                    <img src={product_image ? product_image : cartImage} className='h-full w-full aspect-square object-cover' alt={product_title} />
                 </div>
                 <div className='text-container w-full h-fit pt-2'>
                     <div className='inner-container space-y-4'>
                         <div className='space-y-2'>
-                            <h1 className='text-[16px] font-playfair font-[600] text-[#363636] capitalize'>Ultra Brightening Face Serum</h1>
+                            <h1 className='text-[16px] font-playfair font-[600] text-[#363636] capitalize'>{product_title}</h1>
                             <div>
                                 <p className='text-[#363636] text-[14px] font-[400] '>Weight <span>30 ml</span></p>
                             </div>
                         </div>
                         <div className='price-container'>
-                            <p className='text-nav-pink text-[18px] font-[600] '>$450</p>
+                            <p className=' text-[18px] font-[600] text-[#363636]'>${productPrice ? productPrice : product_price}/-</p>
                         </div>
-                        <div className='quantity-container flex items-center gap-2'>
-                            <CouterCommon />
+                        <div className='quantity-container flex w-8/12 items-center gap-6'>
+                            <CouterCommon handleCounterQuantity={handleCounterQuantity} />
                             <div>
-                                <button className='underline font-[600] text-[14px]'>Remove</button>
+                                <button onClick={()=>handleSaveButton()} className='underline font-[600] text-[18px] bg-nav-pink text-white px-3 py-1'>Save</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+            </main>}
     </>
 }
 

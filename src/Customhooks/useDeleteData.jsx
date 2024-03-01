@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const useDeleteData = memo((endpoint) => {
+export const GlobalDeleteData = () => {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const deleteDataAsync = async () => {
+  
+    const deleteDataAsync = async(endpoint) => {
       setIsLoading(true);
       try {
-        const response = await axios.delete(endpoint);
+        const response = await axios.delete(`http://localhost:4000/${endpoint}`);
+        console.log("url : ", `http://localhost:4000/${endpoint}`)
         setResponse(response.data);
       } catch (error) {
         setError('Error while deleting data');
@@ -18,19 +18,9 @@ export const useDeleteData = memo((endpoint) => {
         setIsLoading(false);
       }
     };
-
-    deleteDataAsync();
-
-    // Cleanup function to reset state on unmount or when the dependency changes
-    return () => {
-      setResponse(null);
-      setError(null);
-      setIsLoading(false);
-    };
-  }, [endpoint]);
-
-  return { response, error, isLoading };
-});
+    
+  return { response, error, isLoading, deleteDataAsync};
+}
 
 // Usage in your component
 // const YourComponent = () => {
