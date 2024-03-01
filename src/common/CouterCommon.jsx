@@ -53,6 +53,7 @@ function CouterCommon({children, handleCounterQuantity}) {
           <LuMinus className="text-[1rem] text-[#E89689] font-thin" />
         </button>
         <input
+        disabled
           type="text"
           value={count ? count : 0}
           className="bg-transparent text-[#E89689] border-none w-8/12 mx-auto focus:outline-none text-center text-[14px]"

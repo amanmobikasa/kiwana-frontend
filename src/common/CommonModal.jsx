@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import IlustratorAnimation from '../Components/TimelineComp/IlustratorAnimation';
 
 
-const CommonModal = memo(({showModal, setShowModal})=> {
+const CommonModal = memo(({showModal, setShowModal, handleCancelButton})=> {
   return (
     <>
         <Modal show={showModal} size="md" onClose={() => setShowModal(false)} popup>
@@ -16,7 +16,7 @@ const CommonModal = memo(({showModal, setShowModal})=> {
               Are you sure you want to cancel this order?
             </h3>
             <div className="flex justify-center gap-4">
-              <Button color="failure" onClick={() => setShowModal(false)}>
+              <Button  color="failure" onClick={(e)=>handleCancelButton(e)}>
                 {"Yes, I'm sure"}
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>

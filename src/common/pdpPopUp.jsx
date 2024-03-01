@@ -111,27 +111,28 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
      
     // handle the add to bag function
     const handleAddtoCartProduct = () =>{
+        // alert("hello wordl")
         if(productTypeState || productWeightState || itemCount){
             setPdpPopUpDataState((prevData) => {
                 const updatedData = {
                   ...prevData,
-                  product_quantity: itemCount,
-                  product_type: Array.isArray(productTypeState) ? productTypeState : prevData.product_type,
-                  product_weight: Array.isArray(productWeightState) ? productWeightState : prevData.product_weight,
+                  product_quantity: {productId : parseInt(prevData?.pdp_link) , productCount : itemCount?.productCount ? itemCount?.productCount : 1},
+                  product_type: Array.isArray(productTypeState) && productTypeState.length > 0 ? productTypeState : prevData.product_type,
+                  product_weight: Array.isArray(productWeightState)  && productWeightState.length > 0 ? productWeightState : prevData.product_weight,
                 };
-                toastSuccess("Product added to cart");
                 setAddtoCartState(updatedData);
                 return updatedData;
               });
         }
         else{
-            toastFailed("Something went wrong 😒");
+            toastFailed("Something went wrong while adding to cart 😒");
         }
     } 
 
     useEffect(()=>{
         if(addToCartState !== null){
             console.log("addtocartstate", addToCartState);
+            toastSuccess("Product added to cart");
             dispatch(productQuantityReducer(addToCartState))
             navigate('/cartpage');
         } 

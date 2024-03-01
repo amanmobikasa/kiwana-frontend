@@ -3,7 +3,6 @@ import axios from "axios";
 
 const initialUser = {
     usersData : "",
-
 }
 
 // async thunk function to change address of user

@@ -34,7 +34,7 @@ const ProductGrid = () => {
             const updatedProducts = filterProductsByPriceRange(productListDataApi, minValue, maxValue);
             setProductListDataApi(updatedProducts);
         }
-    },[price_range, productListDataApi])
+    },[price_range, ])
     // useEffect(() => {
     //     if (price_range) {
     //         const { minValue, maxValue } = price_range;
