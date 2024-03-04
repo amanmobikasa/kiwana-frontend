@@ -12,6 +12,7 @@ import userAuthTokenSlice from "../reducer/userAuthTokenSlice";
 import orderStatusSlice from "../reducer/orderStatusSlice";
 import { combineReducers } from "@reduxjs/toolkit";
 import priceRangeSlice from "./priceRangeSlice";
+import orderProductsSlice from "./orderProductsSlice";
 
 
 const rootReducer = combineReducers({
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
     signUp : signupSlice,
     userJwtToken : userAuthTokenSlice,
     orderStatus : orderStatusSlice,
-    priceRangeStore : priceRangeSlice
+    priceRangeStore : priceRangeSlice,
+    orderFinalProducts : orderProductsSlice
 })
 export default rootReducer;

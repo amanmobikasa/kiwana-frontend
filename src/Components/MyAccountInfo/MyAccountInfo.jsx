@@ -3,13 +3,27 @@ import { toastResult, toastSuccess } from '../../common/toast';
 import { useFetcher, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import UserAddress from '../UserAddress/UserAddress';
+import TableCommon from '../../common/tablecommon';
+import { compareAddtoCartAndUpdateCart } from '../../common/compareUpdateAndAddtoCart';
 
 const MyAccountInfo = () => {
     const [tabNav, setTabNav] = useState([])
     const [userInformation, setUserInformation] = useState({});
+    const [finalCartProductsTable, setFinalCartProductsTable] = useState([]);
 
     const navigate = useNavigate();
     const USER_JWT_TOKEN = useSelector((state)=> state.userJwtToken.userJwtToken);
+    // const add_to_cart_products = useSelector((state)=> state.productQty.addtoCartQty);
+    // const update_to_cart_products = useSelector((state)=> state.productQty.updateCartQty);
+    const finalCartProducts = useSelector((state)=> state.orderFinalProducts.orderProductsFinal);
+
+
+    useEffect(()=>{
+       if(finalCartProducts?.length > 0){
+        // const finalCartProducts = compareAddtoCartAndUpdateCart(add_to_cart_products, update_to_cart_products);
+        setFinalCartProductsTable(finalCartProducts);
+       }
+    },[finalCartProducts])
 
     useEffect(()=>{
         setTabNav([...tabButton]);
@@ -86,20 +100,21 @@ const MyAccountInfo = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className='order-history-container w-6/12'>
-                                <div className='inner-container space-y-3'>
+                            <div className='order-history-container w-9/12 h-full'>
+                                <div className='inner-container space-y-3 h-full w-full'>
                                 {
                                     tabNav.map((tabActive , i)=>{
                                         if(tabActive.active && tabActive?.tabId === 1){
                                             return <>
-                                            <div className='tab1-container'>
+                                            { finalCartProductsTable.length > 0 ? <TableCommon finalCartProductsTable={finalCartProductsTable}  /> : <div className='tab1-container'>
                                                 <div>
                                                     <h1 className='text-[20px] font-[600] text-[#363636] lg:text-[27px] lg:font-[600]'>Order History</h1>
                                                 </div>
                                                 <div>
                                                     <p className='text-[#363636] text-[16px] font-[400] lg:text-[19px] '>You haven't olaced any orders yet.</p>
                                                 </div>
-                                            </div>
+                                            </div> 
+                                            }
                                             </>
                                         }
                                         if(tabActive.active && tabActive?.tabId === 2){

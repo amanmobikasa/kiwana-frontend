@@ -7,12 +7,13 @@ import cartImage from '../Assest/images/cartimg1.png';
 // import { LuMinus, LuPlus } from 'react-icons/lu';
 import CouterCommon from './CouterCommon';
 import { ItemContainerofCart } from '../Components/CartProductList/CartProductList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { toastFailed, toastSuccess } from './toast';
 import { AiFillExperiment } from 'react-icons/ai';
 import useUpdateUserAddress from '../Customhooks/usePutData';
 import { toast } from 'react-toastify';
+import { orderFinal } from '../Redux/reducer/orderProductsSlice';
 
 
 function CartSideBar({setShowCartSidebar, showCartSidebar}) {
@@ -117,6 +118,7 @@ const CartItems = ({finalOrderProductDataState}) => {
     const {errorAddress,loading,responseData,updateUserAddress} = useUpdateUserAddress()
     const [orderDetails, setOrderDetails] = useState([]);
     const navigate = useNavigate()
+    const dispatch = useDispatch();
 
     const order_details = useSelector((state)=> state.orderStatus.orderDetails);
 
@@ -164,6 +166,7 @@ const CartItems = ({finalOrderProductDataState}) => {
 
     useEffect(()=>{
         if(responseData?.success){
+            dispatch(orderFinal(responseData?.data)); // settin the data to the store of final products order.
             toastSuccess(responseData?.message);
             navigate("/myaccount");
         }

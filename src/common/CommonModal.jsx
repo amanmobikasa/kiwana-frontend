@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 import IlustratorAnimation from '../Components/TimelineComp/IlustratorAnimation';
 
 
-const CommonModal = memo(({showModal, setShowModal, handleCancelButton})=> {
+const CommonModal = memo(({showModal, setShowModal, handleCancelButton })=> {
   return (
     <>
         <Modal show={showModal} size="md" onClose={() => setShowModal(false)} popup>
