@@ -10,7 +10,7 @@ export const GlobalDeleteData = () => {
       setIsLoading(true);
       try {
         const response = await axios.delete(`http://localhost:4000/${endpoint}`);
-        console.log("url : ", `http://localhost:4000/${endpoint}`)
+        // console.log("url : ", `http://localhost:4000/${endpoint}`)
         setResponse(response.data);
       } catch (error) {
         setError('Error while deleting data');
