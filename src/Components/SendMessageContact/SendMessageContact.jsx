@@ -3,6 +3,9 @@ import { useDispatch } from 'react-redux'
 import { contactCreateSlice } from '../../Redux/reducer/createContactSlice';
 import { toastFailed, toastSuccess } from '../../common/toast';
 import GlobalPostData from '../../Customhooks/usePostData';
+import isEmail from 'validator/lib/isEmail';
+import isMobilePhone from 'validator/lib/isMobilePhone';
+
 
 const SendMessageContact = () => {
 
@@ -14,15 +17,16 @@ const SendMessageContact = () => {
     const handleContactDetails = (event, data) => {
         const {name, value} = event.target;
         setContactData({...contactData, [name] : value})
-        if(value){
-            data.value = value;
-        }   
+        data.value = value; 
     }
 
     
     // handle the submit contact details;
     const handleSubmitContactDetails = (event) => {
         event.preventDefault();
+        if(!isEmail(contactData?.email) || !isMobilePhone(contactData?.phone_number)){
+            return toastFailed("Invalid Email or Phone Number");
+        }
         if(contactData){
             dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
             postData("http://localhost:4000/contactus", contactData);
