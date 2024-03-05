@@ -10,24 +10,20 @@ const addToCartSliceProduct = createSlice({
     initialState,
     reducers : {
         productQuantityReducer : (state, action)=>{
-             void state.addtoCartQty.push(action.payload);
+            if(!state.addtoCartQty.some(item => item.pdp_link === action.payload.pdp_link)){
+                void state.addtoCartQty.push(action.payload);
+            }
         },
         removeFromCart : (state, action)=>{
             state.addtoCartQty.splice(action.payload, 1);
         },
         updateProductQuantityReducer: (state, action) => {
-            const existingProductIndex = state.updateCartQty.findIndex(
-              (item) => item.pdp_link === action.payload.pdp_link
-            );
-          
-            if (existingProductIndex !== -1) {
-              // If the product already exists, update its quantity
-              state.updateCartQty[existingProductIndex] = action.payload;
-            } else {
-              // If the product doesn't exist, add it to the array
-              state.updateCartQty.push(action.payload);
-            }
-          },
+            state.updateCartQty = [
+              ...state.updateCartQty.filter((item) => item.pdp_link !== action.payload.pdp_link),
+              { ...action.payload },
+            ];
+        },
+
           
 
     }

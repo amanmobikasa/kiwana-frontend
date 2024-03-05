@@ -62,7 +62,7 @@ const ProductCheckout = memo(() => {
     }, [setCurrentPaymentMethod, payement_api, setPaymentState]);
 
     
-    const user_info = useSelector((state)=> state.users.usersData[state.users.usersData.length-1]); // getting the user data from redux store
+    const user_info = useSelector((state)=> state?.users?.usersData); // getting the user data from redux store
     const add_to_cart_products = useSelector((state)=> state.productQty.addtoCartQty);
     const update_cart_qty_products = useSelector((state)=> state.productQty.updateCartQty);
 
@@ -80,6 +80,7 @@ const ProductCheckout = memo(() => {
 
     useEffect(()=>{ // setting the retrive data to state.
       if(user_info){
+        // console.log("user_info", user_info)
         setUserInfoState(user_info)
         setValueOfAddress(user_info?.address); // setting the value address of user.
       }
@@ -90,7 +91,7 @@ const ProductCheckout = memo(() => {
       if(responseData){
         console.log("responseData", responseData)
         toastSuccess(responseData?.message)
-        navigate("/delivery-status")
+        // navigate("/delivery-status")
       }else{
         console.log("responseDataError", errorAddress)
       }
@@ -136,66 +137,6 @@ const ProductCheckout = memo(() => {
         updateUserAddress("/change-address", { email : userInfoState?.email, newAddress : valueOfAddress })
       }
     }
-
-    // const handleOrderStatusPage = useCallback(async()=>{
-    //   try {
-        
-    //     let updatedFinalProductOrderState = [];
-    //     if(updateCartQtyState.length <= 0){
-    //       addtoCartQtyState.forEach((product_obj)=>{
-    //           const updatedFinalProductOrder = { 
-    //             product_id : product_obj?.pdp_link,
-    //             product_name : product_obj?.product_title,
-    //             product_price : product_obj?.product_price,
-    //             product_image : product_obj?.product_image,
-    //             product_qty : product_obj?.product_quantity?.productCount,
-    //             product_weight : Array.isArray(product_obj?.product_weight) ? (product_obj?.product_weight.find(prod_weight => prod_weight?.selected)?.weight_label || "30ml") : "30ml",
-    //             order_status : "order_placed",
-    //             payment_mode : currentPaymentMethod
-    //           }
-    //           setFinalProductOrderState((prevVal) => {
-    //             updatedFinalProductOrderState.push(updatedFinalProductOrder);
-    //             return updatedFinalProductOrderState;
-    //           });
-    //       })
-
-    //     }
-    //     else {
-    //       updateCartQtyState.forEach((product_obj)=>{
-    //           const updatedFinalProductOrder =  {
-    //             product_id : product_obj?.pdp_link,
-    //             product_name : product_obj?.product_title,
-    //             product_price : product_obj?.product_price,
-    //             product_image : product_obj?.product_image,
-    //             product_qty : product_obj?.product_quantity?.productCount,
-    //             product_weight : Array.isArray(product_obj?.product_weight) ? (product_obj?.product_weight.find((prod_weight) => prod_weight?.selected)?.weight_label || "30ml") : "30ml",
-    //             order_status : "order_placed", 
-    //             payment_mode : currentPaymentMethod
-    //           }
-    //           setFinalProductOrderState((prevVal) => {
-    //             updatedFinalProductOrderState.push(updatedFinalProductOrder);
-    //             return updatedFinalProductOrderState;
-    //           });
-            
-    //       }) 
-
-    //     }
-    //     console.log("DataNow", finalProductOrderState);
-
-    //     postData("http://localhost:4000/order-product", {product_order:finalProductOrderState});
-    //   // } 
-    //   } catch (error){
-    //     console.error("something went wrong while sending the data to the server", error);
-    //   }
-    // },[finalProductOrderState, navigate])
-    
-
-    // useEffect(()=>{
-    //   if(finalProductOrderState.product_name !== ""){
-    //     postData("http://localhost:4000/order-product", finalProductOrderState);
-    //   }
-
-    // },[finalProductOrderState])
 
     const handleOrderStatusPage = useCallback((event) => {
       // sending the orderproduct array to the server

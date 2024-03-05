@@ -133,7 +133,7 @@ const CartItems = ({finalOrderProductDataState}) => {
 
     const handleCounterQuantity = (counter)=>{
         const {count} = counter
-        setProductPrice(productPrice * count);
+        setProductPrice(product_price * count);
         setProductQuantity(count);
     }
 

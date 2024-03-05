@@ -115,7 +115,7 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
 
     const handleSaveProductObject = () => {
         // debugger;
-        setSingleCartData((prevData) => {
+        setSingleCartData((prevData) => {   
           const updatedData = {
             ...prevData,
             product_price: cartPriceState,
