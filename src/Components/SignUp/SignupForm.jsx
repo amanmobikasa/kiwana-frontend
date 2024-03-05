@@ -4,8 +4,12 @@ import { signUpData } from '../../Redux/reducer/signupSlice';
 import { MdTry } from 'react-icons/md';
 import { toastFailed, toastSuccess } from '../../common/toast';
 import axios from 'axios';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { setUserJwtToken } from '../../Redux/reducer/userAuthTokenSlice';
+import isEmail from 'validator/lib/isEmail';
+import isMobilePhone from 'validator/lib/isMobilePhone';
+import isStrongPassword from 'validator/lib/isStrongPassword';
+
 
 export default function SignupForm() {
 
@@ -21,35 +25,42 @@ export default function SignupForm() {
     }
     // console.log("data", signUpDataState)
 
-    async function handleSignUpForm(event){
-        event.preventDefault();
-        if(signUpDataState!==null){
-            dispatch(signUpData(signUpDataState));
-         }
-
-        const { first_name , last_name, user_email, date_of_birth, phone_number, user_address, password} = signUpDataState
+    async function handleSignUpForm(event) {
         try {
+            event.preventDefault();
+    
+            if (!isValidFormData(signUpDataState)) {
+                return toastFailed("Invalid Email, Phone Number, or Password");
+            }
+    
+            const { first_name, last_name, user_email, date_of_birth, phone_number, user_address, password } = signUpDataState;
+    
             const response = await axios.post('http://localhost:4000/signup', {
-                username : first_name + " " + last_name,
-                email : user_email,
-                password : password,
-                phone_number : phone_number,
-                address : user_address,
-                date_of_birth : date_of_birth,
-            })
-            if(response.data.success){
+                username: `${first_name} ${last_name}`,
+                email: user_email,
+                password: password,
+                phone_number: phone_number,
+                address: user_address,
+                date_of_birth: date_of_birth,
+            });
+    
+            if (response.data.success) {
                 setUserAuthToken(response.data);
                 toastSuccess("Signup Successfully");
                 naviagte("/login");
-            }else{
+            } else {
                 console.log("response", response);
                 toastFailed("Something Went Wrong");
             }
-            
         } catch (error) {
-            console.log("error", error);
+            console.error("error", error);
             toastFailed("Something Went Wrong");
         }
+    }
+
+    function isValidFormData(data) {
+        const { user_email, phone_number } = data;
+        return isEmail(user_email) && isMobilePhone(phone_number) ;
     }
      
     // this block of code send the jwt token to session storage.

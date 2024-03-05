@@ -58,7 +58,9 @@ const NavbarComp = memo(() => {
     const loginDetails = JSON.parse(sessionStorage.getItem("userLogin"));
     const jwtToken = sessionStorage.getItem("userJwtToken");
 
-    if (loginDetails && jwtToken) {
+    // console.log("loginDetails",  jwtToken)
+
+    if (loginDetails || jwtToken) {
         setLoginDetailsState({ googleToken: loginDetails, jwtToken: jwtToken });
     } else {
         setLoginDetailsState({ googleToken: "", jwtToken: "" });

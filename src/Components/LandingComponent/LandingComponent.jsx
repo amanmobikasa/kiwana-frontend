@@ -16,7 +16,7 @@ const LandingComponent = ({crouselData}) => {
                     <h1 className='text-white text-[30px] text-center lg:text-left font-[MonteCarlo] font-[400] md:text-[30px]  lg:tracking-wider lg:opacity-80 lg:text-[2.5rem]'>{crouselData?.sub_title}</h1>
                     <h1 className='top-[5rem]  text-white font-playfair text-center lg:text-left font-[700] text-[45px] lg:text-[58px] leading-tight tracking-wider lg:tracking-wider md:text-[55px]'>{crouselData?.heading_1} <span className='font-[500]'>{crouselData?.heading_part1}</span> {crouselData?.heading_2} <span className='font-[500]'>{crouselData?.heading_part2}</span></h1>
                     <div className='w-full flex justify-center pt-4 lg:justify-start lg:pt-[3.2rem]'>
-                        <button className='uppercase font-poppins text-white bg-transparent px-8 lg:px-5 py-3  border-white border-[0.01rem] text-[17px] lg:text-[20px] tracking-wider hover:bg-nav-pink md:px-12 md:py-3 md:text-lg'><NavLink to={crouselData?.button_link}>{crouselData?.button_text}</NavLink></button>
+                        <NavLink to={"/collection"}><button className='uppercase font-poppins text-white bg-transparent px-8 lg:px-5 py-3  border-white border-[0.01rem] text-[17px] lg:text-[20px] tracking-wider hover:bg-nav-pink md:px-12 md:py-3 md:text-lg'>Shop Now</button></NavLink>
                     </div>
                 </div>
             </div>

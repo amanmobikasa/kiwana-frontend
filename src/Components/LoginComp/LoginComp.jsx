@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { userLogin } from "../../Redux/reducer/userAuthSlice";
 import { setUserJwtToken } from "../../Redux/reducer/userAuthTokenSlice";
-import {  toastSuccess } from "../../common/toast";
+import {  toastFailed, toastSuccess } from "../../common/toast";
 import GlobalPostData from "../../Customhooks/usePostData";
 import { NavLink, useNavigate } from "react-router-dom";
+import isEmail from 'validator/lib/isEmail';
+
 
 const LoginComp = () => {
   const dispatch = useDispatch();
@@ -36,6 +38,9 @@ const LoginComp = () => {
 
   const handleLoginSubmit = (event) => {
     event.preventDefault();
+    if(!isEmail(loginData?.email)){
+      return toastFailed("Invalid Email or Phone Number");
+    }else{
     setLoginData(loginData);
     try {
        postData('http://localhost:4000/login', loginData); // sending the login crendentials to the api
@@ -43,6 +48,7 @@ const LoginComp = () => {
     } catch (error) {
         console.log("error in trycatch block", error)
     }
+  }
   };
 
   return (
@@ -84,6 +90,7 @@ const LoginComp = () => {
                   value={loginData.password}
                   placeholder="Password"
                 />
+                <span className="text-xs text-gray-400">Password must contain min 8 length, symbol, lowercase, uppercase, symbol, special character</span>
               </label>
             </div>
             <div className="space-y-6 lg:space-y-5">
