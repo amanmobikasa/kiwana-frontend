@@ -22,6 +22,7 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
     const [productWeightState, setProductWeightState] = useState([])
     const [itemCount, setItemCount] = useState({productId : 1, productCount : 1})
     const [addToCartState, setAddtoCartState] = useState(null)
+    const [productPrice, setProductPrice] = useState(0);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -31,6 +32,12 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
         hidePdp(false)
     }
 
+    useEffect(()=>{
+        if(pdpPopUpDataState?.product_price){
+            setProductPrice(pdpPopUpDataState?.product_price)
+        }
+    },[pdpPopUpData])
+ 
 
     //handle the product type selected fucntion
     const handleProductTypeSelected = (event, product_type_obj) => {
@@ -100,6 +107,7 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
     // handle the add to bag function
     const handleCounterQuantity = (productCount) => {
         console.log("count", productCount)
+        setProductPrice(pdpPopUpDataState?.product_price * productCount.count);
         setItemCount((prev)=>{
             return {
                 ...prev,
@@ -119,6 +127,7 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
                   product_quantity: {productId : parseInt(prevData?.pdp_link) , productCount : itemCount?.productCount ? itemCount?.productCount : 1},
                   product_type: Array.isArray(productTypeState) && productTypeState.length > 0 ? productTypeState : prevData.product_type,
                   product_weight: Array.isArray(productWeightState)  && productWeightState.length > 0 ? productWeightState : prevData.product_weight,
+                  product_price : productPrice || prevData.product_price,
                 };
                 setAddtoCartState(updatedData);
                 return updatedData;
@@ -163,7 +172,7 @@ const PdpPopup = ({hidePdp,hidePdpPopup, pdpPopUpData}) => {
                                         </div>
                                     </div>
                                     <div>
-                                        <h4 className='font-[400] lg:text-[30px] text-[18px] '>${pdpPopUpDataState?.product_price}</h4>
+                                        <h4 className='font-[400] lg:text-[30px] text-[18px] '>${/* pdpPopUpDataState?.product_price * itemCount?.productCount */ }{productPrice} </h4>
                                     </div>
                                     <div>
                                         <div className='w-full flex h-fit justify-start items-center pt-[1rem] lg:gap-1 '>

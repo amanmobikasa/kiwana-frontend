@@ -12,8 +12,8 @@ export function SearchList({searchResultArray, setShowSearchList}) {
                 searchResultArray.map((items, i)=> {
                     const {title, id} = items; 
                     return <>
-                    <ListGroup.Item key={i} className=' hover:text-nav-pink rounded-none'>
-                        <NavLink>{title}</NavLink>
+                    <ListGroup.Item color='pink' key={i} className=' hover:text-nav-pink rounded-none'>
+                        <NavLink to={`/pdp-product/${id}`} >{title}</NavLink>
                     </ListGroup.Item>
                     </>
                 })

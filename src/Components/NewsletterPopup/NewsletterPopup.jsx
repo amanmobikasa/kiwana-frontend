@@ -20,12 +20,9 @@ const NewsletterPopup = () => {
     const submitNewsLetter = (e) => {
         e.preventDefault();
         try {
-            console.log(newsLetterEmail);
+            // console.log(newsLetterEmail);
             postData("http://localhost:4000/subscribe", {email : newsLetterEmail})
             setNewsLetterEmail("");
-            // if(response !== null){
-            //     toastSuccess(message);
-            // }
             handleShowNewsLetter();
             
         } catch (error) {
@@ -39,9 +36,11 @@ const NewsletterPopup = () => {
     }
 
     useEffect(()=>{
-        if(response !== null){
-            toastSuccess(message);
-        }
+        if(response?.success){
+            toastSuccess(response?.message);
+        }else if(response?.success === false){
+            toastFailed(response?.message);
+        }else return;
         
     },[response])
 

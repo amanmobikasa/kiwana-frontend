@@ -56,43 +56,21 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
         const filterWeight = singleCartData?.product_weight?.filter((weight)=> weight.selected === true)
             return filterWeight[0]?.weight_label
     })
-    const [productSelectedQuantity, setProductSelectedQuantity] = useState(0)
-
-    useEffect(()=>{
-        setProductSelectedQuantity((prevVal)=>{
-            if(prevVal?.product_quantity){
-                return prevVal?.product_quantity 
-            }
-            else{
-                return { productId : 1, productCount : 1 }
-            }
-        })
-        
-     },[])
-
-     console.log("cartdata", CartData)
-
-    //  useEffect(()=>{
-    //     // debugger;
-    //         setProductSelectedWeight((prevVal)=>{
-    //             const filterWeight = CartData?.product_weight?.filter((weight)=> weight.selected === true)
-    //             console.log("filterWeight", filterWeight);
-    //             return filterWeight[0].weight_label ? filterWeight[0].weight_label : "30ml" 
-    //         })
-
-    //  },[])
-
-    const [cartPriceState, setCartPriceState] = useState(0);
+    const [productSelectedQuantity, setProductSelectedQuantity] = useState(singleCartData?.product_quantity|| 1)
+    const [cartPriceState, setCartPriceState] = useState(singleCartData?.product_price);
     const [openModal, setOpenModal] = useState(false) // true means open and false means close.
-    // const [updatedSingleCartData, setUpdatedSingleCartData] = useState({});
+    const [constantPrice, setConstantPrice] = useState(400)
     const dispatch = useDispatch();
    
 
     useEffect(()=>{
-        const priceUpdate = parseInt(singleCartData?.product_price) * parseInt(productSelectedQuantity?.productCount)
-        setCartPriceState(priceUpdate);
-        setProductPrice(priceUpdate); // updating the price of orderinstruction comp.
-    },[productSelectedQuantity]);
+        setConstantPrice(()=>{
+            const price_constant = singleCartData?.product_price / singleCartData?.product_quantity?.productCount
+            return price_constant;
+        })
+    },[singleCartData]);
+
+    // console.log("constantPrice", constantPrice)
 
     const updateProductQuantity = (type, productId, prevQuantity) => {
         let newQuantity;
@@ -102,6 +80,9 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
           newQuantity = parseInt(prevQuantity.productCount, 10) - 1;
         }
       
+        // setCartPriceState(singleCartData?.product_price * newQuantity);
+        setCartPriceState(constantPrice * newQuantity)
+
         return { productId, productCount: isNaN(newQuantity) ? 0 : newQuantity };
       };
 
@@ -115,7 +96,7 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
 
     const handleSaveProductObject = () => {
         // debugger;
-        setSingleCartData((prevData) => {
+        setSingleCartData((prevData) => {   
           const updatedData = {
             ...prevData,
             product_price: cartPriceState,
@@ -172,7 +153,7 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
                         </div>
                         <div className='w-full flex justify-end'>
                             <div className='mt-4'>
-                                <h1 className='text-[22px] font-[500] text-[#363636] '>${cartPriceState}</h1>
+                                <h1 className='text-[22px] font-[500] text-[#363636] '>${cartPriceState ? cartPriceState : singleCartData?.product_price}</h1>
                             </div>
                         </div>
                     </div>

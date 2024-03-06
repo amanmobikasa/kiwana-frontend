@@ -1,9 +1,10 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import side1 from '../Assest/images/side1.png';
 import side2 from '../Assest/images/side2.png';
 import GlobalPostData from '../Customhooks/usePostData';
-import { toast } from 'react-toastify';
-import { toastSuccess } from '../common/toast';
+import { toastFailed, toastSuccess } from '../common/toast';
+import isEmail from 'validator/lib/isEmail';
+import { scrollTop } from '../common/scrollTop';
 
 
 const SubscribeBox = () => {
@@ -25,15 +26,27 @@ const SubscribeBox = () => {
     const handleSubmitSubscribe = useCallback((event) => {
         event.preventDefault()
         try {
-            postData('http://localhost:4000/subscribe', {email : email.email, confirm : email.confirm})
-           
+            if(isEmail(email.email)){
+                postData('http://localhost:4000/subscribe', {email : email.email, confirm : email.confirm})
+            }else{
+                toastFailed("please enter a valid email");
+            }
         } catch (error) {
             console.error("something went wrong", error)
         }
 
-    },[])
+    },[email, postData, response])  
 
-    console.log("response bdia wala", response);
+    useEffect(()=>{
+        if(response?.success){
+            toastSuccess(response?.message)
+            scrollTop(0, "smooth"); // scroll to top of page.
+        }else if(response?.success === false){
+            toastFailed(response?.message)
+        }else return;
+    },[response])
+
+    // console.log("response bdia wala", response);
 
     return <>
     <section className='w-12/12  h-[25rem] md:h-[30rem] lg:h-[20rem]  overflow-hidden bg-[#FBFBFB] relative '>
