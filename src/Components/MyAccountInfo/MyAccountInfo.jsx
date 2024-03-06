@@ -45,7 +45,7 @@ const MyAccountInfo = () => {
             sessionStorage.clear();
             toastSuccess("Logout Successfully");
             setUserInformation({})
-            navigate('/')
+            navigate('/login')
         }
         const updatedTabs = tabNav.map((tab) => ({
             ...tab,

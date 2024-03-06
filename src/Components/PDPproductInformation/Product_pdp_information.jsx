@@ -28,6 +28,7 @@ const ProductPdpInformationComp = () => {
     const [productWeightState, setUpdateProductWeightState] = useState({}) // handling the updated json of weight
     const [updateProductTypeState, setUpdateProductTypeState] = useState({}) // handling the updated json of product types
     const [addtocartState, setAddtoCartState] = useState(null);
+    const [productPrice, setProductPrice] = useState(pdpInformationData?.product_price || 0)
     const navigate = useNavigate()
 
     const pdp_description_data =  useSelector((state)=> state.pdpProductData.pdpData)
@@ -109,6 +110,7 @@ const ProductPdpInformationComp = () => {
         }
     
         setItemCount({ productId: productID, productCount: newCount });
+        setProductPrice(newCount * pdpInformationData.product_price);
     
         if (newCount >= pdpInformationData.product_stock) {
             toastFailed(`Quantity can't be more than ${pdpInformationData.product_stock}`);
@@ -133,6 +135,7 @@ const ProductPdpInformationComp = () => {
             },
             product_type: Array.isArray(updateProductTypeState) ? updateProductTypeState : prevData.product_type,
             product_weight: Array.isArray(productWeightState) ? productWeightState : prevData.product_weight,
+            product_price: isNaN(productPrice) ? prevData.product_price : productPrice,
           };
       
           // console.log("updatedDataItemCount", updatedData);
@@ -170,7 +173,7 @@ const ProductPdpInformationComp = () => {
                             </div>
                             <div className='lg:space-y-1'>
                                 <div>
-                                    <p className='text-[25px] font-[400]'>$350</p>
+                                    <p className='text-[25px] font-[400]'>${productPrice ? productPrice :pdpInformationData?.product_price}</p>
                                 </div>
                                 <div className='flex justify-start items-center gap-1  w-full'>
                                     <FaStar className='text-nav-pink  text-xl lg:text-[1.50rem]' />

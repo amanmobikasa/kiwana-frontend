@@ -29,22 +29,20 @@ const NavbarComp = memo(() => {
       if(name === "searchQuerry"){
         setGlobalSearch(value);
         const searchResult =  globalSearchHook(value); // sending the search querry 
-        if(searchResult.length > 0){
+        if(value && value.trim() !== "" && searchResult.length > 0){
           setSearchResultArray(searchResult);
           setShowSearchList(true); // show the searchList;
-        }
-        if(value === "" || searchResultArray.length === 0){
-          setShowSearchList(false); // hide the searchlist when value is empty
+        }else{
+          setShowSearchList(false); // hide the searchlist when value is empty or ""
         }
       }
-
-      
     } catch (error) {
       if(error){
         console.error("Global Search Error : ",error)
       }
     }
   } 
+
 
   // console.log("searchResultArray : ",searchResultArray) // searching the products using the search custom hook.
   
@@ -99,7 +97,7 @@ const NavbarComp = memo(() => {
           <ul className="lg:flex items-center gap-[30px] lg:gap-[33px]  text-[16px] lg:text-[16px] lg:font-[600] text-black hidden">
             <li className="">
               <NavLink to={"/"}>
-              <a href="#" className="font-[600] underline">
+              <a href="#" className="font-[600]">
                 HOME
               </a>
               </NavLink>
