@@ -317,7 +317,7 @@ const ProductPdpInformationComp = () => {
 
 const AccordionPDP = () => {
     return <>
-        <div className='w-full h-fit relative overflow-hidden'>
+        <div className='w-full h-fit relative overflow-hidden '>
             <div className='outer-container relative w-full h-fit'>
             <Accordion  collapseAll className='bg-transparent border-y-[0.01rem] border-x-0 border-nav-pink rounded-none'>
                 <Accordion.Panel arrowIcon={"a"}>
@@ -332,9 +332,9 @@ const AccordionPDP = () => {
                         </p>
                         <p className="text-gray-500 dark:text-gray-400">
                             Check out the
-                            <a href="https://flowbite.com/figma/" className="text-cyan-600 hover:underline dark:text-cyan-500">
+                            <NavLink href="#" className="text-cyan-600 hover:underline dark:text-cyan-500">
                             Figma design system
-                            </a>
+                            </NavLink>
                             based on the utility classes from Tailwind CSS and components from Flowbite.
                         </p>
                     </Accordion.Content>

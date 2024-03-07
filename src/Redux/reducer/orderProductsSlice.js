@@ -11,12 +11,10 @@ const orderSliceFinal = createSlice({
     initialState,
     reducers : {
         orderFinal : (state, action) => {
-            state.orderProductsFinal.push(action.payload)
+            state.orderProductsFinal.push(action.payload) 
         },
         cancelOrderFinal : (state, action) => {
-            // return "hello"
-            const updatedOrder = state.orderProductsFinal.filter((item)=> item?.order_id !== action.payload)
-            state.orderProductsFinal = updatedOrder;
+            state.orderProductsFinal = state.orderProductsFinal.filter((item)=> item?.order_id !== action.payload)
         },
         editOrderFinal : (state, action) => {
             void state.editProductFinal.push(action.payload)
