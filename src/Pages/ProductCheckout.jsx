@@ -13,7 +13,6 @@ import useUpdateUserAddress from "../Customhooks/usePutData";
 import { useNavigate } from "react-router-dom";
 import GlobalPostData from "../Customhooks/usePostData";
 import { addOrderDetails } from "../Redux/reducer/orderStatusSlice";
-import { orderFinal } from "../Redux/reducer/orderProductsSlice";
 
 
 const ProductCheckout = memo(() => {
@@ -156,9 +155,7 @@ const ProductCheckout = memo(() => {
     useEffect(()=>{
       if(response !== null){
         console.log("response", response.data)
-        const {order_id, order_date} = response?.data
-        dispatch(addOrderDetails({"order_id" : order_id, "order_date" : order_date}));
-        dispatch(orderFinal(response?.data));
+        dispatch(addOrderDetails(response.data));
         toastSuccess(response?.message)
         navigate("/delivery-status");
       }else{

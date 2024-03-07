@@ -298,8 +298,3 @@ html {
 }
 
 
-/* for navbar active class */
-.active{
-  @apply underline underline-offset-2
-}
-
