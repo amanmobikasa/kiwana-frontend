@@ -29,16 +29,13 @@ const NavbarComp = memo(() => {
       if(name === "searchQuerry"){
         setGlobalSearch(value);
         const searchResult =  globalSearchHook(value); // sending the search querry 
-        if(searchResult.length > 0){
+        if(value && value.trim() !== "" && searchResult.length > 0){
           setSearchResultArray(searchResult);
           setShowSearchList(true); // show the searchList;
-        }
-        if(value === "" || searchResultArray.length === 0){
+        } else {
           setShowSearchList(false); // hide the searchlist when value is empty
         }
       }
-
-      
     } catch (error) {
       if(error){
         console.error("Global Search Error : ",error)

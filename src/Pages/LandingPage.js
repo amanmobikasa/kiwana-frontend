@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { scrollTop } from '../common/scrollTop';
+// import { scrollTop } from '../common/scrollTop';
+import scrollTop from '../common/scrollTop';
 
 
 // importing lazy loading components.
@@ -51,7 +52,6 @@ const LandingPage = () => {
                 <div className='lg:hidden'>
                     <DiscountCompMobile />
                 </div>
-
             </div>
             <WhyTrustUs />
             <Testimonials/>

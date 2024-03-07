@@ -41,11 +41,8 @@ const SendMessageContact = () => {
         
         }
     }
-<<<<<<< HEAD
 
-=======
     
->>>>>>> parent of e213eb5 (adding the active class to all navbar and validations of send mesaage comp and subscribe comp)
     return <>
     <div id='send-message' className='w-full text-black h-fit lg:h-[30rem] xs:h-[34rem]  relative mt-[1rem] bg-white'>
         <div className='content-container w-11/12 mx-auto border-[0.01rem]  '>
