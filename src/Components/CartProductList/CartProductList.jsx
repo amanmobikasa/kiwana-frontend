@@ -4,16 +4,18 @@ import { LuMinus, LuPlus } from 'react-icons/lu';
 import { useDispatch, useSelector } from 'react-redux';
 import {  } from 'react-router-dom';
 import { RemoveCartProduct } from './RemoveCartProduct';
-import { productQuantityReducer, updateProductQuantityReducer } from '../../Redux/reducer/addToCartSlice';
+import { productQuantityReducer, removeFromAddToCart, updateProductQuantityReducer } from '../../Redux/reducer/addToCartSlice';
+import { toastSuccess } from '../../common/toast';
 
 const CartProductList = ({setProductPrice}) => {
 
     const [cartItemsState, setCartItemsState] = useState([]);
 
     const cartItems = useSelector((state)=> state.productQty.addtoCartQty);
+    const updateItems = useSelector((state)=> state.productQty.updateCartQty);
 
     useEffect(()=>{
-        setCartItemsState(cartItems)
+        setCartItemsState(cartItems?.length > 0 ? cartItems : updateItems)
     },[cartItems])
 
     return <>
@@ -104,9 +106,11 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
           };
           if (cartPriceState !== prevData.product_price) {
             dispatch(updateProductQuantityReducer(updatedData));
+            dispatch(removeFromAddToCart(updatedData));
           }
           return updatedData;
         });
+        toastSuccess("Quantity updated successfully");
       };
 
     return <>
@@ -146,7 +150,7 @@ const ItemContainerofCart = React.memo(({CartData, cartItemsState, setProductPri
                                     </div>
                                     <div className='flex gap-2 items-center'>
                                         <button onClick={handleRemoveProduct} className='text-[12px] hover:underline lg:text-[19px] lg:font-[500] '>Remove</button>
-                                        { productSelectedQuantity?.productCount > 1 ? <button onClick={handleSaveProductObject} className='text-[12px] hover:underline lg:text-[19px] lg:font-[500] px-4 py-1 text-white bg-nav-pink'>Save</button> : null}
+                                        { productSelectedQuantity?.productCount > 0 ? <button onClick={handleSaveProductObject} className='text-[12px] hover:underline lg:text-[19px] lg:font-[500] px-4 py-1 text-white bg-nav-pink'>Save</button> : null}
                                     </div>
                                 </div>
                             </div>

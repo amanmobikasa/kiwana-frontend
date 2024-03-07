@@ -44,7 +44,7 @@ const SendMessageContact = () => {
             toastFailed(error);
         }
     }
-        
+
     return <>
     <div id='send-message' className='w-full text-black h-fit lg:h-[30rem] xs:h-[34rem]  relative mt-[1rem] bg-white'>
         <div className='content-container w-11/12 mx-auto border-[0.01rem]  '>
@@ -100,7 +100,7 @@ const sendMessageContact_api = [
     },
     {
        
-        inputType : "email",
+        inputType : "text",
         placeholder : "Email Address",
         name : "email",
         value : "",

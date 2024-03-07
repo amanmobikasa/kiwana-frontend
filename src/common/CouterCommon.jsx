@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { LuMinus, LuPlus } from "react-icons/lu";
 
-function CouterCommon({children, handleCounterQuantity}) {
+function CouterCommon({children, handleCounterQuantity, productQty}) {
 
     const [counter, setCounter] = useState({
-        count: 1,
-        product_id : 1
+        count: productQty?.productCount ? productQty?.productCount : 1,
+        product_id : productQty?.productId ? productQty?.productId : 1,
     });
 
     const handleCounter = useCallback((event, type, productId)=>{
