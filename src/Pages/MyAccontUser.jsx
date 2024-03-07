@@ -1,7 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MyAccountInfo from '../Components/MyAccountInfo/MyAccountInfo';
+import scrollTop from '../common/scrollTop';
 
 const MyAccount = () => {
+    useEffect(()=>{
+        scrollTop(0, "smooth");
+    },[])
     return <>
     <section className='my-account-container w-full relative h-fit bg-[#FFF8F7] pb-[7.5rem] lg:pb-[3rem]'>
         <div className='inner-account-container w-11/12 lg:w-[93%] mx-auto h-fit'>
