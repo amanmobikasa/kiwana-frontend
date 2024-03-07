@@ -9,7 +9,7 @@ const OrderInstructionCart = ({productPrice}) => {
     const [orderInstruction, setHandleInstruction] = useState("");
     const [getCartProductsState, setGetCartProductsState] = useState([]);
     const [updatedProductCartDataState, setUpdatedProductCartDataState] = useState({});
-    // const [priceOfProduct, setPriceOfProduct] = useState(productPrice);
+    const [TotalPriceOfProducts, setTotalPriceOfProducts] = useState(0);
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const [userAuthToken , setUserAuthToken] = useState("");
@@ -23,21 +23,26 @@ const OrderInstructionCart = ({productPrice}) => {
             setUserAuthToken(USER_AUTH_TOKEN);
             setUserJwtToken(USER_JWT_TOKEN);
         }
-    },[])
+    },[]) 
 
-    // useEffect(()=>{
-    //     setGetCartProductsState(getCartProducts); // setting the cart products array to state.
-    // },[])
 
-    // get the data initial or update data from redux store.
-    const updatedProductCartData = useSelector((state)=> state.productQty);
-    // console.log("updatedProductCart", updatedProductCartData);
+    const updatedProductCartData = useSelector((state)=> state.productQty);    
 
     useEffect(()=>{
         setUpdatedProductCartDataState(updatedProductCartData); // setting the data from redux to state.
-    },[updatedProductCartData])
-
-    // console.log("dataUpdated", updatedProductCartDataState);
+        if(updatedProductCartData){
+            // insert all the products to the single state and extract the price from it.
+            const productArr = [ ...updatedProductCartData.addtoCartQty, ...updatedProductCartData.updateCartQty ];
+            const priceArr = productArr.map((product)=>{
+                return product.product_price
+            })
+            console.log("priceArr", priceArr);  
+            setTotalPriceOfProducts((prev)=> {
+                const total_price = priceArr.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
+                return total_price;
+            })
+        }
+    },[updatedProductCartData, TotalPriceOfProducts])
 
 
     const handleOrderInstruction = (e) => {
@@ -88,7 +93,7 @@ const OrderInstructionCart = ({productPrice}) => {
         }
       }
     return <>
-    <section className='order-instruction-container w-full relative h-fit mt-[3rem] lg:mt-[3.5rem] '>
+    <section  className='order-instruction-container w-full relative h-fit mt-[3rem] lg:mt-[3.5rem] '>
         <div className='content-container w-full h-fit'>
             <div className='inner-container px-1 space-y-[2.4rem] lg:space-y-0  lg:flex lg:justify-between lg:items-start lg:gap-x-[80px]'>
                 <div className='space-y-4 lg:w-full'>
@@ -109,7 +114,7 @@ const OrderInstructionCart = ({productPrice}) => {
                                 <h5 className='text-[20px] font-[600] text-[#363636] '>Subtotal</h5>
                             </div>
                             <div>
-                                <h5 className='font-[600] text-[20px] text-[#363636]'>$<span className='font-[400]'>{productPrice}</span></h5>
+                                <h5 className='font-[600] text-[20px] text-[#363636]'>$<span className='font-[400]'>{TotalPriceOfProducts}</span></h5>
                             </div>
                         </div>
                         <div>

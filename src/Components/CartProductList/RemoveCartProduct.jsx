@@ -21,9 +21,9 @@ function RemoveCartProduct({setOpenModal,openModal, singleCartData, cartItemsSta
     const handleRemoveCartProduct = (event, productId) =>{
       
       if (productId) {
-        let updatedCartProducts = allCartProducts.findIndex((item) => item.product_quantity?.productId === productId );
-        console.log("tet", updatedCartProducts);
-        dispatch(removeFromCart(updatedCartProducts)); // remove the product from cart.
+        // let updatedCartProducts = allCartProducts.findIndex((item) => item.product_quantity?.productId === productId );
+        // console.log("tet", updatedCartProducts);
+        dispatch(removeFromCart(productId)); // remove the product from cart.
         setOpenModal(false);
       }
     }

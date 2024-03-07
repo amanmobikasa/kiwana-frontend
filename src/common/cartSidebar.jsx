@@ -129,18 +129,19 @@ const CartItems = ({finalOrderProductDataState}) => {
     },[order_details])
 
 
-    // console.log("orderProductDataState", orderProductDataState) 
+    console.log("orderProductDataState", orderProductDataState) 
 
     const handleCounterQuantity = (counter)=>{
         const {count} = counter
-        setProductPrice(product_price * count);
-        setProductQuantity(count);
+        const staticPrice = product_price / product_quantity?.productCount
+        setProductPrice(staticPrice * count);
+        setProductQuantity(product_quantity?.productCount);
     }
 
     const handleSaveButton = useCallback((event) => {
         // debugger
         // alert(productPrice, product_price)
-       if((productQuantity > 1 ) && (productPrice > product_price)){
+       if((productQuantity > 1 ) || (productPrice > product_price)){
         setOrderProductDataState((prevData)=>{
             const updatedData = {
                 ...prevData,
@@ -196,7 +197,7 @@ const CartItems = ({finalOrderProductDataState}) => {
                             <p className=' text-[18px] font-[600] text-[#363636]'>${productPrice ? productPrice : product_price}/-</p>
                         </div>
                         <div className='quantity-container flex w-8/12 items-center gap-6'>
-                            <CouterCommon handleCounterQuantity={handleCounterQuantity} />
+                            <CouterCommon handleCounterQuantity={handleCounterQuantity} productQty = {product_quantity}  />
                             <div>
                                 <button onClick={()=>handleSaveButton()} className='underline font-[600] text-[18px] bg-nav-pink text-white px-3 py-1'>Save</button>
                             </div>

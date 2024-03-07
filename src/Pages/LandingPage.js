@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { scrollTop } from '../common/scrollTop';
 
 
 // importing lazy loading components.
@@ -21,6 +22,11 @@ const DiscountCompMobile = React.lazy(()=> import('../Components/DiscountComp/Di
 const LandingCarousel = React.lazy(()=> import('../Components/LandingComponent/LandingCrousel'));
 
 const LandingPage = () => {
+
+    useEffect(()=>{
+        scrollTop(0, "smooth");
+    },[])
+
     return <>
         <div id='LandingHomePage' className=''>
             <NewsletterPopup />
