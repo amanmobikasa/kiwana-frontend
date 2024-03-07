@@ -5,6 +5,7 @@ import payment2 from '../Assest/images/payment2.png'
 import payment3 from '../Assest/images/payment3.png'
 import payment4 from '../Assest/images/payment4.png'
 import payment5 from '../Assest/images/payment5.png'
+import { NavLink } from "react-router-dom";
 
 
 function FooterComp() {
@@ -40,9 +41,9 @@ function FooterComp() {
                     <Footer.LinkGroup className="lg:gap-[0px] lg:mt-[1px] lg:space-y-0" col>
                       {data.sub_title.map((sub_title, i) => {
                         return (
-                          <Footer.Link
+                          <Footer.Link as={NavLink}
                             key={i}
-                            href={`${sub_title?.link}`}
+                            to={`${sub_title?.link}`}
                             className={`${sub_title?.style} text-[12px] md:text-[16px] lg:text-[12px] `}
                           >
                             {sub_title.name}
