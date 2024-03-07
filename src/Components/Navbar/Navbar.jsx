@@ -96,7 +96,7 @@ const NavbarComp = memo(() => {
           <ul className="lg:flex items-center gap-[30px] lg:gap-[33px]  text-[16px] lg:text-[16px] lg:font-[600] text-black hidden">
             <li className="">
               <NavLink to={"/"}>
-              <a href="#" className="font-[600] underline">
+              <a href="#" className="font-[600] ">
                 HOME
               </a>
               </NavLink>

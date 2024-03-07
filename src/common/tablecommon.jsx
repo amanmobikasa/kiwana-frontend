@@ -28,7 +28,7 @@ const TableCommon = ({ finalCartProductsTable }) => {
   const handleDeleteProduct = useCallback((event) => {
     if(orderIdState !== ""){
         deleteDataAsync("delete-order/" + orderIdState);
-        dispatch()
+        // dispatch()
     }
 
   },[tableDataProducts, orderIdState])
