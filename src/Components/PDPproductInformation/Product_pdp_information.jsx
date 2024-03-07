@@ -317,7 +317,7 @@ const ProductPdpInformationComp = () => {
 
 const AccordionPDP = () => {
     return <>
-        <div className='w-full h-fit relative overflow-hidden'>
+        <div className='w-full h-fit relative overflow-hidden '>
             <div className='outer-container relative w-full h-fit'>
             <Accordion  collapseAll className='bg-transparent border-y-[0.01rem] border-x-0 border-nav-pink rounded-none'>
                 <Accordion.Panel arrowIcon={"a"}>
