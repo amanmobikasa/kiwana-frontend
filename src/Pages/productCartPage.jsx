@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {CartProductList} from '../Components/CartProductList/CartProductList';
 import OrderInstructionCart from '../Components/OrderInstructionCartPage/OrderInstructionCart';
 import ProductCollectionAlsoLike from '../Components/ProductCollectionComp/ProductCollectionAlsoLike';
-import { scrollTop } from '../common/scrollTop';
+import  scrollTop  from '../common/scrollTop';
 
 const ProductCartPage = () => {
     const [productPrice, setProductPrice] = useState(0)

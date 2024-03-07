@@ -32,8 +32,8 @@ const NavbarComp = memo(() => {
         if(value && value.trim() !== "" && searchResult.length > 0){
           setSearchResultArray(searchResult);
           setShowSearchList(true); // show the searchList;
-        }else{
-          setShowSearchList(false); // hide the searchlist when value is empty or ""
+        } else {
+          setShowSearchList(false); // hide the searchlist when value is empty
         }
       }
     } catch (error) {
@@ -42,7 +42,6 @@ const NavbarComp = memo(() => {
       }
     }
   } 
-
 
   // console.log("searchResultArray : ",searchResultArray) // searching the products using the search custom hook.
   
@@ -97,7 +96,7 @@ const NavbarComp = memo(() => {
           <ul className="lg:flex items-center gap-[30px] lg:gap-[33px]  text-[16px] lg:text-[16px] lg:font-[600] text-black hidden">
             <li className="">
               <NavLink to={"/"}>
-              <a href="#" className="font-[600]">
+              <a href="#" className="font-[600] underline">
                 HOME
               </a>
               </NavLink>

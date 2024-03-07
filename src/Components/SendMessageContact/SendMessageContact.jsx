@@ -12,7 +12,6 @@ const SendMessageContact = () => {
     const [contactData, setContactData] = useState({})
     const dispatch = useDispatch();
     const {error, isLoading, message, postData, response} = GlobalPostData()
-    const [disable, setDisable] = useState(false);
 
     // handle the contact details;
     const handleContactDetails = (event, data) => {
@@ -25,26 +24,25 @@ const SendMessageContact = () => {
     // handle the submit contact details;
     const handleSubmitContactDetails = (event) => {
         event.preventDefault();
-        if (!contactData || Object.keys(contactData).length === 0) {
-            return toastFailed("Please fill out the form first!");
-        }
-        if (!isEmail(contactData?.email) || !isMobilePhone(contactData?.phone_number)) {
+        if(!isEmail(contactData?.email) || !isMobilePhone(contactData?.phone_number)){
             return toastFailed("Invalid Email or Phone Number");
         }
-        if (contactData) {
+        if(contactData){
             dispatch(contactCreateSlice(contactData)); // setting the contact data to redux.
             postData("http://localhost:4000/contactus", contactData);
             toastSuccess("message is delievered, We will reach out you soon!")
-            setContactData({});
+            setContactData(sendMessageContact_api);
         }
-        if (response) {
+        if(response){
             toastSuccess(message);
         }
-        else if (error) {
+        else if(error){
             toastFailed(error);
+        
         }
     }
 
+    
     return <>
     <div id='send-message' className='w-full text-black h-fit lg:h-[30rem] xs:h-[34rem]  relative mt-[1rem] bg-white'>
         <div className='content-container w-11/12 mx-auto border-[0.01rem]  '>
