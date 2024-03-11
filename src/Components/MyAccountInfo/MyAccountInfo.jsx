@@ -16,14 +16,17 @@ const MyAccountInfo = () => {
     // const add_to_cart_products = useSelector((state)=> state.productQty.addtoCartQty);
     // const update_to_cart_products = useSelector((state)=> state.productQty.updateCartQty);
     const finalCartProducts = useSelector((state)=> state.orderFinalProducts.orderProductsFinal);
+    const order_details = useSelector((state)=> state.orderStatus.orderDetails);
 
 
     useEffect(()=>{
        if(finalCartProducts?.length > 0){
         // const finalCartProducts = compareAddtoCartAndUpdateCart(add_to_cart_products, update_to_cart_products);
         setFinalCartProductsTable(finalCartProducts);
+       }else if(order_details?.length > 0){
+        setFinalCartProductsTable(order_details);
        }
-    },[finalCartProducts])
+    },[finalCartProducts, order_details])
 
     useEffect(()=>{
         setTabNav([...tabButton]);
