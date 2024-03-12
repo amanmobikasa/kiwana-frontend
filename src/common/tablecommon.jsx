@@ -23,7 +23,7 @@ const TableCommon = ({ finalCartProductsTable }) => {
     }
   }
 
-  console.log("orderIdState", orderIdState)
+  // console.log("orderIdState", orderIdState)
   
   const handleDeleteProduct = useCallback((event) => {
     if(orderIdState !== ""){
